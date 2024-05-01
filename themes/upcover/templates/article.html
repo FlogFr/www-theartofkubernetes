@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="author" content="{{ article.author.name }}" />
+<meta name="description" content="{{ article.summary|striptags|escape }}" />
+<meta name="keywords" content="{{ article.tags|join(', ')|escape }}">
+
+{% if article.translations -%}
+<link rel="alternate" href="{{ SITEURL }}/{{ article.url }}" hreflang="{{ article.lang }}" />
+{% for a in article.translations %}
+<link rel="alternate" href="{{ SITEURL }}/{{ a.url }}" hreflang="{{ a.lang }}" />
+{% endfor %}
+{% endif %}
+
+{% endblock %}
+
+{% block title %}{{ article.title|striptags|escape }}{% endblock %}
+
+{% block content %}
+<!-- Start Hero -->
+<section class="relative table w-full py-36 lg:py-64 overflow-hidden" id="livre">
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute image-wrap -top-[350px] -bottom-[350px] -start-[100px] -end-[100px] min-w-full w-auto min-h-full h-auto overflow-hidden m-auto bg-[url('/theme/assets/images/Mountains.jpg')] bg-no-repeat bg-center bg-cover"></div>
+    </div>
+    <div class="absolute inset-0 bg-black/70"></div>
+
+    <div class="container relative">
+        <div class="grid grid-cols-1 text-center">
+            <h4 id="{{ article.slug }}" class="text-white font-semibold lg:leading-normal leading-normal tracking-wide text-4xl lg:text-5xl my-5">{{ article.title }}</h4>
+            <p class="text-white/70 text-lg max-w-xl mx-auto">{{ article.summary|striptags }}</p>
+        </div>
+    </div><!--end container-->
+</section><!--end section-->
+<div class="relative">
+    <div class="absolute block w-full h-auto bottom-[25px] z-1 start-0">
+        <a href="#about"><i class="mdi mdi-arrow-down absolute top-0 start-0 end-0 text-center inline-flex items-center justify-center rounded-full bg-white dark:bg-slate-900 h-12 w-12 mx-auto shadow-md dark:shadow-gray-800"></i></a>
+    </div>
+
+    <div class="shape absolute sm:-bottom-px -bottom-[2px] start-0 end-0 overflow-hidden text-white dark:text-slate-900">
+        <svg class="w-full h-auto scale-[2.0] origin-top" viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+        </svg>
+    </div>
+</div>
+<!-- End Hero -->
+
+<!-- Start Content -->
+<section class="relative md:py-24 py-16">
+    <div class="container relative">
+        <div class="grid md:grid-cols-1 grid-cols-1 items-center">
+            <div class="md:col-span-12">
+                <div class="lg:ms-12">
+                    {{ article.content }}
+                </div>
+            </div>
+        </div>
+    </div><!--end container-->
+</section><!--end section-->
+<!-- End Content -->
+
+{% include "partials/section-auteur.html" %}
+
+<section class="relative lg:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="contact">
+    <div class="container relative">
+        <div class="grid grid-cols-1 pb-6 text-center">
+            <h3 class="font-semibold text-2xl leading-normal mb-4">Rejoignez la communauté The Art of Kubernetes</h3>
+
+            <p class="text-slate-400 max-w-xl mx-auto">En vous inscrivant à la newsletter, vous recevrez un chapitre gratuitement du livre.</p>
+        </div><!--end grid-->
+
+        <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-6">
+            <div class="lg:col-span-7 md:col-span-6">
+                <img src="theme/assets/images/contact.svg" alt="">
+            </div>
+
+            <div class="lg:col-span-5 md:col-span-6">
+                <div class="lg:ms-5">
+                    <div class="bg-white dark:bg-slate-900 rounded-md shadow dark:shadow-gray-700 p-6">
+                        <form method="post" action="https://app.convertkit.com/forms/6510011/subscriptions" data-sv-form="6510011" data-uid="a30283acef" data-format="inline" data-version="5" >
+                            <p class="mb-0" id="error-msg"></p>
+                            <div id="simple-msg"></div>
+                            <div class="grid lg:grid-cols-12 grid-cols-1 gap-3">
+                                <div class="lg:col-span-12">
+                                    <label for="email_address" class="font-semibold">Recevez un chapitre du livre gratuitement, ainsi que des nouvelles à propos de Kubernetes</label>
+                                    <input name="email_address" id="email" type="email" class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0" placeholder="Mon email">
+                                    <p class="text-slate-400 max-w-xl mx-auto">Vous allez recevoir un email pour confirmer votre volonté de rejoindre la newsletter The Art of Kubernetes.</p>
+                                </div>
+                            </div>
+                            <button type="submit" id="submit" name="send" data-element="submit" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white mt-2">Rejoindre la communauté</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--end container-->
+</section><!--end section-->
+{% endblock %}
