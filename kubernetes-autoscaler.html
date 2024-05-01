@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="fr" class="light scroll-smooth" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Art of Kubernetes - Un livre complet sur Kubernetes</title>
+<meta name="author" content="Florian Grignon">
+<meta name="description" content="The Art of Kubernetes est un livre complet pour maitriser la mise en place et l'utilisation de Kubernetes">
+<meta name="keywords" content="Kubernetes, Cloud, Florian GRIGNON">
+
+<meta name="website" content="https://theartofkubernetes.com">
+<meta name="email" content="bonjour@theartofkubernetes.com">
+<meta name="version" content="1.0.0">
+
+<!-- favicon -->
+<link href="assets/images/favicon.ico" rel="shortcut icon">
+  <!-- Css -->
+<!-- Main Css -->
+<link href="theme/assets/libs/tobii/css/tobii.min.css" rel="stylesheet">
+<link href="theme/assets/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
+<link href="theme/assets/libs/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="theme/assets/css/tailwind.css"></head>
+
+<body class="font-libre_franklin text-base text-black dark:text-white bg-white dark:bg-slate-900">
+    <!-- Loader Start -->
+    <!-- <div id="preloader">
+        <div id="status">
+            <div class="logo">
+                <img src="assets/images/logo-icon-64.png" class="d-block mx-auto animate-[spin_10s_linear_infinite]" alt="">
+            </div>
+            <div class="justify-content-center">
+                <div class="text-center">
+                    <h4 class="mb-0 mt-2 text-lg font-semibold">Upcover</h4>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Loader End -->
+<!-- Navbar Start -->
+<nav class="navbar" id="navbar">
+    <div class="container relative flex flex-wrap items-center justify-between">
+        <a class="navbar-brand md:me-8" href="index.html">
+            <span class="inline-block dark:hidden">
+                <img src="theme/assets/images/TheArtOfKubernetes-logo-dark.png" class="l-dark" style="max-height: 100px;" alt="">
+                <img src="theme/assets/images/TheArtOfKubernetes-logo-light.png" class="l-light" style="max-height: 100px;" alt="">
+            </span>
+            <img src="theme/assets/images/TheArtOfKubernetes-logo-light.png" class="hidden dark:inline-block" style="max-height: 100px;" alt="">
+        </a>
+
+        <div class="nav-icons flex items-center lg_992:order-2 ms-auto md:ms-8">
+            <!-- Navbar Button -->
+            <ul class="list-none menu-social mb-0">
+                <li class="inline">
+                    <a href="" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white uppercase">Acheter</a>
+                </li>
+            </ul>
+            <!-- Navbar Collapse Manu Button -->
+            <button data-collapse="menu-collapse" type="button" class="collapse-btn inline-flex items-center ms-2 text-dark dark:text-white lg_992:hidden" aria-controls="menu-collapse" aria-expanded="false">
+                <span class="sr-only">Navigation Menu</span>
+                <i class="mdi mdi-menu text-[24px]"></i>
+            </button>
+        </div>
+
+        <!-- Navbar Manu -->
+        <div class="navigation lg_992:order-1 lg_992:flex hidden ms-auto" id="menu-collapse">
+            <ul class="navbar-nav nav-light sidebar-nav" id="navbar-navlist">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#livre">Le Livre</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#chapitres">Chapitres</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#editions">Éditions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#publications">Publications</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Navbar End -->
+<!-- Start Hero -->
+<section class="relative table w-full py-36 lg:py-64 overflow-hidden" id="livre">
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute image-wrap -top-[350px] -bottom-[350px] -start-[100px] -end-[100px] min-w-full w-auto min-h-full h-auto overflow-hidden m-auto bg-[url('/theme/assets/images/Mountains.jpg')] bg-no-repeat bg-center bg-cover"></div>
+    </div>
+    <div class="absolute inset-0 bg-black/70"></div>
+
+    <div class="container relative">
+        <div class="grid grid-cols-1 text-center">
+            <h4 id="kubernetes-autoscaler" class="text-white font-semibold lg:leading-normal leading-normal tracking-wide text-4xl lg:text-5xl my-5">Kubernetes AutoScaler</h4>
+            <p class="text-white/70 text-lg max-w-xl mx-auto">Comment Auto Scaler verticalement et horizontalement votre Infrastructure Kubernetes avec Kubernetes AutoScaler</p>
+        </div>
+    </div><!--end container-->
+</section><!--end section-->
+<div class="relative">
+    <div class="absolute block w-full h-auto bottom-[25px] z-1 start-0">
+        <a href="#about"><i class="mdi mdi-arrow-down absolute top-0 start-0 end-0 text-center inline-flex items-center justify-center rounded-full bg-white dark:bg-slate-900 h-12 w-12 mx-auto shadow-md dark:shadow-gray-800"></i></a>
+    </div>
+
+    <div class="shape absolute sm:-bottom-px -bottom-[2px] start-0 end-0 overflow-hidden text-white dark:text-slate-900">
+        <svg class="w-full h-auto scale-[2.0] origin-top" viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+        </svg>
+    </div>
+</div>
+<!-- End Hero -->
+
+<!-- Start Content -->
+<section class="relative md:py-24 py-16">
+    <div class="container relative">
+        <div class="grid md:grid-cols-1 grid-cols-1 items-center">
+            <div class="md:col-span-12">
+                <div class="lg:ms-12">
+                    <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">Kubernetes Autoscaler</h6>
+<p class="text-slate-400 max-w-xl mb-6">Kubernetes Autoscaler</p>
+                </div>
+            </div>
+        </div>
+    </div><!--end container-->
+</section><!--end section-->
+<!-- End Content -->
+
+<section class="relative md:py-24 py-16"><!-- Section Auteur -->
+    <div class="container relative">
+        <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-6">
+            <div class="md:col-span-6">
+                <div class="lg:me-8">
+                    <div class="relative">
+                        <img src="theme/assets/images/auteur-florian-grignon.jpg" class="rounded-full shadow dark:shadow-gray-700" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-6">
+                <div class="lg:ms-8">
+                    <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">A qui s'adresse ce livre ?</h6>
+                    <h3 class="font-semibold text-2xl leading-normal mb-4">Pour tous les utilisateurs de Kubernetes, mais pas que…</h3>
+
+                    <p class="text-slate-400 max-w-xl mb-6">J'ai écris ce livre à destination de toutes les personnes techniques et non techniques qui sont amenées à travailler avec Kubernetes.</p>
+
+                    <a href="#chapitres" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white">Voir les chapitres <i class="mdi mdi-chevron-right align-middle ms-0.5"></i></a>
+                </div>
+            </div>
+        </div>
+    </div><!--end container-->
+</section><!--end section auteur-->
+<!-- End Auteur -->
+<section class="relative lg:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="contact">
+    <div class="container relative">
+        <div class="grid grid-cols-1 pb-6 text-center">
+            <h3 class="font-semibold text-2xl leading-normal mb-4">Rejoignez la communauté The Art of Kubernetes</h3>
+
+            <p class="text-slate-400 max-w-xl mx-auto">En vous inscrivant à la newsletter, vous recevrez un chapitre gratuitement du livre.</p>
+        </div><!--end grid-->
+
+        <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-6">
+            <div class="lg:col-span-7 md:col-span-6">
+                <img src="theme/assets/images/contact.svg" alt="">
+            </div>
+
+            <div class="lg:col-span-5 md:col-span-6">
+                <div class="lg:ms-5">
+                    <div class="bg-white dark:bg-slate-900 rounded-md shadow dark:shadow-gray-700 p-6">
+                        <form method="post" action="https://app.convertkit.com/forms/6510011/subscriptions" data-sv-form="6510011" data-uid="a30283acef" data-format="inline" data-version="5" >
+                            <p class="mb-0" id="error-msg"></p>
+                            <div id="simple-msg"></div>
+                            <div class="grid lg:grid-cols-12 grid-cols-1 gap-3">
+                                <div class="lg:col-span-12">
+                                    <label for="email_address" class="font-semibold">Recevez un chapitre du livre gratuitement, ainsi que des nouvelles à propos de Kubernetes</label>
+                                    <input name="email_address" id="email" type="email" class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0" placeholder="Mon email">
+                                    <p class="text-slate-400 max-w-xl mx-auto">Vous allez recevoir un email pour confirmer votre volonté de rejoindre la newsletter The Art of Kubernetes.</p>
+                                </div>
+                            </div>
+                            <button type="submit" id="submit" name="send" data-element="submit" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white mt-2">Rejoindre la communauté</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--end container-->
+</section><!--end section-->
+
+<!-- Footer Start -->
+<footer class="footer bg-dark-footer relative text-gray-200 dark:text-gray-200">
+    <div class="py-[30px] px-0 border-t border-slate-800">
+        <div class="container relative text-center">
+            <div class="grid lg:grid-cols-12 md:grid-cols-3 grid-cols-1 items-center">
+
+                <div class="lg:col-span-3 md:text-start text-center">
+                    <a href="#" class="text-[22px] focus:outline-none">
+                        <img src="assets/images/logo-light.png" class="mx-auto md:me-auto md:ms-0" alt="">
+                    </a>
+                </div>
+
+                <div class="lg:col-span-5 text-center mt-6 md:mt-0">
+                    <p class="mb-0">Copyright 2024-<script>document.write(new Date().getFullYear())</script> © Grignon Florian. All rights reserved. Design with <i class="mdi mdi-heart text-red-600"></i> by <a href="https://shreethemes.in/" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                </div>
+
+            </div><!--end grid-->
+        </div><!--end container-->
+    </div>
+</footer><!--end footer-->
+<!-- Footer End -->
+        <!-- Back to top -->
+        <a href="#" onclick="topFunction()" id="back-to-top" class="back-to-top fixed hidden text-lg rounded-full z-10 bottom-5 right-5 size-9 text-center bg-teal-500 text-white leading-9"><i class="mdi mdi-arrow-up"></i></a>
+        <!-- Back to top -->
+
+        <!-- JAVASCRIPTS -->
+        <script src="theme/assets/libs/feather-icons/feather.min.js"></script>
+<script src="theme/assets/libs/gumshoejs/gumshoe.polyfills.min.js"></script>
+<script src="theme/assets/libs/tobii/js/tobii.min.js"></script>
+<script src="theme/assets/libs/tiny-slider/min/tiny-slider.js"></script>
+<script src="theme/assets/js/plugins.init.js"></script>
+<script src="theme/assets/js/app.js"></script>        <!-- JAVASCRIPTS -->
+    </body>
+</html>
