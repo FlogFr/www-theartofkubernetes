@@ -15,6 +15,8 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
+DEFAULT_DATE_FORMAT = "%d-%m-%Y"
+
 THEME = "themes/upcover"
 
 # Blogroll
