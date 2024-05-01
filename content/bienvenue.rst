@@ -9,6 +9,7 @@ Bienvenue
 :authors: Florian Grignon
 :summary: Bienvenue sur la Newsletter The Art of Kubernetes
 :timeread: 0 min
+:nomenu: True
 
 .. raw:: html
 
