@@ -33,29 +33,7 @@
 </div>
 <!-- End Hero -->
 
-<!-- Start Content -->
-<section class="relative md:py-24 py-16">
-    <div class="container relative">
-        <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-6">
-            <div class="md:col-span-6">
-                <div class="lg:ms-8">
-                    <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">A qui s'adresse ce livre ?</h6>
-                    <h3 class="font-semibold text-2xl leading-normal mb-4">Pour tous les utilisateurs de Kubernetes, mais pas que…</h3>
-
-                    <p class="text-slate-400 max-w-xl mb-6">J'ai écris ce livre à destination de toutes les personnes techniques et non techniques qui sont amenées à travailler avec Kubernetes.</p>
-                </div>
-            </div>
-            <div class="md:col-span-6">
-                <div class="lg:ms-8">
-                    <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">A qui s'adresse ce livre ?</h6>
-                    <h3 class="font-semibold text-2xl leading-normal mb-4">Pour tous les utilisateurs de Kubernetes, mais pas que…</h3>
-
-                    <p class="text-slate-400 max-w-xl mb-6">J'ai écris ce livre à destination de toutes les personnes techniques et non techniques qui sont amenées à travailler avec Kubernetes.</p>
-                </div>
-            </div>
-        </div>
-    </div><!--end container-->
-</section><!--end section-->
+{% include "partials/livre.html" %}
 
 {% include "partials/section-auteur.html" %}
 
@@ -124,7 +102,7 @@
 <!-- Blog Card List -->
 {% include "partials/article-card-list.html" %}
 
-<section class="relative lg:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="contact">
+<section class="relative lg:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="newsletter">
     <div class="container relative">
         <div class="grid grid-cols-1 pb-6 text-center">
             <h3 class="font-semibold text-2xl leading-normal mb-4">Rejoignez la communauté The Art of Kubernetes</h3>
