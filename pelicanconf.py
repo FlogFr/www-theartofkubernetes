@@ -1,6 +1,6 @@
 AUTHOR = 'Florian Grignon'
 SITENAME = 'The Art of Kubernetes'
-SITEURL = ""
+SITEURL = "https://theartofkubernetes.com"
 
 PATH = "content"
 
