@@ -21,10 +21,7 @@ THEME = "themes/upcover"
 
 # Blogroll
 LINKS = (
-    ("Pelican", "https://getpelican.com/"),
-    ("Python.org", "https://www.python.org/"),
-    ("Jinja2", "https://palletsprojects.com/p/jinja/"),
-    ("You can modify those links in your config file", "#"),
+    ("Appréhendez Kubernetes pour sa mise en place et son utilisation.", "#"),
 )
 
 # Social widget
