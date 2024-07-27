@@ -7,7 +7,25 @@
 <!DOCTYPE html>
 <html lang="fr" class="light scroll-smooth" dir="ltr">
 <head>
-  {% include "partials/title-meta.html" %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Appréhendez Kubernetes pour sa mise en place et son utilisation{% endblock %}</title>
+  
+  {% block meta %}
+  <meta name="author" content="Florian Grignon">
+  <meta name="description" content="Appréhendez Kubernetes pour sa mise en place et son utilisation.">
+  <meta name="keywords" content="Kubernetes, Organisation de Kubernetes, Piloter Kubernetes, Automatisation et Orchestration, Surveillance et Dépannage, Sécurité avec Kubernetes, Cas d'Utilisation Kubernetes, Écosystème Kubernetes, Cloud, GCP, AWS, Livre, Chapitres, Partage">
+  {% endblock %}
+  
+  <meta name="website" content="https://theartofkubernetes.com">
+  <meta name="email" content="bonjour@theartofkubernetes.com">
+  <meta name="version" content="1.0.0">
+  
+  <!-- favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="theme/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="theme/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="theme/assets/images/favicon-16x16.png">
+  <link href="theme/assets/images/favicon.ico" rel="shortcut icon">
 
   <!-- Css -->
   {% include "partials/head-css.html" %}

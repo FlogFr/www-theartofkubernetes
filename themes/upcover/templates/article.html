@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}{{ article.title|striptags|escape }}{% endblock %}
+
 {% block meta %}
 <meta name="author" content="{{ article.author.name }}" />
 <meta name="description" content="{{ article.summary|striptags|escape }}" />
@@ -13,8 +15,6 @@
 {% endif %}
 
 {% endblock %}
-
-{% block title %}{{ article.title|striptags|escape }}{% endblock %}
 
 {% block content %}
 <!-- Start Hero -->
