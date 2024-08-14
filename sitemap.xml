@@ -5,148 +5,148 @@ xmlns:xhtml="http://www.w3.org/1999/xhtml"
 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-<loc>/</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/archives.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/archives.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/author/florian-grignon.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/author/florian-grignon.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/authors.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/authors.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/bienvenue.html</loc>
+<loc>https://theartofkubernetes.com/bienvenue.html</loc>
 <lastmod>2024-05-01T00:00:00+02:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/categories.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/categories.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/category/kubernetes.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/category/kubernetes.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/category/none.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/category/none.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/helm-et-kustomize.html</loc>
+<loc>https://theartofkubernetes.com/helm-et-kustomize.html</loc>
 <lastmod>2024-05-01T00:00:00+02:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/kubernetes-autoscaler.html</loc>
+<loc>https://theartofkubernetes.com/kubernetes-autoscaler.html</loc>
 <lastmod>2024-05-20T00:00:00+02:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/kubernetes-certmanager.html</loc>
+<loc>https://theartofkubernetes.com/kubernetes-certmanager.html</loc>
 <lastmod>2024-06-20T00:00:00+02:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/tag/autoscaler.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/tag/autoscaler.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/tag/bienvenue.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/tag/bienvenue.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/tag/certmanager.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/tag/certmanager.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/tag/encryption.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/tag/encryption.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/tag/helm.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/tag/helm.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/tag/kubernetes.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/tag/kubernetes.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/tag/kustomize.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/tag/kustomize.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/tag/security.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/tag/security.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/tag/tls.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/tag/tls.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/tags.html</loc>
-<lastmod>2024-08-14T13:31:31-00:00</lastmod>
+<loc>https://theartofkubernetes.com/tags.html</loc>
+<lastmod>2024-08-14T13:33:03-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
