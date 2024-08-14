@@ -39,65 +39,7 @@
 
 {% include "partials/chapitres.html" %}
 
-<!-- Start Pricing -->
-<section class="relative md:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="editions">
-    <div class="container relative">
-        <div class="grid grid-cols-1 pb-6 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">Les Différentes Éditions</h3>
-            <p class="text-slate-400 max-w-xl mx-auto">This is just a simple text made for this unique and awesome template, you can replace it with any text.</p>
-        </div><!--end grid-->
-
-        <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-6 gap-6">
-            <div class="group p-6 relative overflow-hidden shadow dark:shadow-gray-700 bg-white dark:bg-slate-900 rounded-md h-fit">
-                <h6 class="font-semibold mb-5 text-xl">Digitale</h6>
-
-                <div class="flex mb-5">
-                    <span class="text-lg font-medium">€</span>
-                    <span class="price text-5xl h6 font-semibold mb-0">40</span>
-                </div>
-
-                <ul class="list-none text-slate-400">
-                    <li class="mb-1 flex"><i class="mdi mdi-check-circle-outline text-teal-500 text-[20px] align-middle me-2"></i> <span>Le livre complet, avec les 8 entretiens en version EPub et PDF. PDF libre de DRM. Vous possédez ce que vous achetez.</span></li>
-                </ul>
-                <a href="" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500/5 hover:bg-teal-500 text-teal-500 hover:text-white w-full mt-5">À venir</a>
-            </div><!--end content-->
-
-            <div class="group p-[1px] relative overflow-hidden shadow dark:shadow-gray-700 rounded-md bg-gradient-to-tr from-teal-500 to-indigo-600 h-fit">
-                <div class="bg-gradient-to-tr from-teal-500 to-indigo-600 text-white py-2 px-6 h6 text-lg font-medium">Meilleures Ventes</div>
-                <div class="p-6 bg-white dark:bg-slate-900 rounded-md">
-                    <h6 class="font-semibold mb-5 text-xl">Papier</h6>
-
-                    <div class="flex mb-5">
-                        <span class="text-lg font-medium">€</span>
-                        <span class="price text-5xl h6 font-semibold mb-0">60</span>
-                    </div>
-
-                    <ul class="list-none text-slate-400">
-                      <li class="mb-1 flex"><i class="mdi mdi-check-circle-outline text-teal-500 text-[20px] align-middle me-2"></i> <span>Le livre en version Papier livré chez vous.</span></li>
-                      <li class="mb-1 flex"><i class="mdi mdi-check-circle-outline text-teal-500 text-[20px] align-middle me-2"></i> <span>Le livre complet, avec les 8 entretiens en version EPub et PDF. PDF libre de DRM. Vous possédez ce que vous achetez.</span></li>
-                    </ul>
-                    <a href="" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500/5 hover:bg-teal-500 text-teal-500 hover:text-white w-full mt-5">À venir</a>
-                </div>
-            </div><!--end content-->
-
-            <div class="group p-6 relative overflow-hidden shadow dark:shadow-gray-700 bg-white dark:bg-slate-900 rounded-md h-fit">
-                <h6 class="font-semibold mb-5 text-xl">Complète</h6>
-
-                <div class="flex mb-5">
-                    <span class="text-lg font-medium">€</span>
-                    <span class="price text-5xl h6 font-semibold mb-0">80</span>
-                </div>
-
-                <ul class="list-none text-slate-400">
-                    <li class="mb-1 flex"><i class="mdi mdi-check-circle-outline text-teal-500 text-[20px] align-middle me-2"></i> <span>Tout le contenu de l'édition Papier</span></li>
-                    <li class="mb-1 flex"><i class="mdi mdi-check-circle-outline text-teal-500 text-[20px] align-middle me-2"></i> <span>Tous les supports de formation Kubernetes comportant les slides sous format PDF (PDF libre de DRM), 20 exercices pratiques, et 50 questions - réponses.</span></li>
-                </ul>
-                <a href="" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500/5 hover:bg-teal-500 text-teal-500 hover:text-white w-full mt-5">À venir</a>
-            </div><!--end content-->
-        </div><!--end grid-->
-    </div>
-</section>
-<!-- End Pricing -->
+{% include "partials/editions.html" %}
 
 <!-- Blog Card List -->
 {% include "partials/article-card-list.html" %}
