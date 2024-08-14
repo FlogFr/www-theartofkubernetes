@@ -1,5 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>The Art of Kubernetes</title><link href="https://theartofkubernetes.com/" rel="alternate"></link><link href="https://theartofkubernetes.com/feeds/all.atom.xml" rel="self"></link><id>https://theartofkubernetes.com/</id><updated>2024-06-20T00:00:00+02:00</updated><entry><title>Kubernetes CertManager</title><link href="https://theartofkubernetes.com/kubernetes-certmanager.html" rel="alternate"></link><published>2024-06-20T00:00:00+02:00</published><updated>2024-06-20T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-06-20:/kubernetes-certmanager.html</id><summary type="html">&lt;p class="first last"&gt;Comment gerer ses certificats TLS dans Kubernetes automatiquement&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>The Art of Kubernetes</title><link href="https://theartofkubernetes.com/" rel="alternate"></link><link href="https://theartofkubernetes.com/feeds/all.atom.xml" rel="self"></link><id>https://theartofkubernetes.com/</id><updated>2024-08-14T00:00:00+02:00</updated><entry><title>Edge Computing avec Kubernetes</title><link href="https://theartofkubernetes.com/edge-computing-avec-kubernetes.html" rel="alternate"></link><published>2024-08-14T00:00:00+02:00</published><updated>2024-08-14T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-08-14:/edge-computing-avec-kubernetes.html</id><summary type="html">&lt;p class="first last"&gt;Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques&lt;/p&gt;
+</summary><content type="html">&lt;section class="relative md:py-24 py-16"&gt;&lt;!-- Section Auteur --&gt;
+  &lt;div class="container relative"&gt;
+    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
+      &lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;Florian Grignon, le 14/08/2024&lt;/h6&gt;
+      &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Edge Computing avec Kubernetes&lt;/h3&gt;
+
+      &lt;p class="text-justify text-lg text-400"&gt;L'Edge Computing, ou informatique en périphérie, est une approche décentralisée du traitement des données, où le calcul et le stockage sont effectués au plus près de la source de production des données, plutôt que dans un centre de données centralisé. Cette architecture permet de réduire la latence, d'améliorer la réactivité des applications, et de gérer les données de manière plus efficace localement, avant de les transférer éventuellement vers un cloud centralisé pour un traitement approfondi ou un stockage à long terme. En rapprochant la puissance de calcul des utilisateurs finaux, l'Edge Computing est particulièrement adapté aux environnements nécessitant une prise de décision en temps réel, tels que l'Internet des objets (IoT), les véhicules autonomes, ou encore les systèmes industriels intelligents.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;&lt;!--end container--&gt;
+&lt;/section&gt;
+
+&lt;section class="relative md:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="services"&gt;
+    &lt;div class="container relative"&gt;
+        &lt;div class="grid grid-cols-1 pb-6 text-center"&gt;
+            &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;L'un des principaux avantages du Edge Computing réside dans sa capacité à réduire la latence en traitant les données localement&lt;/h3&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section class="relative md:py-24 py-16"&gt;
+  &lt;div class="container relative"&gt;
+    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Netflix a été l'une des premières entreprises à mettre en place des points de présence chez les fournisseurs d'accès Internet (FAI), stockant ainsi les films et séries au plus près des utilisateurs. Cette stratégie a permis une lecture optimale des contenus par les utilisateurs du monde entier. Sans aller jusqu'à déployer des points de présence au sein des FAI, ce qui n'est pas accessible à toutes les entreprises, l'architecture Edge Computing peut être réalisée sur plusieurs zones géographiques au sein de votre fournisseur d'infrastructure. Dans ce contexte, Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques.&lt;/p&gt;
+
+      &lt;p class="text-justify text-lg text-400"&gt;L'un des principaux avantages du Edge Computing réside dans sa capacité à réduire la latence en traitant les données localement. Dans des secteurs tels que l'IoT, les véhicules autonomes ou les réseaux de capteurs industriels, la rapidité de traitement est essentielle. En utilisant Kubernetes pour orchestrer ces environnements, les entreprises peuvent déployer des microservices et des applications conteneurisées directement en périphérie du réseau. Cette approche permet non seulement de réduire les temps de réponse, mais aussi d'optimiser l'utilisation de la bande passante en évitant l'envoi de volumes massifs de données vers des centres de données centraux.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Kubernetes offre également une grande flexibilité pour le déploiement et la gestion des applications sur des infrastructures hétérogènes, typiques des environnements Edge. Que les ressources disponibles se trouvent sur des serveurs locaux, des dispositifs IoT, ou même des petits datacentres régionaux, Kubernetes permet de maintenir une homogénéité dans la gestion et l'orchestration des conteneurs. Cette standardisation facilite la scalabilité horizontale, essentielle dans le contexte du Edge, où la capacité de réponse doit s'adapter rapidement aux fluctuations de la demande.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Enfin, Kubernetes renforce la résilience des infrastructures Edge en assurant une gestion autonome des défaillances. En déployant des applications sur plusieurs nœuds en périphérie, Kubernetes garantit la continuité des services, même en cas de panne d'un des nœuds. Cette tolérance aux pannes est cruciale pour les applications critiques, qui ne peuvent se permettre de temps d'arrêt, comme dans la gestion des urgences ou les opérations industrielles.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;&lt;!--end container--&gt;
+&lt;/section&gt;
+
+&lt;section class="relative md:py-24 py-16"&gt;&lt;!-- Section Auteur --&gt;
+  &lt;div class="container relative"&gt;
+    &lt;div class="grid md:grid-cols-12 md:grid-rows-1 md:grid-rows-1 grid-cols-3 grid-rows-2 items-center gap-6"&gt;
+      &lt;div class="row-start-2 col-start-2 md:col-span-4 md:row-start-1"&gt;
+        &lt;div class="lg:me-8"&gt;
+          &lt;div class="relative"&gt;
+            &lt;img src="images/logo-kubeedge.png" class="rounded-full shadow dark:shadow-gray-700" alt=""&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class="row-start-1 col-span-3 md:col-span-8 md:row-start-1"&gt;
+        &lt;div class="lg:ms-8"&gt;
+          &lt;p class="text-justify text-lg text-400"&gt;L'implémentation du Edge Computing avec Kubernetes peut prendre plusieurs formes, en fonction des besoins spécifiques de l'entreprise et de l'architecture sous-jacente. Les approches les plus répandues incluent la distribution de la charge de travail sur plusieurs clusters Kubernetes, l'extension d'un cluster Kubernetes vers les périphéries du réseau, la fédération de plusieurs clusters, ou bien l'utilisation de plateformes clés en main dédiées au Edge, telles qu'&lt;a class="text-slate-400" href="https://lfedge.org/projects/open-horizon/"&gt;Open Horizon&lt;/a&gt; ou &lt;a class="text-slate-400" href="https://kubeedge.io/"&gt;KubeEdge&lt;/a&gt;.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;&lt;!--end container--&gt;
+&lt;/section&gt;&lt;!--end section auteur--&gt;
+
+&lt;section class="relative md:py-24 py-16"&gt;
+  &lt;div class="container relative"&gt;
+    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;La manière la plus directe de faire du Edge est de déployer des points de présence sous forme de clusters Kubernetes en périphérie, répartis sur différents sites, chacun étant autonome mais interconnecté. Cette configuration est idéale pour les environnements où chaque site Edge a des exigences spécifiques en termes de traitement des données, mais où une certaine coordination entre les sites est nécessaire.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Une autre approche consiste à étendre un cluster Kubernetes centralisé vers les périphéries du réseau, en utilisant des nœuds distants pour exécuter des charges de travail spécifiques au Edge. Cette fonctionnalité de répartition de la charge de travail selon des règles métier est déjà implémentée et documentée dans Kubernetes. Cette méthode permet de centraliser la gestion tout en déployant des services spécifiques là où ils sont le plus nécessaires.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;La fédération de clusters est un cas particulier de gestion de plusieurs clusters Kubernetes. Kubernetes permet de gérer plusieurs clusters distribués comme une seule entité cohérente. Cette approche est particulièrement efficace pour orchestrer des déploiements multi-régionaux, où les applications doivent être disponibles et réactives dans plusieurs emplacements géographiques.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;De nombreuses entreprises intègrent Kubernetes avec des plateformes Edge spécialisées telles qu'&lt;a class="text-slate-400" href="https://lfedge.org/projects/open-horizon/"&gt;Open Horizon&lt;/a&gt; ou &lt;a class="text-slate-400" href="https://kubeedge.io/"&gt;KubeEdge&lt;/a&gt;, conçues pour faciliter le déploiement et la gestion des applications sur des infrastructures distribuées. Ces plateformes ajoutent des fonctionnalités spécifiques pour gérer les contraintes du Edge, comme la gestion intermittente de la connectivité réseau ou l'intégration avec des dispositifs IoT.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section class="relative md:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="services"&gt;
+    &lt;div class="container relative"&gt;
+        &lt;div class="grid grid-cols-1 pb-6 text-center"&gt;
+            &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques&lt;/h3&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section class="relative md:py-24 py-16"&gt;
+  &lt;div class="container relative"&gt;
+    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Si vous disposez des ressources en interne, il est également possible de développer une solution Edge à partir de Kubernetes. Cependant, si vous en êtes à ce stade, il est probable que ce livre ne vous apporte plus de nouvelles connaissances.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Le Edge Computing avec Kubernetes ouvre la voie à des architectures plus réactives, résilientes et flexibles, répondant aux exigences croissantes des entreprises modernes en matière de traitement des données en temps réel. L'implémentation de Kubernetes dans des environnements Edge permet non seulement de tirer parti des avantages du Edge Computing, mais aussi de standardiser et d'uniformiser la gestion des ressources à travers des infrastructures dispersées, tout en maintenant une cohérence opérationnelle à l'échelle mondiale.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;&lt;!--end container--&gt;
+&lt;/section&gt;&lt;!--end section auteur--&gt;</content><category term="kubernetes"></category><category term="kubernetes"></category><category term="edge computing"></category><category term="edge"></category><category term="optimisation"></category><category term="architecture"></category><category term="infrastructure"></category><category term="périphérie"></category></entry><entry><title>Operator ou ne pas Operator, telle est la question</title><link href="https://theartofkubernetes.com/operator-or-not-operator.html" rel="alternate"></link><published>2024-08-01T00:00:00+02:00</published><updated>2024-08-01T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-08-01:/operator-or-not-operator.html</id><summary type="html">&lt;p class="first last"&gt;L'un des atouts majeurs de Kubernetes réside dans sa capacité à être extensible et à s'adapter à une multitude de cas d'usage grâce à des abstractions avancées. Parmi celles-ci, le modèle d’Operator occupe une place centrale en automatisant la gestion d'applications complexes directement au sein du cluster Kubernetes.&lt;/p&gt;
+</summary><content type="html">&lt;section class="relative md:py-24 py-16"&gt;&lt;!-- Section Auteur --&gt;
+  &lt;div class="container relative"&gt;
+    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
+      &lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;Florian Grignon, le 01/08/2024&lt;/h6&gt;
+      &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Operator or not Operator, telle est la question&lt;/h3&gt;
+
+      &lt;p class="text-justify text-lg text-400"&gt;L'un des atouts majeurs de Kubernetes réside dans sa capacité à être extensible et à s'adapter à une multitude de cas d'usage grâce à des abstractions avancées. Parmi celles-ci, le modèle d’Operator occupe une place centrale en automatisant la gestion d'applications complexes directement au sein du cluster Kubernetes. Un Operator encapsule la logique opérationnelle d'une application spécifique dans des contrôleurs personnalisés, souvent en s'appuyant sur des Custom Resource Definitions (CRD). Il facilite ainsi la gestion du cycle de vie et l’automatisation de tâches complexes pour les applications. En pratique, un Operator permet de gérer une application, qu'elle soit stateful ou stateless, de son installation à sa désinstallation, en passant par ses différents états fonctionnels. Cette automatisation remplace les interventions manuelles de l'administrateur de l'application, ajoutant ainsi une couche supplémentaire de logique entre l'administrateur et l’application, et requérant souvent des droits élevés, au minimum équivalents à ceux de l'administrateur. Pour des raisons que je vais détailler, je recommande de recourir aux Operators uniquement en dernier recours. Ce chapitre explore les avantages et les inconvénients de cette approche, devenue incontournable pour de nombreuses entreprises souhaitant tirer le meilleur parti de Kubernetes.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;&lt;!--end container--&gt;
+&lt;/section&gt;
+
+&lt;section class="relative md:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="services"&gt;
+    &lt;div class="container relative"&gt;
+        &lt;div class="grid grid-cols-1 pb-6 text-center"&gt;
+            &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;En automatisant la gestion des erreurs et en surveillant continuellement l'état des applications, les Operators contribuent à améliorer la disponibilité et la résilience des services.&lt;/h3&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section class="relative md:py-24 py-16"&gt;
+  &lt;div class="container relative"&gt;
+    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Un Operator est une extension de Kubernetes qui encapsule la logique opérationnelle d'une application spécifique. C'est en quelque sorte un "opérateur humain" codifié, capable de gérer des tâches complexes telles que le déploiement, la mise à jour, la sauvegarde, la restauration et même la mise à l’échelle de l’application, le tout de manière automatisée. Les Operators sont construits sur la base des Custom Resource Definitions (CRDs), une fonctionnalité de Kubernetes qui permet de définir de nouvelles ressources personnalisées. Un Operator surveille ces ressources et réagit aux événements associés en exécutant des actions prédéfinies pour gérer l'état de l'application. Prenons l’exemple de l’&lt;a class="text-slate-400" href="https://operatorhub.io/operator/cloudnative-pg"&gt;Operator PostgreSQL CloudNativePG&lt;/a&gt;. Les CRD suivants seront mis à disposition de l’administrateur du cluster : Cluster, Backup, ScheduleBackup… Pour déployer un cluster PostgreSQL à l’intérieur de votre cluster Kubernetes, il suffit de créer un CRD Cluster avec les bons paramètres, puis de laisser l’Operator faire sa magie. L’Operator déploiera ensuite les Pods, Services et PersistentVolumes nécessaires pour obtenir un cluster PostgreSQL fonctionnel au sein du cluster.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;L'avantage principal des Operators réside dans leur capacité à automatiser des tâches complexes qui, autrement, nécessiteraient une intervention humaine. Par exemple, la mise à jour d'une base de données stateful, avec toutes ses spécificités, peut être entièrement gérée par un Operator, minimisant ainsi les risques d'erreurs et améliorant l'efficacité opérationnelle. Cependant, ce même avantage peut aussi se transformer en inconvénient, car l'administrateur risque de se reposer entièrement sur l'Operator, perdant ainsi la connaissance approfondie de la logique de l’application. Il pourrait alors négliger la documentation et ne plus avoir la connaissance suffisante de l’application pour déployer et maintenir l'application en état fonctionnel, ce qui pourrait avoir des conséquences graves en cas de problème majeur. De plus, les Operators disponibles pour les applications ne couvrent pas nécessairement l'ensemble des besoins opérationnels. Il est donc possible qu'un Operator limite vos capacités à maintenir l'application dans un état pleinement fonctionnel.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Les Operators permettent de standardiser la gestion des applications, en garantissant que les meilleures pratiques sont appliquées de manière cohérente à travers différents environnements. Cette reproductibilité est particulièrement utile dans des contextes multi-environnements ou multi-clusters, où il est essentiel que les applications soient déployées et maintenues de manière uniforme.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;En automatisant la gestion des erreurs et en surveillant continuellement l'état des applications, les Operators contribuent à améliorer la disponibilité et la résilience des services. Par exemple, un Operator peut détecter un dysfonctionnement et prendre automatiquement des mesures correctives, telles que le redémarrage d'un composant défaillant ou la restauration à partir d'une sauvegarde. Cependant, cela peut également constituer un désavantage, car le choix de la résolution des dysfonctionnements est laissé à un composant logiciel plutôt qu’à un expert de l’application. Cette automatisation peut entraîner l’application dans un état non seulement indésirable, mais aussi problématique, sans possibilité de retour en arrière.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Le développement d’un Operator pour vos applications peut être utile pour automatiser les tâches opérationnelles. Cependant, le développement d’un Operator peut s’avérer complexe et nécessite une compréhension approfondie de Kubernetes. Cette complexité peut représenter une barrière à l'adoption, en particulier pour les petites équipes ou les entreprises qui ne disposent pas des compétences nécessaires en interne.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Comme tout composant logiciel dans votre cluster, un Operator doit être maintenu, mis à jour et corrigé en cas de bugs ou de vulnérabilités. Cela implique un effort de maintenance continu, qui peut devenir coûteux si l'Operator est complexe ou s'il doit évoluer avec l'application qu'il gère. Cet effort doit également être pris en compte dans les cas critiques, comme par exemple une migration de l’application. Une migration d’une application d’un cluster à un autre est-elle plus simple à gérer avec ou sans Operator ? Il est évident qu’il existe toujours des cas d’utilisation que nous pourrions oublier.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;&lt;!--end container--&gt;
+&lt;/section&gt;
+
+&lt;section class="relative md:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="services"&gt;
+    &lt;div class="container relative"&gt;
+        &lt;div class="grid grid-cols-1 pb-6 text-center"&gt;
+            &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;L'ajout d'Operators peut contribuer à une surcharge cognitive.&lt;/h3&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section class="relative md:py-24 py-16"&gt;
+  &lt;div class="container relative"&gt;
+    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Pour les équipes qui gèrent déjà un grand nombre d'outils et de services, l'ajout d'Operators peut contribuer à une surcharge cognitive. Comprendre et gérer les différents Operators déployés dans un cluster peut devenir complexe, en particulier lorsque chaque Operator a ses propres configurations et comportements spécifiques.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Un exemple rare où l’utilisation d’un Operator présente des avantages qui surpassent largement ses inconvénients est celui de la gestion des certificats avec l’&lt;a class="text-slate-400" href="https://github.com/cert-manager/cert-manager"&gt;Operator cert-manager&lt;/a&gt;. Cet Operator permet de générer des certificats TLS automatiquement via l’API du fournisseur (par exemple Let’s Encrypt), de les stocker dans l’ETCd de Kubernetes, et de les utiliser dans les objets Ingress pour gérer la terminaison SSL des applications. Cette utilisation des Operators est quasiment parfaite.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Les Operators sont aujourd'hui très (voire trop) répandus. Plus de 277 sont listés sur &lt;a class="text-slate-400" href="https://operatorhub.io"&gt;https://operatorhub.io&lt;/a&gt; à la disposition de la communauté Kubernetes. Il est désormais possible de déployer presque n’importe quel composant logiciel open-source avec un Operator. Cependant, il est crucial de bien peser les avantages et les inconvénients de l’utilisation d’un Operator par rapport à d’autres méthodes pour gérer le cycle de vie d’un composant logiciel.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;&lt;!--end container--&gt;
+&lt;/section&gt;</content><category term="kubernetes"></category><category term="kubernetes"></category><category term="operator"></category><category term="administration"></category><category term="architecture"></category><category term="infrastructure"></category></entry><entry><title>Kubernetes CertManager</title><link href="https://theartofkubernetes.com/kubernetes-certmanager.html" rel="alternate"></link><published>2024-06-20T00:00:00+02:00</published><updated>2024-06-20T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-06-20:/kubernetes-certmanager.html</id><summary type="html">&lt;p class="first last"&gt;Comment gerer ses certificats TLS dans Kubernetes automatiquement&lt;/p&gt;
 </summary><content type="html">&lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;CertManager, automagique ?&lt;/h6&gt;
 &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Un magnifique exemple des possibilités de Kubernetes&lt;/h3&gt;
 &lt;p class="text-slate-400 max-w-xl mb-6"&gt;Kubernetes CertManager&lt;/p&gt;</content><category term="kubernetes"></category><category term="kubernetes"></category><category term="security"></category><category term="encryption"></category><category term="certmanager"></category><category term="tls"></category></entry><entry><title>Kubernetes AutoScaler</title><link href="https://theartofkubernetes.com/kubernetes-autoscaler.html" rel="alternate"></link><published>2024-05-20T00:00:00+02:00</published><updated>2024-05-20T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-05-20:/kubernetes-autoscaler.html</id><summary type="html">&lt;p class="first last"&gt;Comment Auto Scaler verticalement et horizontalement votre Infrastructure Kubernetes avec Kubernetes AutoScaler&lt;/p&gt;
@@ -8,6 +135,4 @@
 </summary><content type="html">&lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;Vous recevrez prochainement un chapitre gratuit par email, ainsi que quelques nouvelles autour de Kubernetes et de son utilisation.&lt;/h6&gt;
 &lt;div class="relative mt-8"&gt;
         &lt;a href="/" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white"&gt;Page d'accueil&lt;/a&gt;
-&lt;/div&gt;</content><category term="none"></category><category term="bienvenue"></category></entry><entry><title>Helm et Kustomize</title><link href="https://theartofkubernetes.com/helm-et-kustomize.html" rel="alternate"></link><published>2024-05-01T00:00:00+02:00</published><updated>2024-05-01T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-05-01:/helm-et-kustomize.html</id><summary type="html">&lt;p class="first last"&gt;Deployer des manifests dans Kubernetes avec Helm et Kustomize&lt;/p&gt;
-</summary><content type="html">&lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;Helm et Kustomize&lt;/h6&gt;
-&lt;p class="text-slate-400 max-w-xl mb-6"&gt;Helm et Kustomize&lt;/p&gt;</content><category term="kubernetes"></category><category term="helm"></category><category term="kustomize"></category></entry></feed>
+&lt;/div&gt;</content><category term="none"></category><category term="bienvenue"></category></entry></feed>
