@@ -17,6 +17,9 @@ AUTHOR_FEED_RSS = None
 
 DEFAULT_DATE_FORMAT = "%d-%m-%Y"
 
+ARTICLE_SAVE_AS = '{lang}/{slug}.html'
+ARTICLE_URL = '{lang}/{slug}'
+
 THEME = "themes/upcover"
 
 # Blogroll

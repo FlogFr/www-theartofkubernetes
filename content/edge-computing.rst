@@ -1,6 +1,7 @@
 Edge Computing avec Kubernetes
 ##############################
 
+:lang: fr
 :date: 2024-08-14
 :modified: 2024-08-14
 :tags: kubernetes, edge computing, edge, optimisation, architecture, infrastructure, périphérie

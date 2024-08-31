@@ -1,6 +1,7 @@
 Bienvenue
 #########
 
+:lang: fr
 :date: 2024-05-01
 :modified: 2024-05-01
 :tags: bienvenue

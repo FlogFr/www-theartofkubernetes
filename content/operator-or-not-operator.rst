@@ -1,6 +1,7 @@
 Operator ou ne pas Operator, telle est la question
 ##################################################
 
+:lang: fr
 :date: 2024-08-01
 :modified: 2024-08-01
 :tags: kubernetes, operator, administration, architecture, infrastructure

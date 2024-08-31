@@ -1,6 +1,7 @@
 Kubernetes AutoScaler
 #####################
 
+:lang: fr
 :date: 2024-05-20
 :modified: 2024-05-20
 :tags: kubernetes, autoscaler
