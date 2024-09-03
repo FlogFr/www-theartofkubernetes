@@ -2504,6 +2504,9 @@ html[dir=rtl] .tns-visually-hidden {
   .md\:col-span-8{
     grid-column: span 8 / span 8 !important;
   }
+  .md\:col-start-5{
+    grid-column-start: 5 !important;
+  }
   .md\:row-start-1{
     grid-row-start: 1 !important;
   }

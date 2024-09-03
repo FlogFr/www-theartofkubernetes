@@ -1,3 +1,52 @@
-{% extends "index.html" %}
-{% block title %} &ndash; {{ _('Posts by %(name)s', name=author) }}:{% endblock %}
-{% set summarise = True %}
+{% extends "base.html" %}
+
+{% block title %}{{ author|striptags|escape }}{% endblock %}
+
+{% block content %}
+<section class="relative table w-full py-36 lg:py-64 overflow-hidden" id="livre">
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute image-wrap -top-[350px] -bottom-[350px] -start-[100px] -end-[100px] min-w-full w-auto min-h-full h-auto overflow-hidden m-auto bg-[url('/theme/assets/images/Mountains.jpg')] bg-no-repeat bg-center bg-cover"></div>
+    </div>
+    <div class="absolute inset-0 bg-black/70"></div>
+
+    <div class="container relative">
+        <div class="grid grid-cols-1 text-center">
+          <h4 class="text-white font-semibold lg:leading-normal leading-normal tracking-wide text-4xl lg:text-5xl my-5">Un mot de l'auteur…</h4>
+          <h2 class="text-white/70 text-lg max-w-xl mx-auto">{{ author }}</h2>
+          <div class="relative mt-8">
+            <a href="/" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white">Revenir à l'accueil</a>
+          </div>
+        </div>
+    </div><!--end container-->
+</section><!--end section-->
+
+<section class="relative md:py-24 py-16"><!-- Section Auteur -->
+  <div class="container relative">
+    <div class="grid grid-cols-1 grid-rows-1">
+      <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">Florian Grignon, le 01/09/2024</h6>
+      <p class="text-justify text-lg text-400">Bonjour !</p>
+      <p class="text-justify text-lg text-400">Je m'appelle Florian Grignon. Je suis certifié Administrateur Kubernetes (CKA) et formateur spécialisé dans les technologies Cloud Native, telles que Terraform et Kubernetes. Après des études d'ingénieur en informatique, axées sur le développement logiciel et les réseaux, je me suis rapidement orienté vers l'administration des systèmes. J'ai acquis de l'expérience chez OVH et Scaleway (anciennement Online.net), ce qui m'a permis de développer une expertise dans la gestion des infrastructures.</p>
+      <p class="text-justify text-lg text-400">Par la suite, j'ai accompagné quotidiennement des entreprises dans l'apprentissage et la mise en place de leurs infrastructures, ce qui m'a permis de découvrir les coulisses des grands acteurs de l'hébergement d'infrastructures et de mieux comprendre leur utilisation.</p>
+      <p class="text-justify text-lg text-400">Au cours de ces expériences, j’ai pu observer que l’infrastructure est trop souvent mal comprise et prise en compte trop tardivement, voire, dans le pire des cas, laissée à l’abandon. Ce constat s’applique également à d’autres aspects connexes de l’infrastructure, tels que la résilience, la conformité, la sécurité, la performance…</p>
+      <p class="text-justify text-lg text-400">Pourtant, il est désormais possible, même pour de petites entreprises, de maîtriser leur infrastructure et de bénéficier des avantages d'une PaaS (Platform as a Service), grâce à des solutions comme Kubernetes. Le concept de PaaS constitue une excellente interface entre les applications et leur infrastructure, permettant une meilleure organisation et une répartition optimale des tâches entre les équipes.</p>
+      <p class="text-justify text-lg text-400">En définitive, définir et implémenter une Platform as a Service avec Kubernetes au sein de votre entreprise se révèle très souvent être une solution remarquable pour maîtriser votre infrastructure, afin qu’elle atteigne des hauts niveaux de service.</p>
+      <p class="text-justify text-lg text-400">Convaincu des avantages de cette vision de l’infrastructure depuis plusieurs années, je profite d’un moment de pause professionnel pour vous partager cette approche et vous guider dans la mise en œuvre de votre infrastructure avec Kubernetes.</p>
+    </div>
+  </div><!--end container-->
+</section>
+
+<section class="relative md:py-24 py-16"><!-- Section Image Centrale Auteur -->
+  <div class="container relative">
+    <div class="grid md:grid-cols-12 grid-cols-3 items-center gap-6">
+      <div class="md:col-start-5 md:col-span-4">
+        <div class="lg:me-8">
+          <div class="relative">
+            <img src="/theme/assets/images/auteur-florian-grignon.webp" class="rounded-full shadow dark:shadow-gray-700" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!--end container-->
+</section><!--end section auteur-->
+<!-- End Auteur -->
+{% endblock %}
