@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>The Art of Kubernetes - none</title><link href="https://theartofkubernetes.com/" rel="alternate"></link><link href="https://theartofkubernetes.com/feeds/none.atom.xml" rel="self"></link><id>https://theartofkubernetes.com/</id><updated>2024-05-01T00:00:00+02:00</updated><entry><title>Bienvenue</title><link href="https://theartofkubernetes.com/fr/bienvenue" rel="alternate"></link><published>2024-05-01T00:00:00+02:00</published><updated>2024-05-01T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-05-01:/fr/bienvenue</id><summary type="html">&lt;p class="first last"&gt;Bienvenue sur la Newsletter The Art of Kubernetes&lt;/p&gt;
-</summary><content type="html">&lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;Vous recevrez prochainement un chapitre gratuit par email, ainsi que quelques nouvelles autour de Kubernetes et de son utilisation.&lt;/h6&gt;
-&lt;div class="relative mt-8"&gt;
-        &lt;a href="/" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white"&gt;Page d'accueil&lt;/a&gt;
-&lt;/div&gt;</content><category term="none"></category><category term="bienvenue"></category></entry></feed>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>The Art of Kubernetes - none</title><link href="https://theartofkubernetes.com/" rel="alternate"></link><link href="https://theartofkubernetes.com/feeds/none.atom.xml" rel="self"></link><id>https://theartofkubernetes.com/</id><updated>2024-05-01T00:00:00+02:00</updated><entry><title>Bienvenue</title><link href="https://theartofkubernetes.com/fr/bienvenue" rel="alternate"></link><published>2024-05-01T00:00:00+02:00</published><updated>2024-05-01T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-05-01:/fr/bienvenue</id><summary type="html">&lt;p class="first last"&gt;Vous venez de rejoindre les connaisseurs de Kubernetes&lt;/p&gt;
+</summary><content type="html">&lt;!-- Section Connaisseur Kubernetes --&gt;
+&lt;section class="relative"&gt;
+  &lt;div class="container relative"&gt;
+    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
+      &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Qu'est-ce que les connaisseurs de Kubernetes ?&lt;/h3&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Bienvenue parmis les connaisseurs de Kubernetes. Les connaisseurs de Kubernetes est une communauté qui partage le maximum de connaissances à propos de ce magnifique outil qu'est Kubernetes. Nous offrons une vue exhaustive des possibilités et des limites de Kubernetes et de son écosystème étendu, afin de répondre à vos besoins d'infrastructure pour vos applications.&lt;/p&gt;
+
+      &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Vous recevrez bientot un chapitre gratuitement par email&lt;/h3&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;J'espère que le livre The Art of Kubernetes vous servira de guide, vous permettant de faire des choix éclairés et autonomes concernant l'utilisation de Kubernetes. Pour vous donner une idée de à quoi ressemble ce livre, je vous en partage un chapitre très bientôt par email.&lt;/p&gt;
+
+      &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Ainsi que toutes les nouvelles autour de Kubernetes&lt;/h3&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;La mailing list des connaisseurs de Kubernetes ne s'arrête pas qu'au livre. Vous serez prévenu en premier de toutes les publications d'articles, entretiens, podcasts intéressant autour de Kubernetes.&lt;/p&gt;
+
+      &lt;div class="container flex flex-col items-center"&gt;
+      &lt;div class="relative content-center mt-8"&gt;
+              &lt;a href="/" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white"&gt;Page d'accueil&lt;/a&gt;
+      &lt;/div&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;!-- End Section Connaisseur Kubernetes --&gt;</content><category term="none"></category><category term="bienvenue"></category></entry></feed>

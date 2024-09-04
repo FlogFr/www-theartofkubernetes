@@ -7,7 +7,7 @@
   <title>Bienvenue</title>
   
 <meta name="author" content="Florian Grignon" />
-<meta name="description" content="Bienvenue sur la Newsletter The Art of Kubernetes" />
+<meta name="description" content="Vous venez de rejoindre les connaisseurs de Kubernetes" />
 <meta name="keywords" content="bienvenue">
 
 
@@ -26,7 +26,7 @@
 <!-- Main Css -->
 <link href="/theme/assets/libs/tobii/css/tobii.min.css" rel="stylesheet">
 <link href="/theme/assets/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
-<!-- <link href="/theme/assets/libs/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css"> -->
+<link href="/theme/assets/libs/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/theme/assets/css/tailwind.css"></head>
 
 <body class="font-libre_franklin text-base text-black dark:text-white bg-white dark:bg-slate-900">
@@ -47,7 +47,7 @@
 <!-- Navbar Start -->
 <nav class="navbar" id="navbar">
     <div class="container relative flex flex-wrap items-center justify-between">
-        <a class="navbar-brand md:me-8" href="index.html">
+        <a class="navbar-brand md:me-8" href="/index.html">
             <span class="inline-block dark:hidden">
                 <img src="/theme/assets/images/TheArtOfKubernetes-logo-dark.png" class="l-dark" style="max-height: 100px;" alt="">
                 <img src="/theme/assets/images/TheArtOfKubernetes-logo-light.png" class="l-light" style="max-height: 100px;" alt="">
@@ -76,7 +76,7 @@
             <!-- Navbar Button -->
             <ul class="list-none menu-social mb-0">
                 <li class="inline">
-                    <a href="" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white uppercase">Acheter</a>
+                    <a href="/#editions" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white uppercase">Acheter</a>
                 </li>
             </ul>
             <!-- Navbar Collapse Manu Button -->
@@ -98,7 +98,7 @@
     <div class="container relative">
         <div class="grid grid-cols-1 text-center">
             <h4 id="bienvenue" class="text-white font-semibold lg:leading-normal leading-normal tracking-wide text-4xl lg:text-5xl my-5">Bienvenue</h4>
-            <p class="text-white/70 text-lg max-w-xl mx-auto">Bienvenue sur la Newsletter The Art of Kubernetes</p>
+            <p class="text-white/70 text-lg max-w-xl mx-auto">Vous venez de rejoindre les connaisseurs de Kubernetes</p>
         </div>
     </div><!--end container-->
 </section><!--end section-->
@@ -121,10 +121,29 @@
         <div class="grid md:grid-cols-1 grid-cols-1 items-center">
             <div class="md:col-span-12">
                 <div class="lg:ms-12">
-                    <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">Vous recevrez prochainement un chapitre gratuit par email, ainsi que quelques nouvelles autour de Kubernetes et de son utilisation.</h6>
-<div class="relative mt-8">
-        <a href="/" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white">Page d'accueil</a>
-</div>
+                    <!-- Section Connaisseur Kubernetes -->
+<section class="relative">
+  <div class="container relative">
+    <div class="grid grid-cols-1 grid-rows-1">
+      <h3 class="font-semibold text-2xl leading-normal mb-4">Qu'est-ce que les connaisseurs de Kubernetes ?</h3>
+      <p class="text-justify text-lg text-400">Bienvenue parmis les connaisseurs de Kubernetes. Les connaisseurs de Kubernetes est une communauté qui partage le maximum de connaissances à propos de ce magnifique outil qu'est Kubernetes. Nous offrons une vue exhaustive des possibilités et des limites de Kubernetes et de son écosystème étendu, afin de répondre à vos besoins d'infrastructure pour vos applications.</p>
+
+      <h3 class="font-semibold text-2xl leading-normal mb-4">Vous recevrez bientot un chapitre gratuitement par email</h3>
+      <p class="text-justify text-lg text-400">J'espère que le livre The Art of Kubernetes vous servira de guide, vous permettant de faire des choix éclairés et autonomes concernant l'utilisation de Kubernetes. Pour vous donner une idée de à quoi ressemble ce livre, je vous en partage un chapitre très bientôt par email.</p>
+
+      <h3 class="font-semibold text-2xl leading-normal mb-4">Ainsi que toutes les nouvelles autour de Kubernetes</h3>
+      <p class="text-justify text-lg text-400">La mailing list des connaisseurs de Kubernetes ne s'arrête pas qu'au livre. Vous serez prévenu en premier de toutes les publications d'articles, entretiens, podcasts intéressant autour de Kubernetes.</p>
+
+      <div class="container flex flex-col items-center">
+      <div class="relative content-center mt-8">
+              <a href="/" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white">Page d'accueil</a>
+      </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- End Section Connaisseur Kubernetes -->
                 </div>
             </div>
         </div>
@@ -147,7 +166,7 @@
           <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">À propos de l'auteur…</h6>
           <h3 class="font-semibold text-2xl leading-normal mb-4">À qui s'adresse ce livre ?</h3>
           <p class="text-slate-400 max-w-xl mb-6">Bonjour ! Je m’appelle Florian Grignon. Je suis Certifié Administrateur Kubernetes (CKA) et Formateur autour des technologies Cloud Native (Terraform et Kubernetes). J’accompagne au quotidien des entreprises dans leur apprentissage et la mise en place de leur Infrastructure Cloud Native. L’infrastructure est trop souvent mal comprise, prise en compte trop tard, voire laissée à l’abandon. Pourtant, avec des solutions comme Kubernetes, il est maintenant possible, même pour de petites entreprises, de maîtriser leur infrastructure.</p>
-          <p class="text-slate-400 max-w-xl mb-6">J'ai écrit The Art of Kubernetes pour toutes les personnes qui sont potentiellement amenées à travailler avec Kubernetes, afin de les aider à appréhender cette technologie.</p>
+          <p class="text-slate-400 max-w-xl mb-6">J'ai écrit The Art of Kubernetes pour toutes les personnes qui sont amenées à travailler avec Kubernetes, afin de les aider à appréhender cette technologie.</p>
           <a href="/#chapitres" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white">Voir les chapitres <i class="mdi mdi-chevron-right align-middle ms-0.5"></i></a>
         </div>
       </div>
@@ -192,7 +211,7 @@
                 </div>
 
                 <div class="lg:col-span-5 text-center mt-6 md:mt-0">
-                    <p class="mb-0">Copyright 2024-<script>document.write(new Date().getFullYear())</script> © Grignon Florian. All rights reserved. Design with <i class="mdi mdi-heart text-red-600"></i> by <a href="https://shreethemes.in/" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                  <p class="mb-0">Copyright 2024-<script>document.write(new Date().getFullYear())</script> © Grignon Florian.<br/>All rights reserved.</p>
                 </div>
 
             </div><!--end grid-->

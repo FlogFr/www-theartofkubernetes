@@ -24,7 +24,7 @@
 <!-- Main Css -->
 <link href="/theme/assets/libs/tobii/css/tobii.min.css" rel="stylesheet">
 <link href="/theme/assets/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
-<!-- <link href="/theme/assets/libs/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css"> -->
+<link href="/theme/assets/libs/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/theme/assets/css/tailwind.css"></head>
 
 <body class="font-libre_franklin text-base text-black dark:text-white bg-white dark:bg-slate-900">
@@ -45,7 +45,7 @@
 <!-- Navbar Start -->
 <nav class="navbar" id="navbar">
     <div class="container relative flex flex-wrap items-center justify-between">
-        <a class="navbar-brand md:me-8" href="index.html">
+        <a class="navbar-brand md:me-8" href="/index.html">
             <span class="inline-block dark:hidden">
                 <img src="/theme/assets/images/TheArtOfKubernetes-logo-dark.png" class="l-dark" style="max-height: 100px;" alt="">
                 <img src="/theme/assets/images/TheArtOfKubernetes-logo-light.png" class="l-light" style="max-height: 100px;" alt="">
@@ -74,7 +74,7 @@
             <!-- Navbar Button -->
             <ul class="list-none menu-social mb-0">
                 <li class="inline">
-                    <a href="" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white uppercase">Acheter</a>
+                    <a href="/#editions" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white uppercase">Acheter</a>
                 </li>
             </ul>
             <!-- Navbar Collapse Manu Button -->
@@ -123,12 +123,11 @@
     <div class="grid md:grid-cols-12 md:grid-rows-1 grid-rows-2 grid-cols-3 items-center gap-6">
       <div class="md:col-span-8 md:row-start-1 md:col-start-1 col-span-3">
         <div class="lg:ms-8">
-          <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">Un mot de l'auteur…</h6>
+          <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">Selon l'auteur…</h6>
           <h3 class="font-semibold text-2xl leading-normal mb-4">Pourquoi ce livre ?</h3>
 
-          <p class="text-slate-400 max-w-xl mb-6">J'espère offrir aux dirigeants d'entreprises technologiques une compréhension approfondie de l'histoire de Kubernetes, de son évolution et de ses capacités, afin qu'ils aient une vue d'ensemble claire de cette technologie et de son écosystème. Pour rendre la lecture agréable, j'ai inclus une dizaine d'entretiens avec des utilisateurs de Kubernetes, recueillant leurs retours d'expérience sur des projets qu'ils ont menés à bien au sein de leurs entreprises respectives.
-          <p class="text-slate-400 max-w-xl mb-6">D'un autre côté, je souhaite que les lecteurs techniques, les développeurs et les DevOps y trouvent les informations nécessaires pour comprendre clairement les capacités de Kubernetes, ainsi que les moyens d'être autonomes dans sa mise en place et son utilisation.
-          </p>
+          <p class="text-slate-400 max-w-xl mb-6">Cet ouvrage a pour ambition de vous offrir une vue exhaustive des possibilités et des limites de Kubernetes et de son écosystème, afin de répondre à vos besoins d'infrastructure pour vos applications.</p>
+          <p class="text-slate-400 max-w-xl mb-6">Après avoir vu les fondamentaux du projet et des briques élémentaires de Kubernetes, nous aborderons le concept de Platform as a Service. Ce concept nous permettra de tirer pleinement profit de Kubernetes et de ses fonctionnalités afin d'atteindre des hauts niveaux de services pour vos applications. </p>
 
           <a href="#chapitres" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white">Voir les chapitres <i class="mdi mdi-chevron-right align-middle ms-0.5"></i></a>
         </div>
@@ -159,7 +158,7 @@
           <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">À propos de l'auteur…</h6>
           <h3 class="font-semibold text-2xl leading-normal mb-4">À qui s'adresse ce livre ?</h3>
           <p class="text-slate-400 max-w-xl mb-6">Bonjour ! Je m’appelle Florian Grignon. Je suis Certifié Administrateur Kubernetes (CKA) et Formateur autour des technologies Cloud Native (Terraform et Kubernetes). J’accompagne au quotidien des entreprises dans leur apprentissage et la mise en place de leur Infrastructure Cloud Native. L’infrastructure est trop souvent mal comprise, prise en compte trop tard, voire laissée à l’abandon. Pourtant, avec des solutions comme Kubernetes, il est maintenant possible, même pour de petites entreprises, de maîtriser leur infrastructure.</p>
-          <p class="text-slate-400 max-w-xl mb-6">J'ai écrit The Art of Kubernetes pour toutes les personnes qui sont potentiellement amenées à travailler avec Kubernetes, afin de les aider à appréhender cette technologie.</p>
+          <p class="text-slate-400 max-w-xl mb-6">J'ai écrit The Art of Kubernetes pour toutes les personnes qui sont amenées à travailler avec Kubernetes, afin de les aider à appréhender cette technologie.</p>
           <a href="/#chapitres" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white">Voir les chapitres <i class="mdi mdi-chevron-right align-middle ms-0.5"></i></a>
         </div>
       </div>
@@ -179,61 +178,61 @@
         <div class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-6 mt-6">
             <div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 350px;" >
                 <div class="flex items-center justify-center size-14 -rotate-45 bg-gradient-to-r from-transparent to-teal-500/10 text-teal-500 text-center rounded-full group-hover:bg-teal-500/10 duration-500">
-                    <i data-feather="compass" class="size-6 rotate-45"></i>
+                    <i data-feather="sunrise" class="size-6 rotate-45"></i>
                 </div>
 
                 <div class="content mt-6 relative z-1">
-                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Organisation de Kubernetes</a>
-                    <p class="text-slate-400 mt-3">Comprendre les tenants et aboutissants de Kubernetes, des pods aux clusters, pour une utilisation autonome et efficace.</p>
+                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Origines de Kubernetes</a>
+                    <p class="text-slate-400 mt-3">Comprenez comment le projet Kubernetes a vu le jour, et a été architecturé en quelques composants Core.</p>
                 </div>
 
                 <div class="absolute bottom-0 -end-16">
-                    <i data-feather="compass" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
+                    <i data-feather="sunrise" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
                 </div>
             </div><!--end feature content-->
 
             <div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 350px;" >
                 <div class="flex items-center justify-center size-14 -rotate-45 bg-gradient-to-r from-transparent to-teal-500/10 text-teal-500 text-center rounded-full group-hover:bg-teal-500/10 duration-500">
-                    <i data-feather="key" class="size-6 rotate-45"></i>
+                    <i data-feather="codepen" class="size-6 rotate-45"></i>
                 </div>
 
                 <div class="content mt-6 relative z-1">
-                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Piloter Kubernetes</a>
-                    <p class="text-slate-400 mt-3">Découvrez les APIs de Kubernetes pour communiquer avec et piloter efficacement cette technologie.</p>
+                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Distribution Kubernetes</a>
+                    <p class="text-slate-400 mt-3">Explorez les possibilités de configuration et d'extensions compatibles Kubernetes pour former une distribution.</p>
                 </div>
 
                 <div class="absolute bottom-0 -end-16">
-                    <i data-feather="key" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
+                    <i data-feather="codepen" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
                 </div>
             </div><!--end feature content-->
 
             <div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 350px;" >
                 <div class="flex items-center justify-center size-14 -rotate-45 bg-gradient-to-r from-transparent to-teal-500/10 text-teal-500 text-center rounded-full group-hover:bg-teal-500/10 duration-500">
-                    <i data-feather="compass" class="size-6 rotate-45"></i>
+                    <i data-feather="hexagon" class="size-6 rotate-45"></i>
                 </div>
 
                 <div class="content mt-6 relative z-1">
-                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Automatisation et Orchestration</a>
-                    <p class="text-slate-400 mt-3">Explorez les stratégies d'automatisation de Kubernetes (comme les Controller) pour simplifier les déploiements et la surveillance des applications.</p>
+                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Platform as a Service</a>
+                    <p class="text-slate-400 mt-3">Tirez pleinement profit de Kubernetes en organisant les outils et services de votre infrastructure selon le concept de Platform as a Service.</p>
                 </div>
 
                 <div class="absolute bottom-0 -end-16">
-                    <i data-feather="compass" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
+                    <i data-feather="hexagon" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
                 </div>
             </div><!--end feature content-->
 
             <div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 350px;" >
                 <div class="flex items-center justify-center size-14 -rotate-45 bg-gradient-to-r from-transparent to-teal-500/10 text-teal-500 text-center rounded-full group-hover:bg-teal-500/10 duration-500">
-                    <i data-feather="search" class="size-6 rotate-45"></i>
+                    <i data-feather="tool" class="size-6 rotate-45"></i>
                 </div>
 
                 <div class="content mt-6 relative z-1">
-                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Surveillance et Dépannage</a>
-                    <p class="text-slate-400 mt-3">Apprenez à optimiser, dimensionner et dépanner vos applications sur Kubernetes.</p>
+                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Mise en œuvre</a>
+                    <p class="text-slate-400 mt-3">Atteignez des hauts niveaux de services pour votre infrastructure en construisant une plateforme sur mesure avec Kubernetes.</p>
                 </div>
 
                 <div class="absolute bottom-0 -end-16">
-                    <i data-feather="search" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
+                    <i data-feather="tool" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
                 </div>
             </div><!--end feature content-->
 
@@ -244,7 +243,7 @@
 
                 <div class="content mt-6 relative z-1">
                     <a href="" class="title text-lg font-semibold hover:text-teal-500">Sécurité</a>
-                    <p class="text-slate-400 mt-3">Découvrez les bonnes pratiques en matière d'authentification, d'authentification et d'extensions pour renforcer la sécurité dans Kubernetes.</p>
+                    <p class="text-slate-400 mt-3">Découvrez une méthode et des outils compatibles Kubernetes permettant d'augmenter la sécurité de vos clusters.</p>
                 </div>
 
                 <div class="absolute bottom-0 -end-16">
@@ -440,9 +439,9 @@
 <section class="relative lg:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="newsletter">
     <div class="container relative">
         <div class="grid grid-cols-1 pb-6 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">Rejoignez la communauté The Art of Kubernetes</h3>
+            <h3 class="font-semibold text-2xl leading-normal mb-4">Rejoignez la communauté des connaisseurs Kubernetes</h3>
 
-            <p class="text-slate-400 max-w-xl mx-auto">En vous inscrivant à la newsletter, vous recevrez un chapitre gratuitement du livre.</p>
+            <p class="text-slate-400 max-w-xl mx-auto">En vous inscrivant à la newsletter, vous recevrez gratuitement un chapitre du livre.</p>
         </div><!--end grid-->
 
         <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-6">
@@ -474,7 +473,7 @@
                 </div>
 
                 <div class="lg:col-span-5 text-center mt-6 md:mt-0">
-                    <p class="mb-0">Copyright 2024-<script>document.write(new Date().getFullYear())</script> © Grignon Florian. All rights reserved. Design with <i class="mdi mdi-heart text-red-600"></i> by <a href="https://shreethemes.in/" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                  <p class="mb-0">Copyright 2024-<script>document.write(new Date().getFullYear())</script> © Grignon Florian.<br/>All rights reserved.</p>
                 </div>
 
             </div><!--end grid-->
