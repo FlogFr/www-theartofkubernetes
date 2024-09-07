@@ -10,6 +10,7 @@ Kubernetes AutoScaler
 :authors: Florian Grignon
 :summary: Comment Auto Scaler verticalement et horizontalement votre Infrastructure Kubernetes avec Kubernetes AutoScaler
 :timeread: 20 min
+:nomenu: True
 
 .. raw:: html
 
