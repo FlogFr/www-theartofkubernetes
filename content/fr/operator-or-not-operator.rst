@@ -6,6 +6,7 @@ Operator ou ne pas Operator, telle est la question
 :modified: 2024-08-01
 :tags: kubernetes, operator, administration, architecture, infrastructure
 :category: kubernetes
+:logo: logo-operator.webp
 :slug: operator-or-not-operator
 :authors: Florian Grignon
 :summary: L'un des atouts majeurs de Kubernetes réside dans sa capacité à être extensible et à s'adapter à une multitude de cas d'usage grâce à des abstractions avancées. Parmi celles-ci, le modèle d’Operator occupe une place centrale en automatisant la gestion d'applications complexes directement au sein du cluster Kubernetes.

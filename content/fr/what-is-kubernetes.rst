@@ -6,6 +6,7 @@ Qu'est-ce que Kubernetes ?
 :modified: 2024-09-09
 :tags: kubernetes, paas, platform as a service, architecture, infrastructure, k8s
 :category: kubernetes
+:logo: logo-kubernetes.webp
 :slug: qu-est-ce-que-kubernetes
 :authors: Florian Grignon
 :summary: Kubernetes a 10 ans, et a bien évolué durant tout ce temps. Prenons 5 minutes pour voir ce qu'est devenu Kubernetes.

@@ -6,6 +6,7 @@ Multi Cluster Kubernetes
 :modified: 2024-09-15
 :tags: kubernetes, multi-cluster, multi cluster, architecture, infrastructure, k8s
 :category: kubernetes
+:logo: logo-multicluster.webp
 :slug: multi-cluster-kubernetes
 :authors: Florian Grignon
 :summary: Kubernetes, grâce à son architecture hautement modulable, flexible et extensible permet facilement de mettre en place une architecture multi clusters pour répondre à des besoins spécifiques.

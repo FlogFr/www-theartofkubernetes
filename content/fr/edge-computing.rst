@@ -6,6 +6,7 @@ Edge Computing avec Kubernetes
 :modified: 2024-08-14
 :tags: kubernetes, edge computing, edge, optimisation, architecture, infrastructure, périphérie
 :category: kubernetes
+:logo: logo-edge.webp
 :slug: edge-computing-avec-kubernetes
 :authors: Florian Grignon
 :summary: Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques
@@ -50,7 +51,7 @@ Edge Computing avec Kubernetes
         <div class="row-start-2 col-start-2 md:col-span-4 md:row-start-1">
           <div class="lg:me-8">
             <div class="relative">
-              <img src="images/logo-kubeedge.png" class="rounded-full shadow dark:shadow-gray-700" alt="">
+              <img src="/images/logo-kubeedge.png" class="rounded-full shadow dark:shadow-gray-700" alt="">
             </div>
           </div>
         </div>
