@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="fr" class="light scroll-smooth" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Multi Cluster Kubernetes</title>
+  
+<meta name="author" content="Florian Grignon" />
+<meta name="description" content="Kubernetes, grâce à son architecture hautement modulable, flexible et extensible permet facilement de mettre en place une architecture multi clusters pour répondre à des besoins spécifiques." />
+<meta name="keywords" content="kubernetes, multi-cluster, multi cluster, architecture, infrastructure, k8s">
+
+
+  
+  <meta name="website" content="https://theartofkubernetes.com">
+  <meta name="email" content="bonjour@theartofkubernetes.com">
+  <meta name="version" content="1.0.0">
+  
+  <!-- favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/theme/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/theme/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/theme/assets/images/favicon-16x16.png">
+  <link href="/theme/assets/images/favicon.ico" rel="shortcut icon">
+
+  <!-- Css -->
+<!-- Main Css -->
+<link href="/theme/assets/libs/tobii/css/tobii.min.css" rel="stylesheet">
+<link href="/theme/assets/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
+<link href="/theme/assets/libs/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/theme/assets/css/tailwind.css"></head>
+
+<body class="font-libre_franklin text-base text-black dark:text-white bg-white dark:bg-slate-900">
+    <!-- Loader Start -->
+    <!-- <div id="preloader">
+        <div id="status">
+            <div class="logo">
+                <img src="/theme/assets/images/logo-icon-64.png" class="d-block mx-auto animate-[spin_10s_linear_infinite]" alt="">
+            </div>
+            <div class="justify-content-center">
+                <div class="text-center">
+                    <h4 class="mb-0 mt-2 text-lg font-semibold">Upcover</h4>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Loader End -->
+<!-- Navbar Start -->
+<nav class="navbar" id="navbar">
+    <div class="container relative flex flex-wrap items-center justify-between">
+        <a class="navbar-brand md:me-8" href="/index.html">
+            <span class="inline-block dark:hidden">
+                <img src="/theme/assets/images/TheArtOfKubernetes-logo-dark.png" class="l-dark" style="max-height: 100px;" alt="">
+                <img src="/theme/assets/images/TheArtOfKubernetes-logo-light.png" class="l-light" style="max-height: 100px;" alt="">
+            </span>
+            <img src="/theme/assets/images/TheArtOfKubernetes-logo-light.png" class="hidden dark:inline-block" style="max-height: 100px;" alt="">
+        </a>
+        <!-- Navbar Manu -->
+        <div class="navigation lg_992:order-1 lg_992:flex hidden ms-auto" id="menu-collapse">
+            <ul class="navbar-nav nav-light sidebar-nav" id="navbar-navlist">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/#livre">Le Livre</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/#chapitres">Chapitres</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/#editions">Éditions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/#publications">Publications</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav-icons flex items-center lg_992:order-2 ms-auto md:ms-8">
+            <!-- Navbar Button -->
+            <ul class="list-none menu-social mb-0">
+                <li class="inline">
+                    <a href="/#editions" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white uppercase">Acheter</a>
+                </li>
+            </ul>
+            <!-- Navbar Collapse Manu Button -->
+            <button data-collapse="menu-collapse" type="button" class="collapse-btn inline-flex items-center ms-2 text-dark dark:text-white lg_992:hidden" aria-controls="menu-collapse" aria-expanded="false">
+                <span class="sr-only">Navigation Menu</span>
+                <i class="mdi mdi-menu text-[24px]"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+<!-- Navbar End -->
+<!-- Start Hero -->
+<section class="relative table w-full py-36 lg:py-64 overflow-hidden" id="livre">
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute image-wrap -top-[350px] -bottom-[350px] -start-[100px] -end-[100px] min-w-full w-auto min-h-full h-auto overflow-hidden m-auto bg-[url('/theme/assets/images/Mountains.jpg')] bg-no-repeat bg-center bg-cover"></div>
+    </div>
+    <div class="absolute inset-0 bg-black/70"></div>
+
+    <div class="container relative">
+        <div class="grid grid-cols-1 text-center">
+            <h4 id="multi-cluster-kubernetes" class="text-white font-semibold lg:leading-normal leading-normal tracking-wide text-4xl lg:text-5xl my-5">Multi Cluster Kubernetes</h4>
+            <p class="text-white/70 text-lg max-w-xl mx-auto">Kubernetes, grâce à son architecture hautement modulable, flexible et extensible permet facilement de mettre en place une architecture multi clusters pour répondre à des besoins spécifiques.</p>
+        </div>
+    </div><!--end container-->
+</section><!--end section-->
+<div class="relative">
+    <div class="absolute block w-full h-auto bottom-[25px] z-1 start-0">
+        <a href="#about"><i class="mdi mdi-arrow-down absolute top-0 start-0 end-0 text-center inline-flex items-center justify-center rounded-full bg-white dark:bg-slate-900 h-12 w-12 mx-auto shadow-md dark:shadow-gray-800"></i></a>
+    </div>
+
+    <div class="shape absolute sm:-bottom-px -bottom-[2px] start-0 end-0 overflow-hidden text-white dark:text-slate-900">
+        <svg class="w-full h-auto scale-[2.0] origin-top" viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+        </svg>
+    </div>
+</div>
+<!-- End Hero -->
+
+<!-- Start Content -->
+<section class="relative md:py-24 py-16">
+    <div class="container relative">
+        <div class="grid md:grid-cols-1 grid-cols-1 items-center">
+            <div class="md:col-span-12">
+                <div class="lg:ms-12">
+                    <section class="relative md:py-24 py-16"><!-- Section Auteur -->
+  <div class="container relative">
+    <div class="grid grid-cols-1 grid-rows-1">
+      <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">Florian Grignon, le 15/09/2024</h6>
+      <h3 class="font-semibold text-2xl leading-normal mb-4">Multi Cluster Kubernetes</h3>
+      <p class="text-justify text-lg text-400">Dans cet article du blog The Art of Kubernetes, nous abordons un sujet avancé : l'architecture multi-cluster. Nous allons le simplifier tout en supposant que le lecteur maîtrise déjà bien les bases de Kubernetes.</p>
+
+      <h4 class="font-semibold text-2xl leading-normal mb-4">L’architecture de l’infrastructure, reflet des besoins métiers et applicatifs</h4>
+      <p class="text-justify text-lg text-400">Il est désormais courant de disposer de plusieurs environnements pour gérer le cycle de vie des applications. L’environnement de test permet, comme son nom l’indique, de valider fonctionnellement les applications. Un environnement de pré-production teste les processus de déploiement, tandis qu’un environnement d’intégration vérifie des fonctionnalités spécifiques. Un environnement de performance, quant à lui, teste la robustesse de l’application en conditions réelles de charge.</p>
+      <p class="text-justify text-lg text-400">Idéalement, chaque environnement doit être le plus proche possible de la production afin de garantir des résultats pertinents. En parallèle, il est essentiel d’isoler ces environnements pour éviter tout impact négatif, tel que des tests de performance perturbant une application en production. Comme expliqué dans notre livre, les Namespaces Kubernetes permettent une isolation logique des objets de l’API Kubernetes, mais ils ne suffisent pas toujours à isoler complètement les outils et services de la plateforme. La solution la plus simple consiste alors à provisionner un cluster Kubernetes distinct pour chaque environnement. Ainsi, chaque cluster représente un environnement avec ses applications, outils, et services.</p>
+      <p class="text-justify text-lg text-400">Si des contraintes budgétaires existent, il est possible de mutualiser certains outils entre plusieurs environnements ou de déployer des versions allégées, comme des APIs simulées. Cependant, tant que ces clusters ne communiquent pas entre eux, nous ne sommes pas encore dans une architecture multi-cluster à proprement parler.</p>
+      <h4 class="font-semibold text-2xl leading-normal mb-4">Qu'est-ce qu'une architecture multi-cluster ?</h4>
+      <p class="text-justify text-lg text-400">Une architecture multi-cluster consiste en un ensemble de clusters Kubernetes qui communiquent entre eux. Le cas le plus simple est celui d’une répartition de charge entre deux clusters, comme lors d’une migration. Prenons un exemple : vous souhaitez migrer de votre cluster basé à Londres (cluster-lon-1) vers un cluster à Paris (cluster-par-1) pour des raisons de conformité au RGPD. Vous provisionnez un nouveau cluster à Paris et commencez à répartir la charge de travail entre les deux sites. Le projet Kubestellar vous permet justement de spécifier, via une API Kubernetes centrale, quels objets déployer sur chaque cluster, facilitant ainsi la migration de la charge de Londres à Paris. Ce type d’usage est souvent temporaire, le temps de la migration, et vise à décommissionner l’ancien cluster une fois la transition effectuée. D'autres méthodes de migration sont également décrites en détail dans le livre.</p>
+      <h4 class="font-semibold text-2xl leading-normal mb-4">Autres cas d’usage du multi-cluster</h4>
+    </div>
+  </div><!--end container-->
+</section>
+
+<section class="relative"><!-- Section Auteur -->
+    <div class="container relative">
+      <div class="grid grid-cols-1 pb-6 text-center">
+          <img src="/images/Diag MultiCluster Hub and Spoke.png" width="100%" class="shadow dark:shadow-gray-700" alt="Fonctionnalités de Kubernetes" >
+      </div>
+    </div>
+</section>
+
+<section class="relative md:py-24 py-16">
+  <div class="container relative">
+    <div class="grid grid-cols-1 grid-rows-1">
+      <p class="text-justify text-lg text-400">Un autre scénario fréquent est celui du multi-cloud ou du cloud hybride. Dans ces configurations, l’idée est de répartir la charge de travail sur deux fournisseurs de cloud, afin de tirer parti des avantages propres à chacun. Le Special Interest Group (SIG) Kubernetes "multicluster" propose des solutions d’extension des clusters pour gérer la répartition de la charge et la communication entre clusters via les systèmes ServiceImport et ServiceExport. Le fonctionnement de la répartition est similaire à celui de Kubestellar, avec une API Kubernetes centrale et des contrôleurs (WorkController) sur chaque cluster pour répliquer les objets.</p>
+      <p class="text-justify text-lg text-400">Enfin, un cas d’usage courant du multi-cluster est l’architecture satellitaire, où les clusters sont déployés au plus proche des utilisateurs finaux afin de traiter et stocker les données localement. Ce besoin se rencontre souvent dans les entreprises cherchant à optimiser la performance des applications tout en minimisant les délais de traitement. Pour plus de détails sur ce sujet, je vous invite à consulter notre autre article dédié.</p>
+      <h4 class="font-semibold text-2xl leading-normal mb-4">Conclusion</h4>
+      <p class="text-justify text-lg text-400">Grâce à sa modularité, sa flexibilité et son extensibilité, Kubernetes a su évoluer pour répondre à des besoins variés, notamment en matière d’architecture multi-cluster. Que ce soit pour la migration de charges, l’utilisation de plusieurs fournisseurs cloud, ou la proximité avec les utilisateurs finaux, Kubernetes offre des solutions simples et efficaces, parfaitement adaptées aux enjeux des entreprises modernes.</p>
+    </div>
+  </div><!--end container-->
+</section>
+                </div>
+            </div>
+        </div>
+    </div><!--end container-->
+</section><!--end section-->
+<!-- End Content -->
+
+<section class="relative md:py-24 py-16"><!-- Section Auteur -->
+  <div class="container relative">
+    <div class="grid md:grid-cols-12 md:grid-rows-1 md:grid-rows-1 grid-cols-3 grid-rows-2 items-center gap-6">
+      <div class="row-start-2 col-start-2 md:col-span-4 md:row-start-1">
+        <div class="lg:me-8">
+          <div class="relative">
+            <img src="/theme/assets/images/auteur-florian-grignon.webp" class="rounded-full shadow dark:shadow-gray-700" alt="Auteur de The Art of Kubernetes, Florian Grignon">
+          </div>
+        </div>
+      </div>
+      <div class="row-start-1 col-span-3 md:col-span-8 md:row-start-1">
+        <div class="lg:ms-8">
+          <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">À propos de l'auteur…</h6>
+          <h3 class="font-semibold text-2xl leading-normal mb-4">À qui s'adresse ce livre ?</h3>
+          <p class="text-slate-400 max-w-xl mb-6">Bonjour ! Je m’appelle Florian Grignon. Je suis Certifié Administrateur Kubernetes (CKA) et Formateur autour des technologies Cloud Native (Terraform et Kubernetes). J’accompagne au quotidien des entreprises dans leur apprentissage et la mise en place de leur Infrastructure Cloud Native. L’infrastructure est trop souvent mal comprise, prise en compte trop tard, voire laissée à l’abandon. Pourtant, avec des solutions comme Kubernetes, il est maintenant possible, même pour de petites entreprises, de maîtriser leur infrastructure.</p>
+          <p class="text-slate-400 max-w-xl mb-6">J'ai écrit The Art of Kubernetes pour toutes les personnes qui sont amenées à travailler avec Kubernetes, afin de les aider à appréhender cette technologie.</p>
+          <a href="/#chapitres" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white">Voir les chapitres <i class="mdi mdi-chevron-right align-middle ms-0.5"></i></a>
+        </div>
+      </div>
+    </div>
+  </div><!--end container-->
+</section><!--end section auteur-->
+<!-- End Auteur -->
+<section class="relative lg:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="contact">
+    <div class="container relative">
+        <div class="grid grid-cols-1 pb-6 text-center">
+            <h3 class="font-semibold text-2xl leading-normal mb-4">Rejoignez la communauté The Art of Kubernetes</h3>
+
+            <p class="text-slate-400 max-w-xl mx-auto">En vous inscrivant à la newsletter, vous recevrez un chapitre gratuitement du livre.</p>
+        </div><!--end grid-->
+
+        <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-6">
+            <div class="lg:col-span-7 md:col-span-6">
+                <img src="/theme/assets/images/contact.svg" alt="">
+            </div>
+
+            <div class="lg:col-span-5 md:col-span-6">
+                <div class="lg:ms-5">
+                    <div class="bg-white dark:bg-slate-900 rounded-md shadow dark:shadow-gray-700 p-6">
+                      <script async src="https://eocampaign1.com/form/7f014dd2-69c3-11ef-b4cf-7d716c80cc13.js" data-form="7f014dd2-69c3-11ef-b4cf-7d716c80cc13"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--end container-->
+</section><!--end section-->
+
+<!-- Footer Start -->
+<footer class="footer bg-dark-footer relative text-gray-200 dark:text-gray-200">
+    <div class="py-[30px] px-0 border-t border-slate-800">
+        <div class="container relative text-center">
+            <div class="grid lg:grid-cols-12 md:grid-cols-3 grid-cols-1 items-center">
+
+                <div class="lg:col-span-3 md:text-start text-center">
+                    <a href="#" class="text-[22px] focus:outline-none">
+                        <img src="/theme/assets/images/TheArtOfKubernetes-logo-light.png" class="mx-auto md:me-auto md:ms-0" alt="">
+                    </a>
+                </div>
+
+                <div class="lg:col-span-5 text-center mt-6 md:mt-0">
+                  <p class="mb-0">Copyright 2024-<script>document.write(new Date().getFullYear())</script> © Grignon Florian.<br/>All rights reserved.</p>
+                </div>
+
+            </div><!--end grid-->
+        </div><!--end container-->
+    </div>
+</footer><!--end footer-->
+<!-- Footer End -->
+        <!-- Back to top -->
+        <a href="#" onclick="topFunction()" id="back-to-top" class="back-to-top fixed hidden text-lg rounded-full z-10 bottom-5 right-5 size-9 text-center bg-teal-500 text-white leading-9"><i class="mdi mdi-arrow-up"></i></a>
+        <!-- Back to top -->
+
+        <!-- JAVASCRIPTS -->
+        <script src="/theme/assets/libs/feather-icons/feather.min.js"></script>
+<script src="/theme/assets/libs/gumshoejs/gumshoe.polyfills.min.js"></script>
+<script src="/theme/assets/libs/tobii/js/tobii.min.js"></script>
+<script src="/theme/assets/libs/tiny-slider/min/tiny-slider.js"></script>
+<script src="/theme/assets/js/plugins.init.js"></script>
+<script src="/theme/assets/js/app.js"></script>        <!-- JAVASCRIPTS -->
+    </body>
+</html>
