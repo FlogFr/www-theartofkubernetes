@@ -118,7 +118,7 @@
       &lt;div class="row-start-2 col-start-2 md:col-span-4 md:row-start-1"&gt;
         &lt;div class="lg:me-8"&gt;
           &lt;div class="relative"&gt;
-            &lt;img src="images/logo-kubeedge.png" class="rounded-full shadow dark:shadow-gray-700" alt=""&gt;
+            &lt;img src="/images/logo-kubeedge.png" class="rounded-full shadow dark:shadow-gray-700" alt=""&gt;
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
