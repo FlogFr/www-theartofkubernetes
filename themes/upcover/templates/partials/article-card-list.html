@@ -1,5 +1,5 @@
-<!-- Start Blog -->
-<section class="relative md:py-24 py-16" id="publications">
+<!-- Start Blog Article List Card -->
+<section class="relative md:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="chapitres">
     <div class="container relative">
         <div class="grid grid-cols-1 pb-6 text-center">
             <h3 class="font-semibold text-2xl leading-normal mb-4">Publications</h3>
@@ -7,7 +7,7 @@
             <p class="text-slate-400 max-w-xl mx-auto">Quelques articles autour de Kubernetes qui pourraient vous intéresser.</p>
         </div><!--end grid-->
 
-        <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-6 gap-6">
+        <div class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-6 mt-6">
 
             {% for article in articles_page.object_list %}
             {% if 'nomenu' not in article.metadata %}
@@ -18,4 +18,4 @@
         </div><!--end grid-->
     </div><!--end container-->
 </section><!--end section-->
-<!-- End Blog -->
+<!-- End Blog Article List Card -->

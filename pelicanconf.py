@@ -22,6 +22,8 @@ ARTICLE_URL = '{lang}/{slug}'
 
 THEME = "themes/upcover"
 
+FORMATTED_FIELDS = []
+
 # Blogroll
 LINKS = (
     ("Appréhendez Kubernetes pour sa mise en place et son utilisation.", "#"),
