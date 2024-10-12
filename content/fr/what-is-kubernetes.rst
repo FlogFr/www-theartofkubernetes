@@ -19,7 +19,7 @@ Qu'est-ce que Kubernetes ?
       <div class="grid grid-cols-1 grid-rows-1">
         <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">
         Florian Grignon, le 09/09/2024
-        <a href="/assets/Chapitre-Qu-est-ce-que-Kubernetes.pdf" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-right font-medium rounded-md bg-teal-500 text-white uppercase">Version PDF</a>
+        <a href="/assets/Article-Qu-est-ce-que-Kubernetes.pdf" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-right font-medium rounded-md bg-teal-500 text-white uppercase">Version PDF</a>
         </h6>
         <h3 class="font-semibold text-2xl leading-normal mb-4">Qu'est-ce que Kubernetes ?</h3>
 
