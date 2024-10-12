@@ -1,47 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>The Art of Kubernetes</title><link href="https://theartofkubernetes.com/" rel="alternate"></link><link href="https://theartofkubernetes.com/feeds/all.atom.xml" rel="self"></link><id>https://theartofkubernetes.com/</id><updated>2024-09-15T00:00:00+02:00</updated><entry><title>Multi Cluster Kubernetes</title><link href="https://theartofkubernetes.com/fr/multi-cluster-kubernetes" rel="alternate"></link><published>2024-09-15T00:00:00+02:00</published><updated>2024-09-15T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-09-15:/fr/multi-cluster-kubernetes</id><summary type="html">Kubernetes, grâce à son architecture hautement modulable, flexible et extensible permet facilement de mettre en place une architecture multi clusters pour répondre à des besoins spécifiques.</summary><content type="html">&lt;section class="relative md:py-24 py-16"&gt;&lt;!-- Section Auteur --&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>The Art of Kubernetes</title><link href="https://theartofkubernetes.com/" rel="alternate"></link><link href="https://theartofkubernetes.com/feeds/all.atom.xml" rel="self"></link><id>https://theartofkubernetes.com/</id><updated>2024-09-15T00:00:00+02:00</updated><entry><title>Multi Cluster Kubernetes</title><link href="https://theartofkubernetes.com/fr/multi-cluster-kubernetes" rel="alternate"></link><published>2024-09-15T00:00:00+02:00</published><updated>2024-09-15T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-09-15:/fr/multi-cluster-kubernetes</id><summary type="html">Kubernetes, grâce à son architecture hautement modulable, flexible et extensible permet facilement de mettre en place une architecture multi clusters pour répondre à des besoins spécifiques.</summary><content type="html">&lt;section class="relative md:py-8 py-8"&gt;&lt;!-- Section Auteur --&gt;
   &lt;div class="container relative"&gt;
     &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;Florian Grignon, le 15/09/2024&lt;/h6&gt;
+      &lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;
+      Florian Grignon, le 15/09/2024
+      &lt;a href="/assets/Article-Kubernetes-Multi-Cluster.pdf" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-right font-medium rounded-md bg-teal-500 text-white uppercase"&gt;Version PDF&lt;/a&gt;
+      &lt;/h6&gt;
       &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Multi Cluster Kubernetes&lt;/h3&gt;
       &lt;p class="text-justify text-lg text-400"&gt;Il est possible que vous ressentiez le besoin de disposer de plusieurs clusters. Cela implique, ni plus ni moins, d’avoir plusieurs control plan, donc plusieurs cerveaux.&lt;/p&gt;
       &lt;p class="text-justify text-lg text-400"&gt;Le besoin le plus répandu pour la mise en place de multiples clusters est l’isolation des ressources par environnement. Il est essentiel de bien définir ce que chaque environnement inclut ou exclut. Les équipes applicatives auront besoin, au minimum, d’un environnement de développement, d’un environnement de test fonctionnel, d’un environnement de pré-production (staging), et, bien entendu, d’un environnement de production pour livrer le produit aux clients. Il est également envisageable d’ajouter un environnement d’intégration, permettant de vérifier la compatibilité entre les différentes applications et leurs dépendances, ou encore un environnement de performance, conçu pour tester la robustesse du produit dans des conditions identiques à celles de la production, sans impacter les autres environnements.&lt;/p&gt;
       &lt;p class="text-justify text-lg text-400"&gt;Un autre besoin réside dans l’isolation des données par zone géographique. Il serait, par exemple, non conforme de faire communiquer la charge de travail d’un cluster en Europe avec celle d’un cluster situé aux États-Unis. Pour répondre à ce besoin, vous pouvez instancier un cluster par zone, agissant comme un isolant des données.&lt;/p&gt;
       &lt;p class="text-justify text-lg text-400"&gt;Maintenant que vous disposez de plusieurs clusters, il est probable que vous souhaitiez répartir vos charges de travail de manière optimisée entre ces différents environnements. Un outil particulièrement intéressant pour accomplir cela est Kubestellar. Cet outil présente l'avantage de ne nécessiter aucune modification de l'architecture de vos clusters Kubernetes existants. Il permet de centraliser la gestion de l'ensemble des ressources de vos clusters multiples, offrant ainsi une gestion simplifiée et unifiée depuis un point unique.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;&lt;!--end container--&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-24 py-16"&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Il est également possible que vous envisagiez d’interconnecter vos clusters, notamment dans le but de mutualiser certains services de vos plateformes afin de réduire les coûts. Un Special Interest Group (SIG)1 nommé Multicluster se penche sur cette problématique et propose des recommandations, des bonnes pratiques ainsi qu’une ligne de conduite pour y répondre. L’idée centrale consiste à fédérer plusieurs clusters Kubernetes afin de gérer les charges de travail de manière centralisée via une API Kubernetes unique. Dans cette approche, un cluster Kubernetes joue le rôle de « Hub » (cluster central) et communique avec des clusters dits « Spoke » (clusters satellites). Ce modèle de distribution, connu sous le nom de Hub and Spoke2, est soutenu par plusieurs extensions de l’API Kubernetes.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Il est également possible que vous envisagiez d’interconnecter vos clusters, notamment dans le but de mutualiser certains services de vos plateformes afin de réduire les coûts. Un &lt;a href="https://multicluster.sigs.k8s.io/"&gt;Special Interest Group (SIG)&lt;/a&gt; nommé Multicluster se penche sur cette problématique et propose des recommandations, des bonnes pratiques ainsi qu’une ligne de conduite pour y répondre. L’idée centrale consiste à fédérer plusieurs clusters Kubernetes afin de gérer les charges de travail de manière centralisée via une API Kubernetes unique. Dans cette approche, un cluster Kubernetes joue le rôle de « Hub » (cluster central) et communique avec des clusters dits « Spoke » (clusters satellites). Ce modèle de distribution, connu sous le nom de &lt;a href="https://en.wikipedia.org/wiki/Spoke%E2%80%93hub_distribution_paradigm"&gt;Hub and Spoke&lt;/a&gt;, est soutenu par plusieurs extensions de l’API Kubernetes.&lt;/p&gt;
       &lt;p class="text-justify text-lg text-400"&gt;Un Custom Resource Definition (CRD) Work représente une charge de travail constituée de plusieurs manifestes, ainsi que le cluster Spoke cible sur lequel elle doit être déployée. Un contrôleur, appelé Work Controller, prend en charge le déploiement de cette charge sur le cluster désigné. Quant à la gestion réseau des services, les CRD ServiceExport et ServiceImport font leur apparition, représentant respectivement l’exposition d’un service et son importation. Bien que leur implémentation, en termes conceptuels, reste relativement simple et proche des objets Service, ces objets sont spécifiquement adaptés aux environnements cloud.&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;&lt;!--end container--&gt;
 &lt;/section&gt;
 
-&lt;section class="relative"&gt;&lt;!-- Section Auteur --&gt;
+&lt;section class="relative md:py-8 py-8"&gt;
     &lt;div class="container relative"&gt;
       &lt;div class="grid grid-cols-1 pb-6 text-center"&gt;
           &lt;img src="/images/Diag MultiCluster Hub and Spoke.png" width="100%" class="shadow dark:shadow-gray-700" alt="Fonctionnalités de Kubernetes" &gt;
+          &lt;p class="text-justify text-lg text-400"&gt;La fédération de clusters est possible avec une architecture satellite. On peut déployer des objets Work dans l’API centrale, et les contrôleurs des clusters satellites prennent en charge leur déploiement. Cependant, les pods des clusters ne peuvent pas communiquer directement entre eux, sauf via les services exposés par ServiceImport et ServiceExport.&lt;/p&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/section&gt;
 
-&lt;section class="relative md:py-24 py-16"&gt;
+&lt;section class="relative md:py-8 py-8"&gt;
   &lt;div class="container relative"&gt;
     &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
       &lt;p class="text-justify text-lg text-400"&gt;Cette stratégie multi-clusters comporte plusieurs avantages notables. Tout d’abord, il s’agit d’une solution développée par le projet Kubernetes, qui devrait donc continuer à évoluer et être maintenue dans les années à venir. Un autre avantage réside dans son architecture : elle permet d'être mise en place même après le déploiement de plusieurs clusters, pouvant ainsi être vue comme une amélioration naturelle de votre infrastructure. Cette architecture répond au besoin de distribution de charge sur plusieurs localisations avec des exigences d’interconnexion moindres comparé à une stratégie d’extension de clusters. La limite de cette architecture est que les Pods des différents clusters ne communiquent pas directement entre eux ; il est nécessaire de mettre en place le système ServiceExport / ServiceImport afin qu’ils puissent interagir avec les services des autres clusters.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Il existe également d'autres solutions, certes moins "officielles", mais redoutablement efficaces. Si vous avez besoin d’interconnecter vos clusters afin que vos applications déployées sur un cluster puissent découvrir les services d’un autre comme s’ils faisaient partie du même cluster, Liqo est un outil minimaliste, open-source, et facile à prendre en main. Liqo permet également une certaine gestion de la répartition des charges de travail entre les différents clusters interconnectés. Il se distingue par sa simplicité de déploiement, puisqu’il ne requiert aucune modification des configurations existantes des clusters. Cependant, intégrer plusieurs clusters hétérogènes, notamment ceux gérés par différents fournisseurs Cloud, peut rendre sa configuration et sa gestion plus complexes. De plus, la latence des interconnexions réseau peut varier en fonction des distances géographiques entre les clusters, impactant ainsi les performances des applications distribuées. Un autre projet, spécialisé dans l’interconnexion des clusters de manière sécurisée et performante, mais sans gestion de charge distribuée, est Submariner. Ce projet, désormais incubé par la CNCF, a été développé pour répondre aux défis de la connectivité réseau dans des environnements multi-cluster. Submariner vise les déploiements nécessitant une communication entre clusters tout en maintenant une stricte isolation réseau.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Submariner permet d’établir une connectivité transparente en configurant automatiquement des tunnels sécurisés et performants, permettant ainsi aux pods d’un cluster d’accéder aux services d’un autre comme s’ils étaient sur le même réseau. Ce qui différencie Submariner, c’est son approche décentralisée qui ne nécessite aucun point de gestion centralisé pour orchestrer la connectivité, renforçant ainsi la disponibilité du réseau.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Il existe également d'autres solutions, certes moins "officielles", mais redoutablement efficaces. Si vous avez besoin d’interconnecter vos clusters afin que vos applications déployées sur un cluster puissent découvrir les services d’un autre comme s’ils faisaient partie du même cluster, &lt;a href="https://docs.liqo.io/en/latest/introduction.html"&gt;Liqo&lt;/a&gt; est un outil minimaliste, open-source, et facile à prendre en main. &lt;a href="https://docs.liqo.io/en/latest/introduction.html"&gt;Liqo&lt;/a&gt; permet également une certaine gestion de la répartition des charges de travail entre les différents clusters interconnectés. Il se distingue par sa simplicité de déploiement, puisqu’il ne requiert aucune modification des configurations existantes des clusters. Cependant, intégrer plusieurs clusters hétérogènes, notamment ceux gérés par différents fournisseurs Cloud, peut rendre sa configuration et sa gestion plus complexes. De plus, la latence des interconnexions réseau peut varier en fonction des distances géographiques entre les clusters, impactant ainsi les performances des applications distribuées.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;Un autre projet, spécialisé dans l’interconnexion des clusters de manière sécurisée et performante, mais sans gestion de charge distribuée, est &lt;a href="https://submariner.io"&gt;Submariner&lt;/a&gt;. Ce projet, désormais incubé par la CNCF, a été développé pour répondre aux défis de la connectivité réseau dans des environnements multi-cluster. &lt;a href="https://submariner.io"&gt;Submariner&lt;/a&gt; vise les déploiements nécessitant une communication entre clusters tout en maintenant une stricte isolation réseau.&lt;/p&gt;
+      &lt;p class="text-justify text-lg text-400"&gt;&lt;a href="https://submariner.io"&gt;Submariner&lt;/a&gt; permet d’établir une connectivité transparente en configurant automatiquement des tunnels sécurisés et performants, permettant ainsi aux pods d’un cluster d’accéder aux services d’un autre comme s’ils étaient sur le même réseau. Ce qui différencie Submariner, c’est son approche décentralisée qui ne nécessite aucun point de gestion centralisé pour orchestrer la connectivité, renforçant ainsi la disponibilité du réseau.&lt;/p&gt;
       &lt;p class="text-justify text-lg text-400"&gt;D’un point de vue technique, Submariner repose sur des tunnels VPN chiffrés, utilisant des technologies éprouvées comme IPsec ou WireGuard, garantissant ainsi une communication sécurisée entre les clusters Kubernetes. Cette approche facilite l’extension des réseaux tout en maintenant des niveaux de sécurité élevés.&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;&lt;!--end container--&gt;
 &lt;/section&gt;
 
-
-&lt;section class="relative md:py-24 py-16"&gt;
+&lt;section class="relative md:py-8 py-8"&gt;
   &lt;div class="container relative"&gt;
     &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
       &lt;p class="text-justify text-lg text-400"&gt;Le concept de Plateforme en tant que Service (PaaS) que nous avons abordé dans ce livre est parfaitement compatible avec une architecture multi-cluster et vous laisse une certaine liberté quant à son implémentation. Cela se traduit concrètement par l'implémentation d’une plateforme par cluster, ou bien seulement d’une partie de la plateforme par cluster, tout en mutualisant certains services et outils sur d’autres clusters. Encore une fois, il est préférable de limiter le nombre d’outils et de services dans une plateforme au strict minimum, ainsi que le nombre d’instances associées. Bien que plusieurs outils de gestion permettent de gagner du temps dans l’exploitation des services, il convient de rester vigilant quant à la complexité supplémentaire qu’ils peuvent ajouter à la suite logicielle que vous devrez maîtriser. Je me répète, mais il est crucial d’adopter une approche pragmatique avec les PaaS et de se concentrer sur les niveaux de service que la plateforme fournit, plutôt que sur la multiplication des outils, des services et des fonctionnalités.&lt;/p&gt;
@@ -52,7 +49,7 @@
     &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
       &lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;
       Florian Grignon, le 09/09/2024
-      &lt;a href="/assets/Chapitre-Qu-est-ce-que-Kubernetes.pdf" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-right font-medium rounded-md bg-teal-500 text-white uppercase"&gt;Version PDF&lt;/a&gt;
+      &lt;a href="/assets/Article-Qu-est-ce-que-Kubernetes.pdf" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-right font-medium rounded-md bg-teal-500 text-white uppercase"&gt;Version PDF&lt;/a&gt;
       &lt;/h6&gt;
       &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Qu'est-ce que Kubernetes ?&lt;/h3&gt;
 
@@ -76,7 +73,7 @@
 
     &lt;/div&gt;
   &lt;/div&gt;
-&lt;/section&gt;</content><category term="kubernetes"></category><category term="kubernetes"></category><category term="paas"></category><category term="platform as a service"></category><category term="architecture"></category><category term="infrastructure"></category><category term="k8s"></category></entry><entry><title>Edge Computing avec Kubernetes</title><link href="https://theartofkubernetes.com/fr/edge-computing-avec-kubernetes" rel="alternate"></link><published>2024-08-14T00:00:00+02:00</published><updated>2024-08-14T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-08-14:/fr/edge-computing-avec-kubernetes</id><summary type="html">Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques</summary><content type="html">&lt;section class="relative md:py-24 py-16"&gt;&lt;!-- Section Auteur --&gt;
+&lt;/section&gt;</content><category term="kubernetes"></category><category term="kubernetes"></category><category term="paas"></category><category term="platform as a service"></category><category term="architecture"></category><category term="infrastructure"></category><category term="k8s"></category></entry><entry><title>Edge Computing avec Kubernetes</title><link href="https://theartofkubernetes.com/fr/edge-computing-avec-kubernetes" rel="alternate"></link><published>2024-08-14T00:00:00+02:00</published><updated>2024-08-14T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-08-14:/fr/edge-computing-avec-kubernetes</id><summary type="html">Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques</summary><content type="html">&lt;section class="relative md:py-8 py-8"&gt;&lt;!-- Section Auteur --&gt;
   &lt;div class="container relative"&gt;
     &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
       &lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;Florian Grignon, le 14/08/2024&lt;/h6&gt;
@@ -87,7 +84,7 @@
   &lt;/div&gt;&lt;!--end container--&gt;
 &lt;/section&gt;
 
-&lt;section class="relative md:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="services"&gt;
+&lt;section class="relative md:py-8 py-8 bg-slate-50 dark:bg-slate-800" id="services"&gt;
     &lt;div class="container relative"&gt;
         &lt;div class="grid grid-cols-1 pb-6 text-center"&gt;
             &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;L'un des principaux avantages du Edge Computing réside dans sa capacité à réduire la latence en traitant les données localement&lt;/h3&gt;
@@ -95,11 +92,10 @@
     &lt;/div&gt;
 &lt;/section&gt;
 
-&lt;section class="relative md:py-24 py-16"&gt;
+&lt;section class="relative md:py-8 py-8"&gt;
   &lt;div class="container relative"&gt;
     &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
       &lt;p class="text-justify text-lg text-400"&gt;Netflix a été l'une des premières entreprises à mettre en place des points de présence chez les fournisseurs d'accès Internet (FAI), stockant ainsi les films et séries au plus près des utilisateurs. Cette stratégie a permis une lecture optimale des contenus par les utilisateurs du monde entier. Sans aller jusqu'à déployer des points de présence au sein des FAI, ce qui n'est pas accessible à toutes les entreprises, l'architecture Edge Computing peut être réalisée sur plusieurs zones géographiques au sein de votre fournisseur d'infrastructure. Dans ce contexte, Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques.&lt;/p&gt;
-
       &lt;p class="text-justify text-lg text-400"&gt;L'un des principaux avantages du Edge Computing réside dans sa capacité à réduire la latence en traitant les données localement. Dans des secteurs tels que l'IoT, les véhicules autonomes ou les réseaux de capteurs industriels, la rapidité de traitement est essentielle. En utilisant Kubernetes pour orchestrer ces environnements, les entreprises peuvent déployer des microservices et des applications conteneurisées directement en périphérie du réseau. Cette approche permet non seulement de réduire les temps de réponse, mais aussi d'optimiser l'utilisation de la bande passante en évitant l'envoi de volumes massifs de données vers des centres de données centraux.&lt;/p&gt;
       &lt;p class="text-justify text-lg text-400"&gt;Kubernetes offre également une grande flexibilité pour le déploiement et la gestion des applications sur des infrastructures hétérogènes, typiques des environnements Edge. Que les ressources disponibles se trouvent sur des serveurs locaux, des dispositifs IoT, ou même des petits datacentres régionaux, Kubernetes permet de maintenir une homogénéité dans la gestion et l'orchestration des conteneurs. Cette standardisation facilite la scalabilité horizontale, essentielle dans le contexte du Edge, où la capacité de réponse doit s'adapter rapidement aux fluctuations de la demande.&lt;/p&gt;
       &lt;p class="text-justify text-lg text-400"&gt;Enfin, Kubernetes renforce la résilience des infrastructures Edge en assurant une gestion autonome des défaillances. En déployant des applications sur plusieurs nœuds en périphérie, Kubernetes garantit la continuité des services, même en cas de panne d'un des nœuds. Cette tolérance aux pannes est cruciale pour les applications critiques, qui ne peuvent se permettre de temps d'arrêt, comme dans la gestion des urgences ou les opérations industrielles.&lt;/p&gt;
@@ -107,7 +103,7 @@
   &lt;/div&gt;&lt;!--end container--&gt;
 &lt;/section&gt;
 
-&lt;section class="relative md:py-24 py-16"&gt;&lt;!-- Section Auteur --&gt;
+&lt;section class="relative md:py-8 py-8"&gt;&lt;!-- Section Auteur --&gt;
   &lt;div class="container relative"&gt;
     &lt;div class="grid md:grid-cols-12 md:grid-rows-1 md:grid-rows-1 grid-cols-3 grid-rows-2 items-center gap-6"&gt;
       &lt;div class="row-start-2 col-start-2 md:col-span-4 md:row-start-1"&gt;
@@ -127,7 +123,7 @@
   &lt;/div&gt;&lt;!--end container--&gt;
 &lt;/section&gt;&lt;!--end section auteur--&gt;
 
-&lt;section class="relative md:py-24 py-16"&gt;
+&lt;section class="relative md:py-8 py-8"&gt;
   &lt;div class="container relative"&gt;
     &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
       &lt;p class="text-justify text-lg text-400"&gt;La manière la plus directe de faire du Edge est de déployer des points de présence sous forme de clusters Kubernetes en périphérie, répartis sur différents sites, chacun étant autonome mais interconnecté. Cette configuration est idéale pour les environnements où chaque site Edge a des exigences spécifiques en termes de traitement des données, mais où une certaine coordination entre les sites est nécessaire.&lt;/p&gt;
@@ -138,7 +134,7 @@
   &lt;/div&gt;
 &lt;/section&gt;
 
-&lt;section class="relative md:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="services"&gt;
+&lt;section class="relative md:py-8 py-8 bg-slate-50 dark:bg-slate-800" id="services"&gt;
     &lt;div class="container relative"&gt;
         &lt;div class="grid grid-cols-1 pb-6 text-center"&gt;
             &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques&lt;/h3&gt;
@@ -146,7 +142,7 @@
     &lt;/div&gt;
 &lt;/section&gt;
 
-&lt;section class="relative md:py-24 py-16"&gt;
+&lt;section class="relative md:py-8 py-8"&gt;
   &lt;div class="container relative"&gt;
     &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
       &lt;p class="text-justify text-lg text-400"&gt;Si vous disposez des ressources en interne, il est également possible de développer une solution Edge à partir de Kubernetes. Cependant, si vous en êtes à ce stade, il est probable que ce livre ne vous apporte plus de nouvelles connaissances.&lt;/p&gt;
