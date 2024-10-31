@@ -31,26 +31,26 @@ try {
 //=========================================//
 /*/*            02) Tiny SLider            */
 //=========================================//
-if(document.getElementsByClassName('tiny-three-item').length > 0) {
+if(document.getElementsByClassName('tiny-item').length > 0) {
     var slider = tns({
-        container: '.tiny-three-item',
+        container: '.tiny-item',
         controls: false,
         mouseDrag: true,
         loop: true,
         rewind: true,
         autoplay: true,
         autoplayButtonOutput: false,
-        autoplayTimeout: 3000,
+        autoplayTimeout: 5000,
         navPosition: "bottom",
         speed: 400,
         gutter: 12,
         responsive: {
             992: {
-                items: 3
+                items: 1
             },
 
             767: {
-                items: 2
+                items: 1
             },
 
             320: {
