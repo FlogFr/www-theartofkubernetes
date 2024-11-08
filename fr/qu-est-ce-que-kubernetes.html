@@ -74,11 +74,12 @@
 
         <div class="nav-icons flex items-center lg_992:order-2 ms-auto md:ms-8">
             <!-- Navbar Button -->
-            <ul class="list-none menu-social mb-0">
+            <ul class="invisible lg:visible list-none menu-social mb-0">
                 <li class="inline">
                     <a href="/#editions" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white uppercase">Acheter</a>
                 </li>
             </ul>
+
             <!-- Navbar Collapse Manu Button -->
             <button data-collapse="menu-collapse" type="button" class="collapse-btn inline-flex items-center ms-2 text-dark dark:text-white lg_992:hidden" aria-controls="menu-collapse" aria-expanded="false">
                 <span class="sr-only">Navigation Menu</span>
@@ -160,11 +161,7 @@
 
 <section class="relative md:py-24 py-8"><!-- Section Auteur -->
   <div class="container relative">
-    <div class="flex flex-col-reverse md:flex-row items-center">
-      <div class="basis-1/2 flex justify-center pt-8">
-          <img src="/theme/assets/images/auteur-florian-grignon.webp" class="rounded-full shadow dark:shadow-gray-700 max-h-40 max-w-40 md:max-h-96 md:max-w-96" alt="Auteur de The Art of Kubernetes, Florian Grignon">
-      </div>
-
+    <div class="flex flex-col md:flex-row items-center">
       <div class="basis-1/2">
         <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">À propos de l'auteur…</h6>
         <h3 class="font-semibold text-2xl leading-normal mb-4">À qui s'adresse ce livre ?</h3>
@@ -174,6 +171,10 @@
         <div class="flex justify-center">
           <a href="#chapitres" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white">Voir les chapitres <i class="mdi mdi-chevron-right align-middle ms-0.5"></i></a>
         </div>
+      </div>
+
+      <div class="basis-1/2 flex justify-center pt-8">
+          <img src="/theme/assets/images/auteur-florian-grignon.webp" class="rounded-full shadow dark:shadow-gray-700 max-h-40 max-w-40 md:max-h-96 md:max-w-96" alt="Auteur de The Art of Kubernetes, Florian Grignon">
       </div>
     </div>
   </div><!--end container-->
