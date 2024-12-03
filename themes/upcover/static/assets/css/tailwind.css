@@ -1255,6 +1255,9 @@ video {
 .bg-\[url\(\'\.\.\/\.\.\/assets\/images\/bg\/bg2\.png\'\)\]{
   background-image: url('../../assets/images/bg/bg2.png') !important;
 }
+.bg-\[url\(\'\/assets\/images\/Mountains\.jpg\'\)\]{
+  background-image: url('/assets/images/Mountains.jpg') !important;
+}
 .bg-\[url\(\'\/theme\/assets\/images\/Mountains\.jpg\'\)\]{
   background-image: url('/theme/assets/images/Mountains.jpg') !important;
 }
