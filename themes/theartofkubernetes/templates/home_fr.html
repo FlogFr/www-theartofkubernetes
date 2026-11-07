@@ -1,0 +1,314 @@
+{#- Landing page, French edition. Copy and data of the page live here.
+    Layout + structured data: home.html. Rules: claude/rules/content.md. -#}
+{% extends "home.html" %}
+{% set book = BOOKS[page.lang] %}
+
+{% set book_description = "The Art of Kubernetes est un livre en français pour comprendre Kubernetes, ses composants et son écosystème, et apprendre à bâtir une plateforme sur mesure (Platform as a Service) capable d'atteindre des niveaux de service élevés avec des ressources modestes. Écrit par Florian Grignon, formateur certifié Kubernetes (CKA), il inclut des entretiens avec des acteurs du marché." %}
+
+{% set learn = [
+  "Comprendre les composants fondamentaux de Kubernetes et pourquoi il s'est imposé",
+  "Choisir et assembler une distribution Kubernetes adaptée à vos besoins",
+  "Penser votre infrastructure comme une Platform as a Service (PaaS)",
+  "Atteindre des niveaux de service élevés avec des ressources modestes",
+  "Renforcer la sécurité de vos clusters avec une méthode et des outils éprouvés",
+  "Savoir quand recourir aux Operators, au multi-cluster ou à l'edge computing",
+] %}
+
+{% set audiences = [
+  {"icon": "cpu", "title": "Développeurs", "text": "Comprenez la plateforme sur laquelle tournent vos applications et collaborez plus efficacement avec les équipes d'infrastructure."},
+  {"icon": "tool", "title": "Ops, SRE et DevOps", "text": "Prenez du recul sur les détails techniques, structurez votre plateforme et fiabilisez vos niveaux de service."},
+  {"icon": "layers", "title": "Architectes et tech leads", "text": "Faites des choix d'architecture éclairés : distribution, multi-cluster, edge computing, Operators, sécurité."},
+  {"icon": "target", "title": "CTO et décideurs", "text": "Mesurez l'intérêt stratégique de Kubernetes et ce qu'une plateforme sur mesure peut apporter à votre organisation."},
+] %}
+
+{% set chapters = [
+  {"icon": "sunrise", "title": "Origines de Kubernetes", "text": "Comprenez comment le projet Kubernetes a vu le jour et comment il a été architecturé autour de quelques composants principaux."},
+  {"icon": "codepen", "title": "Distributions Kubernetes", "text": "Explorez les possibilités de configuration et les extensions compatibles avec Kubernetes qui, ensemble, forment une distribution."},
+  {"icon": "hexagon", "title": "Platform as a Service", "text": "Tirez pleinement profit de Kubernetes en organisant les outils et services de votre infrastructure selon le concept de Platform as a Service (PaaS)."},
+  {"icon": "tool", "title": "Mise en œuvre", "text": "Atteignez des niveaux de service élevés pour votre infrastructure en construisant une plateforme sur mesure avec Kubernetes."},
+  {"icon": "shield", "title": "Sécurité", "text": "Découvrez une méthode et des outils compatibles avec Kubernetes pour renforcer la sécurité de vos clusters."},
+  {"icon": "compass", "title": "Cas d'utilisation", "text": "Explorez des cas d'utilisation atypiques mais essentiels de Kubernetes, et les bonnes pratiques pour répondre à des besoins spécifiques."},
+  {"icon": "share-2", "title": "Écosystème Kubernetes", "text": "Plongez dans l'écosystème de Kubernetes : les outils internes et externes qui étendent ses fonctionnalités."},
+  {"icon": "message-circle", "title": "Entretiens d'experts", "text": "Des entretiens avec des acteurs du marché apportent un regard de terrain et de nombreux retours d'expérience."},
+] %}
+
+{#- Testimonials: quotes are verbatim, never edit them. -#}
+{% set testimonials = [
+  {"name": "Fresser J.", "role": "Site Reliability Engineer", "image": "/images/JD-Fresser-Portrait.webp",
+   "quote": "Le bouleversement technique et organisationel de l'IT que nous connaissions, apporté par Kubernetes, est de nature à rebuter, sinon troubler, les non-initiés. Cet ouvrage a pour but de prendre du recul sur les détails techniques et d'embrasser une vision d'ensemble de cet outil incontournable. Les avertis y trouveront de quoi approfondir leurs connaissances ou remettre en question leurs certitudes, grâce aux nombreux retours d'expérience et témoignages."},
+  {"name": "Ismael Hommani", "role": "Cloud Expert", "image": "/images/Ismael-Hommani-Portrait.webp",
+   "quote": "Félicitations Florian Grignon pour cette réalisation. J'ai beaucoup aimé la pédagogie de ton livre et surtout la passion que l'on ressent au fil des pages. Je suis content d'avoir enfin un livre francophone à conseiller sur la thématique \"Cloud Native\" (Taillé pour l'informatique Nuagique ? :D ) et k8s dans un domaine dominé par l'anglais. En espérant en parler de vive voix bientôt !"},
+  {"name": "Iñigo Imaz Chacón", "role": "Main Software Developer", "image": "/images/Inigo-Imaz-Chacon-Portrait.webp",
+   "quote": "Que vous soyez débutant ou déjà expérimenté, ce livre est super utile pour mieux comprendre Kubernetes. Il explique les bases de façon claire pour les nouveaux et partage des conseils avancés pour les experts. En plus, les entretiens inclus avec des pros du domaine apportent des idées vraiment intéressantes. C’est une ressource parfaite pour progresser à tout niveau!"},
+] %}
+
+{% set faq = [
+  {"q": "À qui s'adresse The Art of Kubernetes ?",
+   "a": "À toutes les personnes amenées à travailler avec Kubernetes : développeurs, ops, SRE, architectes, mais aussi décideurs techniques. Les bases sont expliquées clairement pour les débutants, et les retours d'expérience comme les entretiens apportent de quoi approfondir leurs connaissances aux plus expérimentés."},
+  {"q": "Faut-il déjà connaître Kubernetes pour lire ce livre ?",
+   "a": "Non. Le livre commence par les origines de Kubernetes et le fonctionnement de ses composants principaux, avant d'aborder les distributions, la construction d'une plateforme, la sécurité et l'écosystème."},
+  {"q": "Est-ce un tutoriel Kubernetes ?",
+   "a": "Non, ce n'est pas une liste de commandes. The Art of Kubernetes prend du recul sur les détails techniques pour donner une vision d'ensemble : comprendre les possibilités et les limites de Kubernetes, choisir les bons outils dans son écosystème et en faire une plateforme adaptée à votre entreprise."},
+  {"q": "Dans quel format le livre est-il disponible ?",
+   "a": "The Art of Kubernetes est disponible au format " ~ book.format ~ " sur " ~ book.store ~ ", au prix de " ~ book.price_display ~ ". Pas besoin de liseuse : l'application Kindle gratuite permet de le lire sur smartphone, tablette ou ordinateur."},
+  {"q": "Combien de pages compte le livre ?",
+   "a": "Le livre complet compte " ~ book.pages ~ " pages, entretiens avec des acteurs du marché compris."},
+  {"q": "Puis-je lire un extrait avant d'acheter ?",
+   "a": "Oui : inscrivez-vous à la <a href=\"#newsletter\">newsletter</a> et vous recevrez gratuitement un chapitre du livre par email."},
+  {"q": "Existe-t-il une version anglaise ?",
+   "a": "Une édition anglaise est en cours d'écriture. Inscrivez-vous à la <a href=\"#newsletter\">newsletter</a> pour être prévenu de sa sortie."},
+  {"q": "Proposez-vous des achats groupés ?",
+   "a": "Pour équiper une équipe ou une entreprise, n'hésitez pas à me contacter à <a href=\"mailto:" ~ CONTACT_EMAIL ~ "\">" ~ CONTACT_EMAIL ~ "</a>."},
+] %}
+
+{% block content %}
+{# ===================== HERO ===================== #}
+<section class="relative isolate overflow-hidden bg-night text-white">
+  <picture>
+    <source media="(min-width: 768px)" srcset="/theme/assets/images/mountains-1920.webp">
+    <img src="/theme/assets/images/mountains-960.webp" alt="" width="1920" height="1080" class="absolute inset-0 -z-10 size-full object-cover object-[center_70%] opacity-45" fetchpriority="low">
+  </picture>
+  <div class="absolute inset-0 -z-10 bg-gradient-to-r from-night via-night/85 to-night/30"></div>
+
+  <div class="wrap grid items-center gap-12 py-14 md:grid-cols-[1.25fr_0.75fr] lg:py-24">
+    <div>
+      <p class="eyebrow text-teal-300">Livre · Édition française</p>
+      <h1 class="font-serif font-semibold tracking-tight text-white">
+        <span class="block text-5xl leading-none sm:text-6xl lg:text-7xl">The Art of Kubernetes</span>
+        <span class="mt-4 block text-2xl font-medium leading-snug text-teal-100 sm:text-3xl">Le livre pour maîtriser Kubernetes et son écosystème</span>
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-200">Comprenez les fondements de Kubernetes, faites les bons choix parmi les outils de son écosystème et bâtissez une <strong class="font-semibold text-white">plateforme sur mesure (PaaS)</strong> capable d'atteindre des niveaux de service élevés, même avec des ressources modestes.</p>
+      <ul class="mt-6 grid gap-2 text-slate-100">
+        <li class="flex gap-3">{{ icon("check-circle", "mt-0.5 size-5 shrink-0 text-teal-300") }}<span>{{ book.pages }} pages de fondamentaux, d'architecture et de bonnes pratiques</span></li>
+        <li class="flex gap-3">{{ icon("check-circle", "mt-0.5 size-5 shrink-0 text-teal-300") }}<span>Des entretiens avec des acteurs du marché et de nombreux retours d'expérience</span></li>
+        <li class="flex gap-3">{{ icon("check-circle", "mt-0.5 size-5 shrink-0 text-teal-300") }}<span>Écrit par un formateur Certified Kubernetes Administrator (CKA)</span></li>
+      </ul>
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        {{ buy_button(book, t, size="lg") }}
+        <a href="#newsletter" class="btn btn-ghost-light btn-lg">{{ icon("book-open", "size-5") }}<span>{{ t.free_chapter }}</span></a>
+      </div>
+      <p class="mt-4 text-sm text-slate-300">{{ t.kindle_note }}</p>
+      <a href="#avis" class="mt-6 inline-flex items-center gap-3 text-sm text-slate-200 hover:text-white">
+        {{ stars(t) }}<span>Recommandé par des SRE, des experts Cloud et des développeurs</span>
+      </a>
+    </div>
+
+    <div class="mx-auto w-56 sm:w-64 md:w-full md:max-w-xs lg:max-w-sm">
+      <a href="{{ book.url }}" target="_blank" rel="{{ book.link_rel }}" class="block" data-track="buy-amazon-cover">
+        <img src="{{ book.cover.replace('-800.', '-400.') }}" srcset="{{ book.cover.replace('-800.', '-400.') }} 400w, {{ book.cover }} 800w" sizes="(min-width: 1024px) 384px, (min-width: 768px) 320px, 256px" alt="Couverture du livre {{ book.full_title }}, de {{ AUTHOR }}" width="400" height="568" fetchpriority="high" class="book-cover w-full rounded-md">
+      </a>
+    </div>
+  </div>
+</section>
+
+{# ===================== KEY FACTS ===================== #}
+<section aria-label="Le livre en bref" class="border-b border-slate-200 bg-white">
+  <ul class="wrap grid grid-cols-2 gap-6 py-8 lg:grid-cols-4">
+    {% for ic, title, text in [
+      ("book-open", book.pages ~ " pages", "du concept à la mise en œuvre"),
+      ("tablet", "Format " ~ book.format, "liseuse, mobile ou ordinateur"),
+      ("message-circle", "Entretiens", "avec des acteurs du marché"),
+      ("award", "Auteur certifié", "Kubernetes Administrator (CKA)"),
+    ] %}
+    <li class="flex items-center gap-3">
+      <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-700">{{ icon(ic, "size-5") }}</span>
+      <span><span class="block font-semibold text-slate-900">{{ title }}</span><span class="block text-sm text-slate-500">{{ text }}</span></span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+
+{# ===================== LE LIVRE ===================== #}
+<section id="livre" class="scroll-mt-24 py-16 lg:py-24" aria-labelledby="livre-title">
+  <div class="wrap grid items-center gap-12 lg:grid-cols-2">
+    <div>
+      <p class="eyebrow">Quatrième de couverture</p>
+      <h2 id="livre-title" class="section-title">Kubernetes est bien plus qu'une liste de fonctionnalités</h2>
+      <div class="mt-6 space-y-4 text-lg leading-relaxed text-slate-600">
+        <p>Réduire Kubernetes, un outil d'une telle flexibilité, modularité et extensibilité, à une simple liste de fonctionnalités serait une erreur majeure. C'est pourquoi, après avoir exploré les fondements de Kubernetes à travers le fonctionnement de ses composants principaux, nous établirons un cadre de réflexion pour découvrir l'étendue des possibilités qu'il offre, tout en en identifiant les limites. Ce cadre repose sur le concept de <strong class="text-slate-900">Platform as a Service (PaaS)</strong>.</p>
+        <p>Nous démontrerons que Kubernetes se distingue particulièrement dans la construction de plateformes sur mesure, capables d'atteindre des niveaux de service élevés avec une allocation de ressources relativement modeste. Loin de se limiter à un rôle technique, Kubernetes s'impose comme un <strong class="text-slate-900">outil stratégique</strong>, adaptable à la grande majorité des entreprises qui souhaitent tirer parti de son potentiel.</p>
+      </div>
+    </div>
+    <figure>
+      <img src="/images/the-art-of-kubernetes-livre-1200.webp" alt="Le livre The Art of Kubernetes, édition française, posé sur une table en bois" width="1200" height="900" loading="lazy" decoding="async" class="w-full rounded-3xl shadow-xl ring-1 ring-slate-200">
+    </figure>
+  </div>
+
+  <div class="wrap mt-16">
+    <div class="rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-200 sm:p-10">
+      <h3 class="font-serif text-3xl font-semibold text-slate-900">Ce que vous allez apprendre</h3>
+      <ul class="mt-6 grid gap-x-10 gap-y-4 md:grid-cols-2">
+        {% for item in learn %}
+        <li class="flex gap-3 text-slate-700">{{ icon("check", "mt-1 size-5 shrink-0 text-teal-600") }}<span>{{ item }}</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+
+{# ===================== POUR QUI ===================== #}
+<section id="pour-qui" class="scroll-mt-24 bg-slate-50 py-16 lg:py-24" aria-labelledby="pour-qui-title">
+  <div class="wrap">
+    <div class="max-w-3xl">
+      <p class="eyebrow">Pour qui ?</p>
+      <h2 id="pour-qui-title" class="section-title">À qui s'adresse ce livre ?</h2>
+      <p class="mt-4 text-lg leading-relaxed text-slate-600">À toutes les personnes amenées à travailler avec Kubernetes, quel que soit leur niveau : les bases sont expliquées clairement, et les retours d'expérience apportent matière à réflexion aux plus expérimentés.</p>
+    </div>
+    <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {% for a in audiences %}
+      <li class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <span class="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700">{{ icon(a.icon, "size-5") }}</span>
+        <h3 class="mt-4 text-lg font-semibold text-slate-900">{{ a.title }}</h3>
+        <p class="mt-2 text-slate-600">{{ a.text }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+{# ===================== SOMMAIRE ===================== #}
+<section id="sommaire" class="scroll-mt-24 py-16 lg:py-24" aria-labelledby="sommaire-title">
+  <div class="wrap">
+    <div class="max-w-3xl">
+      <p class="eyebrow">Sommaire</p>
+      <h2 id="sommaire-title" class="section-title">Les grands thèmes du livre</h2>
+      <p class="mt-4 text-lg leading-relaxed text-slate-600">Du fonctionnement interne de Kubernetes jusqu'à sa mise en œuvre en entreprise, voici les sujets traités dans The Art of Kubernetes.</p>
+    </div>
+    <ol class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {% for c in chapters %}
+      <li class="group relative overflow-hidden rounded-2xl bg-white p-6 ring-1 ring-slate-200 transition hover:shadow-lg hover:ring-teal-300">
+        <div class="flex items-center justify-between">
+          <span class="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700 transition group-hover:bg-teal-600 group-hover:text-white">{{ icon(c.icon, "size-5") }}</span>
+          <span class="font-serif text-3xl font-semibold text-slate-200" aria-hidden="true">{{ "%02d"|format(loop.index) }}</span>
+        </div>
+        <h3 class="mt-4 text-lg font-semibold text-slate-900">{{ c.title }}</h3>
+        <p class="mt-2 text-slate-600">{{ c.text }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+    <div class="mt-10 flex flex-wrap items-center gap-3">
+      {{ buy_button(book, t) }}
+      <a href="#newsletter" class="btn btn-secondary">{{ icon("book-open", "size-5") }}<span>{{ t.free_chapter }}</span></a>
+    </div>
+  </div>
+</section>
+
+{# ===================== AVIS ===================== #}
+<section id="avis" class="scroll-mt-24 bg-night py-16 text-white lg:py-24" aria-labelledby="avis-title">
+  <div class="wrap">
+    <div class="max-w-3xl">
+      <p class="eyebrow text-teal-300">Avis de lecteurs</p>
+      <h2 id="avis-title" class="section-title text-white">Ce qu'en disent les lecteurs</h2>
+    </div>
+    <ul class="mt-10 grid gap-6 lg:grid-cols-3">
+      {% for r in testimonials %}
+      <li>
+        <figure class="flex h-full flex-col rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 sm:p-8">
+          {{ stars(t) }}
+          <blockquote class="mt-4 flex-1 leading-relaxed text-slate-200">
+            <p>« {{ r.quote }} »</p>
+          </blockquote>
+          <figcaption class="mt-6 flex items-center gap-4">
+            <img src="{{ r.image }}" alt="" width="56" height="56" loading="lazy" class="size-14 rounded-full object-cover ring-2 ring-teal-400/40">
+            <span><span class="block font-semibold text-white">{{ r.name }}</span><span class="block text-sm text-slate-400">{{ r.role }}</span></span>
+          </figcaption>
+        </figure>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+{# ===================== AUTEUR ===================== #}
+<section id="auteur" class="scroll-mt-24 py-16 lg:py-24" aria-labelledby="auteur-title">
+  <div class="wrap grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+    <img src="/theme/assets/images/auteur-florian-grignon-480.webp" alt="Portrait dessiné de Florian Grignon, auteur de The Art of Kubernetes" width="480" height="480" loading="lazy" decoding="async" class="mx-auto w-64 rounded-full shadow-xl ring-8 ring-teal-50 lg:w-80">
+    <div>
+      <p class="eyebrow">L'auteur</p>
+      <h2 id="auteur-title" class="section-title">Florian Grignon, formateur Kubernetes certifié CKA</h2>
+      <div class="mt-6 space-y-4 text-lg leading-relaxed text-slate-600">
+        <p>Bonjour ! Je m'appelle Florian Grignon. Je suis Certified Kubernetes Administrator (CKA) et formateur sur les technologies Cloud Native (Kubernetes et Terraform). J'accompagne au quotidien des entreprises dans leur apprentissage et dans la mise en place de leur infrastructure Cloud Native.</p>
+        <p>L'infrastructure est trop souvent mal comprise, prise en compte trop tard, voire laissée à l'abandon. Pourtant, avec des solutions comme Kubernetes, il est désormais possible, même pour de petites entreprises, de maîtriser leur infrastructure.</p>
+        <p>J'ai écrit The Art of Kubernetes pour toutes les personnes amenées à travailler avec Kubernetes, afin de les aider à appréhender cette technologie et à faire des choix éclairés.</p>
+      </div>
+      <ul class="mt-6 flex flex-wrap gap-2 text-sm font-medium">
+        <li class="rounded-full bg-teal-50 px-3 py-1 text-teal-800 ring-1 ring-teal-200">Certified Kubernetes Administrator (CKA)</li>
+        <li class="rounded-full bg-teal-50 px-3 py-1 text-teal-800 ring-1 ring-teal-200">Formateur Kubernetes et Terraform</li>
+        <li class="rounded-full bg-teal-50 px-3 py-1 text-teal-800 ring-1 ring-teal-200">Infrastructure Cloud Native</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{# ===================== ACHETER ===================== #}
+<section id="acheter" class="scroll-mt-24 bg-slate-50 py-16 lg:py-24" aria-labelledby="acheter-title">
+  <div class="wrap">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="eyebrow justify-center">Disponible maintenant</p>
+      <h2 id="acheter-title" class="section-title">Procurez-vous The Art of Kubernetes</h2>
+    </div>
+    <div class="mx-auto mt-10 grid max-w-4xl items-center gap-8 rounded-3xl bg-white p-6 shadow-xl ring-1 ring-slate-200 sm:p-10 md:grid-cols-[220px_1fr]">
+      <img src="{{ book.cover.replace('-800.', '-400.') }}" alt="Couverture de {{ book.full_title }}" width="400" height="568" loading="lazy" class="mx-auto w-44 rounded-md shadow-lg md:w-full">
+      <div>
+        <h3 class="font-serif text-3xl font-semibold text-slate-900">{{ book.full_title }}</h3>
+        <p class="mt-1 text-slate-500">Format {{ book.format }} · {{ book.store }}</p>
+        <p class="mt-4 text-5xl font-semibold tracking-tight text-slate-900">{{ book.price_display }}</p>
+        <ul class="mt-6 grid gap-3 text-slate-700">
+          <li class="flex gap-3">{{ icon("check-circle", "mt-0.5 size-5 shrink-0 text-teal-600") }}<span>Le livre complet : {{ book.pages }} pages</span></li>
+          <li class="flex gap-3">{{ icon("check-circle", "mt-0.5 size-5 shrink-0 text-teal-600") }}<span>Tous les entretiens d'acteurs du marché</span></li>
+          <li class="flex gap-3">{{ icon("check-circle", "mt-0.5 size-5 shrink-0 text-teal-600") }}<span>Lisible sur liseuse Kindle et avec l'application Kindle gratuite (smartphone, tablette, ordinateur)</span></li>
+          <li class="flex gap-3">{{ icon("check-circle", "mt-0.5 size-5 shrink-0 text-teal-600") }}<span>En option : l'actualité de l'écosystème Kubernetes avec la newsletter</span></li>
+        </ul>
+        <div class="mt-8">{{ buy_button(book, t, size="lg", class="w-full sm:w-auto") }}</div>
+        <p class="mt-4 text-sm text-slate-500">Achat groupé pour une équipe ? Contactez-moi : <a href="mailto:{{ CONTACT_EMAIL }}" class="font-medium text-teal-700 underline-offset-2 hover:underline">{{ CONTACT_EMAIL }}</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ===================== FAQ ===================== #}
+<section id="faq" class="scroll-mt-24 py-16 lg:py-24" aria-labelledby="faq-title">
+  <div class="wrap grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+    <div>
+      <p class="eyebrow">FAQ</p>
+      <h2 id="faq-title" class="section-title">Questions fréquentes</h2>
+      <p class="mt-4 text-lg text-slate-600">Une autre question ? Écrivez-moi à <a href="mailto:{{ CONTACT_EMAIL }}" class="font-medium text-teal-700 hover:underline">{{ CONTACT_EMAIL }}</a>.</p>
+    </div>
+    <div class="divide-y divide-slate-200 rounded-2xl ring-1 ring-slate-200">
+      {% for item in faq %}
+      <details class="faq group px-6 py-5"{% if loop.first %} open{% endif %}>
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900">
+          <h3 class="text-lg">{{ item.q }}</h3>
+          {{ icon("chevron-right", "size-5 shrink-0 text-teal-600 transition group-open:rotate-90") }}
+        </summary>
+        <p class="mt-3 leading-relaxed text-slate-600 [&_a]:font-medium [&_a]:text-teal-700 [&_a]:underline">{{ item.a }}</p>
+      </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{# ===================== ARTICLES ===================== #}
+{% set lang_articles = articles | selectattr("lang", "equalto", lang) | list %}
+{% if lang_articles %}
+<section id="articles" class="scroll-mt-24 bg-slate-50 py-16 lg:py-24" aria-labelledby="articles-title">
+  <div class="wrap">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Blog</p>
+        <h2 id="articles-title" class="section-title">Articles Kubernetes</h2>
+        <p class="mt-4 text-lg text-slate-600">Des articles pour approfondir certains sujets du livre : architecture, Operators, multi-cluster, edge computing…</p>
+      </div>
+      <a href="/{{ lang }}/articles" class="btn btn-secondary">{{ t.all_articles }} {{ icon("arrow-right", "size-4") }}</a>
+    </div>
+    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {% for article in lang_articles[:3] %}
+      {{ article_card(article, t) }}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% include "partials/newsletter.html" %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{#- Newsletter (lead magnet: a free chapter). Uses `t`, `icon` from base.html. -#}
+<section id="newsletter" class="scroll-mt-24 bg-teal-50" aria-labelledby="newsletter-title">
+  <div class="wrap grid items-center gap-10 py-16 lg:grid-cols-2 lg:py-24">
+    <div>
+      <p class="eyebrow">{{ icon("mail", "size-4") }} Newsletter</p>
+      <h2 id="newsletter-title" class="section-title">{{ t.newsletter_title }}</h2>
+      <p class="mt-4 max-w-xl text-lg leading-relaxed text-slate-600">{{ t.newsletter_text }}</p>
+    </div>
+    <div class="min-h-56 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <script async src="https://eocampaign1.com/form/{{ NEWSLETTER_FORM_ID }}.js" data-form="{{ NEWSLETTER_FORM_ID }}"></script>
+    </div>
+  </div>
+</section>

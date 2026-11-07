@@ -1,0 +1,32 @@
+{#- Site footer. Uses `t`, `book`, `home_url`, `lang` from base.html. -#}
+<footer class="bg-night text-slate-300">
+  <div class="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+    <div>
+      <a href="{{ home_url }}" class="inline-block rounded-md" aria-label="{{ SITENAME }} – {{ t.home }}">
+        <img src="/theme/assets/images/logo-the-art-of-kubernetes-light.webp" alt="{{ SITENAME }}" width="480" height="182" loading="lazy" class="h-14 w-auto">
+      </a>
+      <p class="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">{{ t.footer_tagline }}</p>
+    </div>
+
+    <nav aria-label="{{ t.footer_book }}">
+      <p class="font-semibold text-white">{{ t.footer_book }}</p>
+      <ul class="mt-4 grid gap-2 text-sm">
+        <li><a href="{{ home_url }}#livre" class="footer-link">{{ t.nav_book }}</a></li>
+        <li><a href="{{ home_url }}#sommaire" class="footer-link">{{ t.nav_contents }}</a></li>
+        <li><a href="{{ home_url }}#avis" class="footer-link">{{ t.nav_reviews }}</a></li>
+        <li><a href="{{ home_url }}#auteur" class="footer-link">{{ t.nav_author }}</a></li>
+        <li><a href="{{ home_url }}#faq" class="footer-link">{{ t.nav_faq }}</a></li>
+        <li><a href="/{{ lang }}/articles" class="footer-link">{{ t.articles_title }}</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <p class="font-semibold text-white">{{ t.footer_contact }}</p>
+      <p class="mt-4 text-sm"><a href="mailto:{{ CONTACT_EMAIL }}" class="footer-link inline-flex items-center gap-2">{{ icon("mail", "size-4") }}{{ CONTACT_EMAIL }}</a></p>
+      <div class="mt-6">{{ buy_button(book, t, size="sm") }}</div>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <p class="wrap py-6 text-xs text-slate-400">© 2024–{{ BUILD_YEAR }} {{ AUTHOR }}. {{ t.rights }}</p>
+  </div>
+</footer>

@@ -1,0 +1,38 @@
+{#- XML sitemap (direct template saved as /sitemap.xml). Lists every indexable
+    page and article with its canonical URL, hreflang alternates and lastmod.
+    Content with `:robots: noindex...` is excluded. -#}
+{% macro entry(item) -%}
+<url>
+  <loc>{{ SITEURL }}/{{ item.url }}</loc>
+  {% set lastmod = item.modified or item.date %}
+  {% if lastmod %}
+  <lastmod>{{ lastmod.date().isoformat() }}</lastmod>
+  {% endif %}
+  {% if item.translations %}
+  <xhtml:link rel="alternate" hreflang="{{ item.lang }}" href="{{ SITEURL }}/{{ item.url }}"/>
+  {% for tr in item.translations %}
+  <xhtml:link rel="alternate" hreflang="{{ tr.lang }}" href="{{ SITEURL }}/{{ tr.url }}"/>
+  {% endfor %}
+  {% endif %}
+  {% if item.logo %}
+  <image:image><image:loc>{{ SITEURL }}/images/{{ item.logo }}</image:loc></image:image>
+  {% endif %}
+</url>
+{%- endmacro %}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+{% for item in pages %}
+{% for version in [item] + item.translations %}
+{% if "noindex" not in (version.robots or "") %}
+{{ entry(version) }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% for item in articles %}
+{% for version in [item] + item.translations %}
+{% if "noindex" not in (version.robots or "") %}
+{{ entry(version) }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+</urlset>

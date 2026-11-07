@@ -1,0 +1,142 @@
+{#- Blog article. Metadata reference: claude/docs/content-guide.md -#}
+{% set obj = article %}
+{% set lang = article.lang %}
+{% set seo_title = article.seo_title or (article.title ~ " | " ~ SITENAME) %}
+{% set seo_description = article.description or (article.summary|striptags|truncate(155, end="…", leeway=0)) %}
+{% set og_type = "article" %}
+{% if article.logo %}
+  {% set og_image = SITEURL ~ "/images/" ~ article.logo %}
+  {% set og_image_width = 800 %}
+  {% set og_image_height = 500 %}
+  {% set og_image_alt = article.title %}
+{% endif %}
+{% set robots = article.robots %}
+{% set modified = article.modified or article.date %}
+{% set has_newsletter = true %}
+{% extends "base.html" %}
+
+{% block og_extra %}
+  <meta property="article:published_time" content="{{ article.date.isoformat() }}">
+  <meta property="article:modified_time" content="{{ modified.isoformat() }}">
+  <meta property="article:author" content="{{ AUTHOR }}">
+  {% for tag in article.tags %}
+  <meta property="article:tag" content="{{ tag|e }}">
+  {% endfor %}
+{% endblock %}
+
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": {{ (canonical ~ "#article")|tojson }},
+      "mainEntityOfPage": {{ canonical|tojson }},
+      "url": {{ canonical|tojson }},
+      "headline": {{ article.title|striptags|tojson }},
+      "description": {{ seo_description|striptags|tojson }},
+      "image": {{ og_image|tojson }},
+      "datePublished": {{ article.date.isoformat()|tojson }},
+      "dateModified": {{ modified.isoformat()|tojson }},
+      "inLanguage": {{ lang|tojson }},
+      "wordCount": {{ article.content|striptags|wordcount }},
+      "keywords": {{ article.tags|map(attribute="name")|join(", ")|tojson }},
+      "author": {"@id": {{ (SITEURL ~ "/#author")|tojson }}},
+      "publisher": {"@id": {{ (SITEURL ~ "/#author")|tojson }}},
+      "isPartOf": {"@id": {{ (SITEURL ~ "/#website")|tojson }}}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": {{ t.home|tojson }}, "item": {{ (SITEURL ~ home_url)|tojson }}},
+        {"@type": "ListItem", "position": 2, "name": {{ t.articles_title|tojson }}, "item": {{ (SITEURL ~ "/" ~ lang ~ "/articles")|tojson }}},
+        {"@type": "ListItem", "position": 3, "name": {{ article.title|striptags|tojson }}}
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": {{ (SITEURL ~ "/#website")|tojson }},
+      "url": {{ (SITEURL ~ "/")|tojson }},
+      "name": {{ SITENAME|tojson }}
+    },
+    {% include "partials/jsonld-person.html" %}
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<article>
+  <header class="relative isolate overflow-hidden bg-night text-white">
+    <img src="/theme/assets/images/mountains-960.webp" alt="" width="960" height="540" class="absolute inset-0 -z-10 size-full object-cover opacity-30">
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-night/40 to-night"></div>
+    <div class="wrap max-w-4xl py-12 lg:py-16">
+      <nav aria-label="{{ t.breadcrumb }}" class="text-sm text-slate-300">
+        <ol class="flex flex-wrap items-center gap-1.5">
+          <li><a href="{{ home_url }}" class="hover:text-white">{{ t.home }}</a></li>
+          <li aria-hidden="true">{{ icon("chevron-right", "size-3.5") }}</li>
+          <li><a href="/{{ lang }}/articles" class="hover:text-white">{{ t.articles_title }}</a></li>
+          <li aria-hidden="true">{{ icon("chevron-right", "size-3.5") }}</li>
+          <li aria-current="page" class="text-slate-400">{{ article.title }}</li>
+        </ol>
+      </nav>
+      <h1 class="mt-6 font-serif text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">{{ article.title }}</h1>
+      <p class="mt-5 max-w-3xl text-lg leading-relaxed text-slate-200">{{ article.summary|striptags }}</p>
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-300">
+        <a href="{{ home_url }}#auteur" class="inline-flex items-center gap-3 hover:text-white" rel="author">
+          <img src="/theme/assets/images/auteur-florian-grignon-480.webp" alt="" width="40" height="40" class="size-10 rounded-full bg-white object-cover">
+          <span>{{ t.by }} <span class="font-semibold text-white">{{ AUTHOR }}</span></span>
+        </a>
+        <span class="inline-flex items-center gap-1.5">{{ icon("calendar", "size-4") }}{{ t.published_on }} <time datetime="{{ article.date.isoformat() }}">{{ article.date|long_date(lang) }}</time></span>
+        {% if article.modified and article.modified.date() != article.date.date() %}
+        <span class="inline-flex items-center gap-1.5">{{ t.updated_on }} <time datetime="{{ article.modified.isoformat() }}">{{ article.modified|long_date(lang) }}</time></span>
+        {% endif %}
+        <span class="inline-flex items-center gap-1.5">{{ icon("clock", "size-4") }}{{ article.content|reading_time }} {{ t.min_read }}</span>
+        {% if article.pdf %}
+        <a href="{{ article.pdf }}" class="btn btn-ghost-light btn-sm">{{ icon("download", "size-4") }}<span>{{ t.pdf_version }}</span></a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  {% if article.logo %}
+  <div class="wrap max-w-4xl">
+    <img src="/images/{{ article.logo }}" alt="{{ article.logo_alt or '' }}" width="800" height="500" class="-mt-px w-full rounded-b-3xl object-cover sm:mt-8 sm:rounded-3xl" fetchpriority="high">
+  </div>
+  {% endif %}
+
+  <div class="wrap max-w-4xl py-12 lg:py-16">
+    <div class="prose prose-lg prose-slate mx-auto max-w-3xl">
+      {{ article.content|responsive_images }}
+    </div>
+  </div>
+</article>
+
+{% include "partials/book-cta.html" %}
+
+<section class="wrap max-w-4xl" aria-labelledby="author-box-title">
+  <div class="flex flex-col gap-6 rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-200 sm:flex-row sm:items-center sm:p-8">
+    <img src="/theme/assets/images/auteur-florian-grignon-480.webp" alt="Portrait dessiné de {{ AUTHOR }}" width="96" height="96" loading="lazy" class="size-24 shrink-0 rounded-full object-cover ring-4 ring-white">
+    <div>
+      <h2 id="author-box-title" class="text-sm font-semibold uppercase tracking-wider text-teal-700">{{ t.author_box_title }}</h2>
+      <p class="mt-1 font-serif text-2xl font-semibold text-slate-900">{{ AUTHOR }}</p>
+      <p class="mt-2 text-slate-600">{{ t.author_bio_short }}</p>
+    </div>
+  </div>
+</section>
+
+{% set related = articles | selectattr("lang", "equalto", lang) | rejectattr("slug", "equalto", article.slug) | list %}
+{% if related %}
+<section class="wrap py-16 lg:py-24" aria-labelledby="related-title">
+  <h2 id="related-title" class="section-title">{{ t.related_articles }}</h2>
+  <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {% for a in related[:3] %}
+    {{ article_card(a, t) }}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% include "partials/newsletter.html" %}
+{% endblock %}

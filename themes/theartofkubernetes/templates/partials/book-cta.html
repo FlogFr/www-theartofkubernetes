@@ -1,0 +1,20 @@
+{#- Book promotion box, used at the end of articles and on listing pages.
+    Uses `t`, `book`, `icon`, `buy_button` from base.html. Set
+    `has_newsletter = true` when the page includes partials/newsletter.html. -#}
+<aside class="wrap my-16" aria-labelledby="book-cta-title">
+  <div class="relative grid items-center gap-8 overflow-hidden rounded-3xl bg-night p-6 text-white sm:grid-cols-[150px_1fr] sm:p-10 lg:grid-cols-[190px_1fr] lg:gap-12">
+    <img src="/theme/assets/images/mountains-960.webp" alt="" width="960" height="540" loading="lazy" class="pointer-events-none absolute inset-0 size-full object-cover opacity-25">
+    <img src="{{ book.cover.replace('-800.', '-400.') }}" alt="{{ book.full_title }}, {{ AUTHOR }}" width="400" height="568" loading="lazy" class="relative mx-auto w-36 rounded-md shadow-2xl ring-1 ring-white/10 sm:w-full">
+    <div class="relative">
+      <p class="eyebrow text-teal-300">{{ t.book_cta_eyebrow }}</p>
+      <h2 id="book-cta-title" class="font-serif text-3xl font-semibold leading-tight text-white sm:text-4xl">{{ t.book_cta_title }}</h2>
+      <p class="mt-4 max-w-2xl text-slate-200">{{ t.book_cta_text }}</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        {{ buy_button(book, t) }}
+        {% if has_newsletter is defined and has_newsletter %}
+        <a href="#newsletter" class="btn btn-ghost-light">{{ icon("book-open", "size-5") }}<span>{{ t.free_chapter }}</span></a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</aside>

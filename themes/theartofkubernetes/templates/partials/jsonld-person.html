@@ -1,0 +1,19 @@
+{#- schema.org Person node for the author, to embed in a JSON-LD @graph.
+    Uses `t` from base.html. Fill AUTHOR_PROFILES in pelicanconf.py. -#}
+    {
+      "@type": "Person",
+      "@id": {{ (SITEURL ~ "/#author")|tojson }},
+      "name": {{ AUTHOR|tojson }},
+      "url": {{ (SITEURL ~ "/#auteur")|tojson }},
+      "image": {{ (SITEURL ~ "/theme/assets/images/auteur-florian-grignon-480.webp")|tojson }},
+      "jobTitle": {{ t.author_job|tojson }},
+      "description": {{ t.author_bio_short|tojson }},
+      "knowsAbout": ["Kubernetes", "Cloud Native", "Platform as a Service", "Terraform", "DevOps"],
+      "hasCredential": {
+        "@type": "EducationalOccupationalCredential",
+        "name": "Certified Kubernetes Administrator (CKA)",
+        "credentialCategory": "certification"
+      }{% if AUTHOR_PROFILES %},
+      "sameAs": {{ AUTHOR_PROFILES|tojson }}{% endif %}
+
+    }

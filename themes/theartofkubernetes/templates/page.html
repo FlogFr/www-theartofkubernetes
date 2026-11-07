@@ -1,0 +1,27 @@
+{#- Generic page (e.g. /fr/bienvenue). Set `:template:` in the page metadata
+    to use a dedicated template instead (home_<lang>, articles). -#}
+{% set obj = page %}
+{% set lang = page.lang %}
+{% set seo_title = page.seo_title or (page.title ~ " | " ~ SITENAME) %}
+{% set seo_description = page.description or (page.summary|striptags|truncate(155, end="…", leeway=0)) %}
+{% set robots = page.robots %}
+{% extends "base.html" %}
+
+{% block content %}
+<header class="relative isolate overflow-hidden bg-night text-white">
+  <img src="/theme/assets/images/mountains-960.webp" alt="" width="960" height="540" class="absolute inset-0 -z-10 size-full object-cover opacity-30">
+  <div class="absolute inset-0 -z-10 bg-gradient-to-b from-night/40 to-night"></div>
+  <div class="wrap max-w-4xl py-14 lg:py-20">
+    <h1 class="font-serif text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">{{ page.title }}</h1>
+    {% if page.summary %}<p class="mt-5 max-w-3xl text-lg leading-relaxed text-slate-200">{{ page.summary|striptags }}</p>{% endif %}
+  </div>
+</header>
+
+<div class="wrap max-w-4xl py-12 lg:py-16">
+  <div class="prose prose-lg prose-slate mx-auto max-w-3xl">
+    {{ page.content|responsive_images }}
+  </div>
+</div>
+
+{% include "partials/book-cta.html" %}
+{% endblock %}

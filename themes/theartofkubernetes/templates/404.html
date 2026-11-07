@@ -1,0 +1,24 @@
+{#- GitHub Pages serves /404.html for unknown URLs. -#}
+{% set seo_title = "Page introuvable | " ~ SITENAME %}
+{% set seo_description = "Cette page n'existe pas. Découvrez The Art of Kubernetes, le livre pour maîtriser Kubernetes et son écosystème." %}
+{% set robots = "noindex, follow" %}
+{% extends "base.html" %}
+
+{% block content %}
+<section class="relative isolate overflow-hidden bg-night text-white">
+  <img src="/theme/assets/images/mountains-960.webp" alt="" width="960" height="540" class="absolute inset-0 -z-10 size-full object-cover opacity-40">
+  <div class="wrap grid items-center gap-10 py-20 md:grid-cols-[1.3fr_0.7fr] lg:py-28">
+    <div>
+      <p class="eyebrow text-teal-300">Erreur 404</p>
+      <h1 class="font-serif text-5xl font-semibold tracking-tight text-white">{{ t.not_found_title }}</h1>
+      <p class="mt-4 text-lg text-slate-200">{{ t.not_found_text }}</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="{{ home_url }}" class="btn btn-ghost-light">{{ t.back_home }}</a>
+        <a href="/{{ lang }}/articles" class="btn btn-ghost-light">{{ t.articles_title }}</a>
+        {{ buy_button(book, t) }}
+      </div>
+    </div>
+    <img src="{{ book.cover.replace('-800.', '-400.') }}" alt="Couverture de {{ book.full_title }}" width="400" height="568" class="book-cover mx-auto w-48 rounded-md md:w-64">
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,17 @@
+{
+  "name": "theartofkubernetes-site",
+  "private": true,
+  "description": "CSS/font tooling for theartofkubernetes.com (the site itself is built with Pelican).",
+  "scripts": {
+    "build:css": "tailwindcss -i themes/theartofkubernetes/src/site.css -o themes/theartofkubernetes/static/assets/css/site.css --minify",
+    "watch:css": "tailwindcss -i themes/theartofkubernetes/src/site.css -o themes/theartofkubernetes/static/assets/css/site.css --watch",
+    "fonts": "mkdir -p themes/theartofkubernetes/static/assets/fonts && cp node_modules/@fontsource-variable/libre-franklin/files/libre-franklin-latin-wght-normal.woff2 node_modules/@fontsource-variable/crimson-pro/files/crimson-pro-latin-wght-normal.woff2 node_modules/@fontsource-variable/crimson-pro/files/crimson-pro-latin-wght-italic.woff2 themes/theartofkubernetes/static/assets/fonts/"
+  },
+  "devDependencies": {
+    "@fontsource-variable/crimson-pro": "5.3.0",
+    "@fontsource-variable/libre-franklin": "5.3.0",
+    "@tailwindcss/cli": "4.3.5",
+    "@tailwindcss/typography": "0.5.20",
+    "tailwindcss": "4.3.5"
+  }
+}

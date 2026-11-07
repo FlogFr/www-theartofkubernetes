@@ -1,0 +1,11 @@
+{
+  "name": "The Art of Kubernetes",
+  "short_name": "Art of K8s",
+  "icons": [
+    {"src": "/theme/assets/images/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "/theme/assets/images/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png"}
+  ],
+  "theme_color": "#0f2a2e",
+  "background_color": "#ffffff",
+  "display": "browser"
+}

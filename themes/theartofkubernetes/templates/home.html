@@ -1,0 +1,98 @@
+{#-
+  Landing page layout, shared by every language. The copy lives in
+  home_<lang>.html, which extends this template and defines:
+    book_description  one-paragraph description of the book (JSON-LD)
+    testimonials      list of {name, role, image, quote}
+    faq               list of {q, a} (a may contain HTML)
+  The content page is content/pages/<lang>/home.rst (`:template: home_<lang>`).
+-#}
+{% set obj = page %}
+{% set lang = page.lang %}
+{% set seo_title = page.seo_title or page.title %}
+{% set seo_description = page.description %}
+{% set og_type = "book" %}
+{% extends "base.html" %}
+
+{% block og_extra %}
+  <meta property="book:author" content="{{ AUTHOR }}">
+{% endblock %}
+
+{% block head %}
+{% set site_id = SITEURL ~ "/#website" %}
+{% set author_id = SITEURL ~ "/#author" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": {{ site_id|tojson }},
+      "url": {{ (SITEURL ~ "/")|tojson }},
+      "name": {{ SITENAME|tojson }},
+      "inLanguage": {{ lang|tojson }},
+      "publisher": {"@id": {{ author_id|tojson }}}
+    },
+    {
+      "@type": "WebPage",
+      "@id": {{ (canonical ~ "#webpage")|tojson }},
+      "url": {{ canonical|tojson }},
+      "name": {{ seo_title|tojson }},
+      "description": {{ seo_description|tojson }},
+      "inLanguage": {{ lang|tojson }},
+      "isPartOf": {"@id": {{ site_id|tojson }}},
+      "about": {"@id": {{ (SITEURL ~ "/#book")|tojson }}},
+      "primaryImageOfPage": {{ (SITEURL ~ book.cover)|tojson }}
+    },
+    {% include "partials/jsonld-person.html" %},
+    {
+      "@type": ["Book", "Product"],
+      "@id": {{ (SITEURL ~ "/#book")|tojson }},
+      "name": {{ book.title|tojson }},
+      "alternateName": {{ book.full_title|tojson }},
+      "description": {{ book_description|tojson }},
+      "url": {{ canonical|tojson }},
+      "image": {{ (SITEURL ~ book.cover)|tojson }},
+      "author": {"@id": {{ author_id|tojson }}},
+      "inLanguage": {{ book.language|tojson }},
+      "bookFormat": {{ book.schema_format|tojson }},
+      "numberOfPages": {{ book.pages }},
+      "genre": "Informatique",
+      "about": ["Kubernetes", "Cloud Native", "Platform as a Service"],
+      "sku": {{ book.asin|tojson }},
+      "brand": {"@type": "Brand", "name": {{ SITENAME|tojson }}},
+      "offers": {
+        "@type": "Offer",
+        "url": {{ book.url|tojson }},
+        "price": {{ book.price|tojson }},
+        "priceCurrency": {{ book.currency|tojson }},
+        "availability": "https://schema.org/InStock",
+        "seller": {"@type": "Organization", "name": {{ book.store|tojson }}}
+      },
+      "review": [
+        {% for r in testimonials %}
+        {
+          "@type": "Review",
+          "author": {"@type": "Person", "name": {{ r.name|tojson }}},
+          "reviewRating": {"@type": "Rating", "ratingValue": 5, "bestRating": 5},
+          "reviewBody": {{ r.quote|tojson }}
+        }{{ "," if not loop.last }}
+        {% endfor %}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": {{ (canonical ~ "#faq")|tojson }},
+      "mainEntity": [
+        {% for item in faq %}
+        {
+          "@type": "Question",
+          "name": {{ item.q|tojson }},
+          "acceptedAnswer": {"@type": "Answer", "text": {{ item.a|striptags|tojson }}}
+        }{{ "," if not loop.last }}
+        {% endfor %}
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
