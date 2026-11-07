@@ -1,287 +1,409 @@
-
-<!DOCTYPE html>
-<html lang="fr" class="light scroll-smooth" dir="ltr">
+<!doctype html>
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Edge Computing avec Kubernetes</title>
-  
-<meta name="author" content="Florian Grignon" />
-<meta name="description" content="Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques" />
-<meta name="keywords" content="kubernetes, edge computing, edge, optimisation, architecture, infrastructure, périphérie">
+  <title>Edge computing avec Kubernetes : architectures et outils</title>
+  <meta name="description" content="Edge computing et Kubernetes : réduire la latence, gérer des sites distribués et choisir son architecture (multi-cluster, nœuds distants, KubeEdge).">
+  <meta name="author" content="Florian Grignon">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://theartofkubernetes.com/fr/edge-computing-avec-kubernetes">
 
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="The Art of Kubernetes">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Edge computing avec Kubernetes : architectures et outils">
+  <meta property="og:description" content="Edge computing et Kubernetes : réduire la latence, gérer des sites distribués et choisir son architecture (multi-cluster, nœuds distants, KubeEdge).">
+  <meta property="og:url" content="https://theartofkubernetes.com/fr/edge-computing-avec-kubernetes">
+  <meta property="og:image" content="https://theartofkubernetes.com/images/logo-edge.webp">
+  <meta property="og:image:width" content="800">
+  <meta property="og:image:height" content="500">
+  <meta property="og:image:alt" content="Edge computing avec Kubernetes : architectures et outils">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="article:published_time" content="2024-08-14T00:00:00+02:00">
+  <meta property="article:modified_time" content="2026-11-07T00:00:00+01:00">
+  <meta property="article:author" content="Florian Grignon">
+  <meta property="article:tag" content="kubernetes">
+  <meta property="article:tag" content="edge computing">
+  <meta property="article:tag" content="edge">
+  <meta property="article:tag" content="kubeedge">
+  <meta property="article:tag" content="open horizon">
+  <meta property="article:tag" content="iot">
+  <meta property="article:tag" content="architecture">
+  <meta property="article:tag" content="infrastructure">
 
-  
-  <meta name="website" content="https://theartofkubernetes.com">
-  <meta name="email" content="bonjour@theartofkubernetes.com">
-  <meta name="version" content="1.0.0">
-  
-  <!-- favicon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/theme/assets/images/apple-touch-icon.png">
+  <link rel="preload" href="/theme/assets/fonts/libre-franklin-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/theme/assets/fonts/crimson-pro-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/theme/assets/css/site.css">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="192x192" href="/theme/assets/images/android-chrome-192x192.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/theme/assets/images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/theme/assets/images/favicon-16x16.png">
-  <link href="/theme/assets/images/favicon.ico" rel="shortcut icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="/theme/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f2a2e">
+  <link rel="alternate" type="application/atom+xml" href="https://theartofkubernetes.com/feeds/all.atom.xml" title="The Art of Kubernetes – Articles Kubernetes">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://theartofkubernetes.com/fr/edge-computing-avec-kubernetes#article",
+      "mainEntityOfPage": "https://theartofkubernetes.com/fr/edge-computing-avec-kubernetes",
+      "url": "https://theartofkubernetes.com/fr/edge-computing-avec-kubernetes",
+      "headline": "Edge computing avec Kubernetes : architectures et outils",
+      "description": "Edge computing et Kubernetes : r\u00e9duire la latence, g\u00e9rer des sites distribu\u00e9s et choisir son architecture (multi-cluster, n\u0153uds distants, KubeEdge).",
+      "image": "https://theartofkubernetes.com/images/logo-edge.webp",
+      "datePublished": "2024-08-14T00:00:00+02:00",
+      "dateModified": "2026-11-07T00:00:00+01:00",
+      "inLanguage": "fr",
+      "wordCount": 938,
+      "keywords": "kubernetes, edge computing, edge, kubeedge, open horizon, iot, architecture, infrastructure",
+      "author": {"@id": "https://theartofkubernetes.com/#author"},
+      "publisher": {"@id": "https://theartofkubernetes.com/#author"},
+      "isPartOf": {"@id": "https://theartofkubernetes.com/#website"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://theartofkubernetes.com/"},
+        {"@type": "ListItem", "position": 2, "name": "Articles Kubernetes", "item": "https://theartofkubernetes.com/fr/articles"},
+        {"@type": "ListItem", "position": 3, "name": "Edge computing avec Kubernetes : architectures et outils"}
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://theartofkubernetes.com/#website",
+      "url": "https://theartofkubernetes.com/",
+      "name": "The Art of Kubernetes"
+    },
+{
+      "@type": "Person",
+      "@id": "https://theartofkubernetes.com/#author",
+      "name": "Florian Grignon",
+      "url": "https://theartofkubernetes.com/#auteur",
+      "image": "https://theartofkubernetes.com/theme/assets/images/auteur-florian-grignon-480.webp",
+      "jobTitle": "Formateur Cloud Native et Certified Kubernetes Administrator (CKA)",
+      "description": "Certifi\u00e9 Kubernetes Administrator (CKA), formateur Cloud Native (Kubernetes, Terraform) et auteur de The Art of Kubernetes. Il accompagne les entreprises dans la conception et la mise en place de leur infrastructure Cloud Native.",
+      "knowsAbout": ["Kubernetes", "Cloud Native", "Platform as a Service", "Terraform", "DevOps"],
+      "hasCredential": {
+        "@type": "EducationalOccupationalCredential",
+        "name": "Certified Kubernetes Administrator (CKA)",
+        "credentialCategory": "certification"
+      }
+    }  ]
+}
+</script>
+</head>
+<body class="bg-white font-sans text-slate-700 antialiased">
+  <a href="#contenu" class="skip-link">Aller au contenu</a>
+<header class="site-header sticky top-0 z-40 border-b border-slate-200/80 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+  <div class="wrap flex h-16 items-center justify-between gap-3 lg:h-20">
+    <a href="/" class="shrink-0 rounded-md" aria-label="The Art of Kubernetes – Accueil">
+      <img src="/theme/assets/images/logo-the-art-of-kubernetes-dark.webp" alt="The Art of Kubernetes" width="480" height="182" class="h-10 w-auto lg:h-12">
+    </a>
 
-  <!-- Css -->
-<!-- Main Css -->
-<link href="/theme/assets/libs/tobii/css/tobii.min.css" rel="stylesheet">
-<link href="/theme/assets/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
-<link href="/theme/assets/libs/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="/theme/assets/css/tailwind.css"></head>
+    <nav aria-label="Navigation principale" class="hidden lg:block">
+      <ul class="flex items-center gap-8 text-[15px] font-medium text-slate-700">
+        <li><a href="/#livre" class="nav-link">Le livre</a></li>
+        <li><a href="/#sommaire" class="nav-link">Sommaire</a></li>
+        <li><a href="/#avis" class="nav-link">Avis</a></li>
+        <li><a href="/#auteur" class="nav-link">L'auteur</a></li>
+        <li><a href="/fr/articles" class="nav-link">Articles</a></li>
+      </ul>
+    </nav>
 
-<body class="font-libre_franklin text-base text-black dark:text-white bg-white dark:bg-slate-900">
-    <!-- Loader Start -->
-    <!-- <div id="preloader">
-        <div id="status">
-            <div class="logo">
-                <img src="/theme/assets/images/logo-icon-64.png" class="d-block mx-auto animate-[spin_10s_linear_infinite]" alt="">
-            </div>
-            <div class="justify-content-center">
-                <div class="text-center">
-                    <h4 class="mb-0 mt-2 text-lg font-semibold">Upcover</h4>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- Loader End -->
-<!-- Navbar Start -->
-<nav class="navbar" id="navbar">
-    <div class="container relative flex flex-wrap items-center justify-between">
-        <a class="navbar-brand md:me-8" href="/index.html">
-            <span class="inline-block dark:hidden">
-                <img src="/theme/assets/images/TheArtOfKubernetes-logo-dark.png" class="l-dark" style="max-height: 100px;" alt="">
-                <img src="/theme/assets/images/TheArtOfKubernetes-logo-light.png" class="l-light" style="max-height: 100px;" alt="">
-            </span>
-            <img src="/theme/assets/images/TheArtOfKubernetes-logo-light.png" class="hidden dark:inline-block" style="max-height: 100px;" alt="">
+    <div class="flex items-center gap-2">
+      <a href="https://www.amazon.fr/dp/B0DMHYT348" class="btn btn-buy btn-sm" target="_blank" rel="noopener" data-track="buy-amazon-header">
+        <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <span class="sm:hidden">Acheter</span><span class="hidden sm:inline">Acheter sur Amazon</span>
+      </a>
+      <button type="button" class="inline-flex size-10 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 lg:hidden" aria-expanded="false" aria-controls="menu-mobile" data-menu-toggle>
+        <span class="sr-only">Menu</span>
+        <svg class="size-6 menu-open-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <svg class="size-6 menu-close-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+  </div>
+
+  <nav id="menu-mobile" aria-label="Navigation principale" class="hidden border-t border-slate-200 bg-white lg:hidden">
+    <ul class="wrap grid py-2 text-base font-medium text-slate-800">
+      <li><a href="/#livre" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>Le livre</a></li>
+      <li><a href="/#sommaire" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>Sommaire</a></li>
+      <li><a href="/#avis" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>Avis</a></li>
+      <li><a href="/#auteur" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>L'auteur</a></li>
+      <li><a href="/fr/articles" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>Articles</a></li>
+    </ul>
+  </nav>
+</header>  <main id="contenu">
+<article>
+  <header class="relative isolate overflow-hidden bg-night text-white">
+    <img src="/theme/assets/images/mountains-960.webp" alt="" width="960" height="540" class="absolute inset-0 -z-10 size-full object-cover opacity-30">
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-night/40 to-night"></div>
+    <div class="wrap max-w-4xl py-12 lg:py-16">
+      <nav aria-label="Fil d'Ariane" class="text-sm text-slate-300">
+        <ol class="flex flex-wrap items-center gap-1.5">
+          <li><a href="/" class="hover:text-white">Accueil</a></li>
+          <li aria-hidden="true"><svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"></polyline></svg></li>
+          <li><a href="/fr/articles" class="hover:text-white">Articles Kubernetes</a></li>
+          <li aria-hidden="true"><svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"></polyline></svg></li>
+          <li aria-current="page" class="text-slate-400">Edge computing avec Kubernetes : architectures et outils</li>
+        </ol>
+      </nav>
+      <h1 class="mt-6 font-serif text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">Edge computing avec Kubernetes : architectures et outils</h1>
+      <p class="mt-5 max-w-3xl text-lg leading-relaxed text-slate-200">Kubernetes est un outil puissant pour orchestrer des environnements décentralisés, où les ressources sont dispersées géographiquement et où la latence, la bande passante et la résilience sont critiques. Tour d'horizon des architectures possibles.</p>
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-300">
+        <a href="/#auteur" class="inline-flex items-center gap-3 hover:text-white" rel="author">
+          <img src="/theme/assets/images/auteur-florian-grignon-480.webp" alt="" width="40" height="40" class="size-10 rounded-full bg-white object-cover">
+          <span>Par <span class="font-semibold text-white">Florian Grignon</span></span>
         </a>
-        <!-- Navbar Manu -->
-        <div class="navigation lg_992:order-1 lg_992:flex hidden ms-auto" id="menu-collapse">
-            <ul class="navbar-nav nav-light sidebar-nav" id="navbar-navlist">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/#livre">Le Livre</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/#chapitres">Chapitres</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/#editions">Éditions</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/#publications">Publications</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="nav-icons flex items-center lg_992:order-2 ms-auto md:ms-8">
-            <!-- Navbar Button -->
-            <ul class="invisible lg:visible list-none menu-social mb-0">
-                <li class="inline">
-                    <a href="/#editions" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white uppercase">Acheter</a>
-                </li>
-            </ul>
-
-            <!-- Navbar Collapse Manu Button -->
-            <button data-collapse="menu-collapse" type="button" class="collapse-btn inline-flex items-center ms-2 text-dark dark:text-white lg_992:hidden" aria-controls="menu-collapse" aria-expanded="false">
-                <span class="sr-only">Navigation Menu</span>
-                <i class="mdi mdi-menu text-[24px]"></i>
-            </button>
-        </div>
+        <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Publié le <time datetime="2024-08-14T00:00:00+02:00">14 août 2024</time></span>
+        <span class="inline-flex items-center gap-1.5">Mis à jour le <time datetime="2026-11-07T00:00:00+01:00">7 novembre 2026</time></span>
+        <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>4 min de lecture</span>
+      </div>
     </div>
-</nav>
-<!-- Navbar End -->
-<!-- Start Hero -->
-<section class="relative table w-full py-36 lg:py-64 overflow-hidden" id="livre">
-    <div class="absolute inset-0 overflow-hidden">
-        <div class="absolute image-wrap -top-[350px] -bottom-[350px] -start-[100px] -end-[100px] min-w-full w-auto min-h-full h-auto overflow-hidden m-auto bg-[url('/theme/assets/images/Mountains.jpg')] bg-no-repeat bg-center bg-cover"></div>
-    </div>
-    <div class="absolute inset-0 bg-black/70"></div>
+  </header>
 
-    <div class="container relative">
-        <div class="grid grid-cols-1 text-center">
-            <h4 id="edge-computing-avec-kubernetes" class="text-white font-semibold lg:leading-normal leading-normal tracking-wide text-4xl lg:text-5xl my-5">Edge Computing avec Kubernetes</h4>
-            <p class="text-white/70 text-lg max-w-xl mx-auto">Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques</p>
-        </div>
-    </div><!--end container-->
-</section><!--end section-->
-<div class="relative">
-    <div class="absolute block w-full h-auto bottom-[25px] z-1 start-0">
-        <a href="#about"><i class="mdi mdi-arrow-down absolute top-0 start-0 end-0 text-center inline-flex items-center justify-center rounded-full bg-white dark:bg-slate-900 h-12 w-12 mx-auto shadow-md dark:shadow-gray-800"></i></a>
-    </div>
+  <div class="wrap max-w-4xl">
+    <img src="/images/logo-edge.webp" alt="" width="800" height="500" class="-mt-px w-full rounded-b-3xl object-cover sm:mt-8 sm:rounded-3xl" fetchpriority="high">
+  </div>
 
-    <div class="shape absolute sm:-bottom-px -bottom-[2px] start-0 end-0 overflow-hidden text-white dark:text-slate-900">
-        <svg class="w-full h-auto scale-[2.0] origin-top" viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
-        </svg>
-    </div>
+  <div class="wrap max-w-4xl py-12 lg:py-16">
+    <div class="prose prose-lg prose-slate mx-auto max-w-3xl">
+      <p>Comment Kubernetes peut-il orchestrer des ressources dispersées au plus près des
+utilisateurs ? Voici ce qu'il faut savoir sur l'edge computing et sur les architectures
+possibles avec Kubernetes.</p>
+<div class="section" id="qu-est-ce-que-l-edge-computing">
+<h2>Qu'est-ce que l'edge computing ?</h2>
+<p>L'edge computing, ou informatique en périphérie, est une approche décentralisée du
+traitement des données : le calcul et le stockage sont effectués au plus près de la source
+de production des données, plutôt que dans un centre de données centralisé. Cette
+architecture permet de réduire la latence, d'améliorer la réactivité des applications et de
+gérer les données plus efficacement en local, avant de les transférer éventuellement vers un
+cloud centralisé pour un traitement approfondi ou un stockage à long terme.</p>
+<p>En rapprochant la puissance de calcul des utilisateurs finaux, l'edge computing est
+particulièrement adapté aux environnements qui nécessitent une prise de décision en temps
+réel, comme l'Internet des objets (IoT), les véhicules autonomes ou les systèmes industriels
+intelligents.</p>
 </div>
-<!-- End Hero -->
+<div class="section" id="reduire-la-latence-en-traitant-les-donnees-localement">
+<h2>Réduire la latence en traitant les données localement</h2>
+<p>Netflix a été l'une des premières entreprises à installer des points de présence chez les
+fournisseurs d'accès à Internet (FAI), avec son réseau
+<a class="reference external" href="https://openconnect.netflix.com/">Open Connect</a> : les films et séries sont stockés au
+plus près des utilisateurs, ce qui garantit une lecture optimale partout dans le monde.</p>
+<p>Sans aller jusqu'à déployer des points de présence chez les FAI, ce qui n'est pas à la
+portée de toutes les entreprises, une architecture edge peut être réalisée sur plusieurs
+zones géographiques au sein de votre fournisseur d'infrastructure.</p>
+<blockquote class="pull-quote">
+L'un des principaux avantages de l'edge computing réside dans sa capacité à réduire la
+latence en traitant les données localement.</blockquote>
+<p>Dans des secteurs tels que l'IoT, les véhicules autonomes ou les réseaux de capteurs
+industriels, la rapidité de traitement est essentielle. En utilisant Kubernetes pour
+orchestrer ces environnements, les entreprises peuvent déployer des microservices et des
+applications conteneurisées directement en périphérie du réseau. Cette approche réduit les
+temps de réponse et optimise l'utilisation de la bande passante, en évitant l'envoi de
+volumes massifs de données vers des centres de données centraux.</p>
+</div>
+<div class="section" id="pourquoi-kubernetes-est-adapte-a-l-edge-computing">
+<h2>Pourquoi Kubernetes est adapté à l'edge computing</h2>
+<p>Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements
+décentralisés, où les ressources sont dispersées géographiquement et où les exigences en
+matière de latence, de bande passante et de résilience sont particulièrement critiques.</p>
+<p>Il offre d'abord une grande <strong>flexibilité</strong> pour déployer et gérer des applications sur les
+infrastructures hétérogènes typiques de l'edge. Que les ressources disponibles se trouvent
+sur des serveurs locaux, des dispositifs IoT ou de petits datacenters régionaux, Kubernetes
+maintient une gestion et une orchestration homogènes des conteneurs. Cette standardisation
+facilite la scalabilité horizontale, essentielle dans un contexte où la capacité de réponse
+doit s'adapter rapidement aux fluctuations de la demande.</p>
+<p>Kubernetes renforce aussi la <strong>résilience</strong> des infrastructures edge en assurant une gestion
+autonome des défaillances. En déployant des applications sur plusieurs nœuds en périphérie,
+il garantit la continuité des services, même en cas de panne de l'un des nœuds. Cette
+tolérance aux pannes est cruciale pour les applications critiques qui ne peuvent se
+permettre aucun temps d'arrêt, comme la gestion des urgences ou les opérations
+industrielles.</p>
+</div>
+<div class="section" id="quatre-approches-pour-faire-de-l-edge-computing-avec-kubernetes">
+<h2>Quatre approches pour faire de l'edge computing avec Kubernetes</h2>
+<p>L'implémentation de l'edge computing avec Kubernetes peut prendre plusieurs formes, selon
+les besoins de l'entreprise et l'architecture sous-jacente.</p>
+<div class="section" id="des-clusters-kubernetes-en-peripherie">
+<h3>Des clusters Kubernetes en périphérie</h3>
+<p>La manière la plus directe consiste à déployer des points de présence sous forme de
+clusters Kubernetes en périphérie, répartis sur différents sites, chacun autonome mais
+interconnecté. Cette configuration est idéale lorsque chaque site a des exigences
+spécifiques en matière de traitement des données, mais qu'une certaine coordination entre
+les sites reste nécessaire. Les outils présentés dans notre article sur le
+<a class="reference external" href="https://theartofkubernetes.com/fr/multi-cluster-kubernetes">multi-cluster Kubernetes</a> s'appliquent alors directement.</p>
+</div>
+<div class="section" id="etendre-un-cluster-avec-des-noeuds-distants">
+<h3>Étendre un cluster avec des nœuds distants</h3>
+<p>Une autre approche consiste à étendre un cluster Kubernetes centralisé vers les périphéries
+du réseau, en utilisant des nœuds distants pour exécuter les charges de travail propres à
+l'edge. La répartition des charges de travail selon des règles métier est déjà
+<a class="reference external" href="https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/">implémentée et documentée dans Kubernetes</a>. Cette méthode
+permet de centraliser la gestion tout en déployant des services là où ils sont le plus
+nécessaires.</p>
+</div>
+<div class="section" id="federer-plusieurs-clusters">
+<h3>Fédérer plusieurs clusters</h3>
+<p>La fédération de clusters est un cas particulier de gestion de plusieurs clusters :
+Kubernetes permet de gérer plusieurs clusters distribués comme une seule entité cohérente.
+Cette approche est particulièrement efficace pour orchestrer des déploiements
+multi-régionaux, où les applications doivent être disponibles et réactives dans plusieurs
+emplacements géographiques.</p>
+</div>
+<div class="section" id="des-plateformes-edge-cles-en-main-kubeedge-et-open-horizon">
+<h3>Des plateformes edge clés en main : KubeEdge et Open Horizon</h3>
+<img loading="lazy" decoding="async" alt="Logo du projet KubeEdge" class="align-right" src="/images/logo-kubeedge-240.webp" width="240" height="240" />
+<p>De nombreuses entreprises intègrent Kubernetes avec des plateformes edge spécialisées
+telles que <a class="reference external" href="https://kubeedge.io/">KubeEdge</a> ou
+<a class="reference external" href="https://lfedge.org/projects/open-horizon/">Open Horizon</a>, conçues pour faciliter le
+déploiement et la gestion des applications sur des infrastructures distribuées. Ces
+plateformes ajoutent des fonctionnalités spécifiques aux contraintes de l'edge, comme la
+gestion d'une connectivité réseau intermittente ou l'intégration avec des dispositifs IoT.</p>
+<p>Si vous disposez des ressources en interne, il est également possible de développer votre
+propre solution edge à partir de Kubernetes. Mais à ce stade, vous faites sans doute déjà
+partie des experts de Kubernetes !</p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>L'edge computing avec Kubernetes ouvre la voie à des architectures plus réactives,
+résilientes et flexibles, qui répondent aux exigences croissantes des entreprises en
+matière de traitement des données en temps réel. Kubernetes permet non seulement de tirer
+parti des avantages de l'edge computing, mais aussi de standardiser la gestion des
+ressources à travers des infrastructures dispersées, tout en maintenant une cohérence
+opérationnelle à l'échelle mondiale.</p>
+</div>
 
-<!-- Start Content -->
-<section class="relative md:py-24 py-16">
-    <div class="container relative">
-        <div class="grid md:grid-cols-1 grid-cols-1 items-center">
-            <div class="md:col-span-12">
-                <div class="lg:ms-12">
-                    <section class="relative md:py-8 py-8"><!-- Section Auteur -->
-  <div class="container relative">
-    <div class="grid grid-cols-1 grid-rows-1">
-      <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">Florian Grignon, le 14/08/2024</h6>
-      <h3 class="font-semibold text-2xl leading-normal mb-4">Edge Computing avec Kubernetes</h3>
-
-      <p class="text-justify text-lg text-400">L'Edge Computing, ou informatique en périphérie, est une approche décentralisée du traitement des données, où le calcul et le stockage sont effectués au plus près de la source de production des données, plutôt que dans un centre de données centralisé. Cette architecture permet de réduire la latence, d'améliorer la réactivité des applications, et de gérer les données de manière plus efficace localement, avant de les transférer éventuellement vers un cloud centralisé pour un traitement approfondi ou un stockage à long terme. En rapprochant la puissance de calcul des utilisateurs finaux, l'Edge Computing est particulièrement adapté aux environnements nécessitant une prise de décision en temps réel, tels que l'Internet des objets (IoT), les véhicules autonomes, ou encore les systèmes industriels intelligents.</p>
     </div>
-  </div><!--end container-->
-</section>
+  </div>
+</article>
 
-<section class="relative md:py-8 py-8 bg-slate-50 dark:bg-slate-800" id="services">
-    <div class="container relative">
-        <div class="grid grid-cols-1 pb-6 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">L'un des principaux avantages du Edge Computing réside dans sa capacité à réduire la latence en traitant les données localement</h3>
-        </div>
-    </div>
-</section>
-
-<section class="relative md:py-8 py-8">
-  <div class="container relative">
-    <div class="grid grid-cols-1 grid-rows-1">
-      <p class="text-justify text-lg text-400">Netflix a été l'une des premières entreprises à mettre en place des points de présence chez les fournisseurs d'accès Internet (FAI), stockant ainsi les films et séries au plus près des utilisateurs. Cette stratégie a permis une lecture optimale des contenus par les utilisateurs du monde entier. Sans aller jusqu'à déployer des points de présence au sein des FAI, ce qui n'est pas accessible à toutes les entreprises, l'architecture Edge Computing peut être réalisée sur plusieurs zones géographiques au sein de votre fournisseur d'infrastructure. Dans ce contexte, Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques.</p>
-      <p class="text-justify text-lg text-400">L'un des principaux avantages du Edge Computing réside dans sa capacité à réduire la latence en traitant les données localement. Dans des secteurs tels que l'IoT, les véhicules autonomes ou les réseaux de capteurs industriels, la rapidité de traitement est essentielle. En utilisant Kubernetes pour orchestrer ces environnements, les entreprises peuvent déployer des microservices et des applications conteneurisées directement en périphérie du réseau. Cette approche permet non seulement de réduire les temps de réponse, mais aussi d'optimiser l'utilisation de la bande passante en évitant l'envoi de volumes massifs de données vers des centres de données centraux.</p>
-      <p class="text-justify text-lg text-400">Kubernetes offre également une grande flexibilité pour le déploiement et la gestion des applications sur des infrastructures hétérogènes, typiques des environnements Edge. Que les ressources disponibles se trouvent sur des serveurs locaux, des dispositifs IoT, ou même des petits datacentres régionaux, Kubernetes permet de maintenir une homogénéité dans la gestion et l'orchestration des conteneurs. Cette standardisation facilite la scalabilité horizontale, essentielle dans le contexte du Edge, où la capacité de réponse doit s'adapter rapidement aux fluctuations de la demande.</p>
-      <p class="text-justify text-lg text-400">Enfin, Kubernetes renforce la résilience des infrastructures Edge en assurant une gestion autonome des défaillances. En déployant des applications sur plusieurs nœuds en périphérie, Kubernetes garantit la continuité des services, même en cas de panne d'un des nœuds. Cette tolérance aux pannes est cruciale pour les applications critiques, qui ne peuvent se permettre de temps d'arrêt, comme dans la gestion des urgences ou les opérations industrielles.</p>
-    </div>
-  </div><!--end container-->
-</section>
-
-<section class="relative md:py-8 py-8"><!-- Section Auteur -->
-  <div class="container relative">
-    <div class="grid md:grid-cols-12 md:grid-rows-1 md:grid-rows-1 grid-cols-3 grid-rows-2 items-center gap-6">
-      <div class="row-start-2 col-start-2 md:col-span-4 md:row-start-1">
-        <div class="lg:me-8">
-          <div class="relative">
-            <img src="/images/logo-kubeedge.png" class="rounded-full shadow dark:shadow-gray-700" alt="">
-          </div>
-        </div>
+<aside class="wrap my-16" aria-labelledby="book-cta-title">
+  <div class="relative grid items-center gap-8 overflow-hidden rounded-3xl bg-night p-6 text-white sm:grid-cols-[150px_1fr] sm:p-10 lg:grid-cols-[190px_1fr] lg:gap-12">
+    <img src="/theme/assets/images/mountains-960.webp" alt="" width="960" height="540" loading="lazy" class="pointer-events-none absolute inset-0 size-full object-cover opacity-25">
+    <img src="/images/the-art-of-kubernetes-couverture-400.webp" alt="The Art of Kubernetes - French Edition, Florian Grignon" width="400" height="568" loading="lazy" class="relative mx-auto w-36 rounded-md shadow-2xl ring-1 ring-white/10 sm:w-full">
+    <div class="relative">
+      <p class="eyebrow text-teal-300">Pour aller plus loin</p>
+      <h2 id="book-cta-title" class="font-serif text-3xl font-semibold leading-tight text-white sm:text-4xl">Maîtrisez Kubernetes avec The Art of Kubernetes</h2>
+      <p class="mt-4 max-w-2xl text-slate-200">Fondamentaux, architecture, plateforme sur mesure (PaaS), sécurité, écosystème et retours d'expérience : le livre de référence en français pour faire des choix éclairés avec Kubernetes.</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="https://www.amazon.fr/dp/B0DMHYT348" class="btn btn-buy  " target="_blank" rel="noopener" data-track="buy-amazon">
+  <svg class="size-5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+  <span>Acheter sur Amazon.fr · 9,99 €</span>
+</a>
+        <a href="#newsletter" class="btn btn-ghost-light"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg><span>Recevoir un chapitre gratuit</span></a>
       </div>
-
-      <div class="row-start-1 col-span-3 md:col-span-8 md:row-start-1">
-        <div class="lg:ms-8">
-          <p class="text-justify text-lg text-400">L'implémentation du Edge Computing avec Kubernetes peut prendre plusieurs formes, en fonction des besoins spécifiques de l'entreprise et de l'architecture sous-jacente. Les approches les plus répandues incluent la distribution de la charge de travail sur plusieurs clusters Kubernetes, l'extension d'un cluster Kubernetes vers les périphéries du réseau, la fédération de plusieurs clusters, ou bien l'utilisation de plateformes clés en main dédiées au Edge, telles qu'<a class="text-slate-400" href="https://lfedge.org/projects/open-horizon/">Open Horizon</a> ou <a class="text-slate-400" href="https://kubeedge.io/">KubeEdge</a>.</p>
-        </div>
-      </div>
     </div>
-  </div><!--end container-->
-</section><!--end section auteur-->
-
-<section class="relative md:py-8 py-8">
-  <div class="container relative">
-    <div class="grid grid-cols-1 grid-rows-1">
-      <p class="text-justify text-lg text-400">La manière la plus directe de faire du Edge est de déployer des points de présence sous forme de clusters Kubernetes en périphérie, répartis sur différents sites, chacun étant autonome mais interconnecté. Cette configuration est idéale pour les environnements où chaque site Edge a des exigences spécifiques en termes de traitement des données, mais où une certaine coordination entre les sites est nécessaire.</p>
-      <p class="text-justify text-lg text-400">Une autre approche consiste à étendre un cluster Kubernetes centralisé vers les périphéries du réseau, en utilisant des nœuds distants pour exécuter des charges de travail spécifiques au Edge. Cette fonctionnalité de répartition de la charge de travail selon des règles métier est déjà implémentée et documentée dans Kubernetes. Cette méthode permet de centraliser la gestion tout en déployant des services spécifiques là où ils sont le plus nécessaires.</p>
-      <p class="text-justify text-lg text-400">La fédération de clusters est un cas particulier de gestion de plusieurs clusters Kubernetes. Kubernetes permet de gérer plusieurs clusters distribués comme une seule entité cohérente. Cette approche est particulièrement efficace pour orchestrer des déploiements multi-régionaux, où les applications doivent être disponibles et réactives dans plusieurs emplacements géographiques.</p>
-      <p class="text-justify text-lg text-400">De nombreuses entreprises intègrent Kubernetes avec des plateformes Edge spécialisées telles qu'<a class="text-slate-400" href="https://lfedge.org/projects/open-horizon/">Open Horizon</a> ou <a class="text-slate-400" href="https://kubeedge.io/">KubeEdge</a>, conçues pour faciliter le déploiement et la gestion des applications sur des infrastructures distribuées. Ces plateformes ajoutent des fonctionnalités spécifiques pour gérer les contraintes du Edge, comme la gestion intermittente de la connectivité réseau ou l'intégration avec des dispositifs IoT.</p>
+  </div>
+</aside>
+<section class="wrap max-w-4xl" aria-labelledby="author-box-title">
+  <div class="flex flex-col gap-6 rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-200 sm:flex-row sm:items-center sm:p-8">
+    <img src="/theme/assets/images/auteur-florian-grignon-480.webp" alt="Portrait dessiné de Florian Grignon" width="96" height="96" loading="lazy" class="size-24 shrink-0 rounded-full object-cover ring-4 ring-white">
+    <div>
+      <h2 id="author-box-title" class="text-sm font-semibold uppercase tracking-wider text-teal-700">À propos de l'auteur</h2>
+      <p class="mt-1 font-serif text-2xl font-semibold text-slate-900">Florian Grignon</p>
+      <p class="mt-2 text-slate-600">Certifié Kubernetes Administrator (CKA), formateur Cloud Native (Kubernetes, Terraform) et auteur de The Art of Kubernetes. Il accompagne les entreprises dans la conception et la mise en place de leur infrastructure Cloud Native.</p>
     </div>
   </div>
 </section>
 
-<section class="relative md:py-8 py-8 bg-slate-50 dark:bg-slate-800" id="services">
-    <div class="container relative">
-        <div class="grid grid-cols-1 pb-6 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques</h3>
-        </div>
-    </div>
+<section class="wrap py-16 lg:py-24" aria-labelledby="related-title">
+  <h2 id="related-title" class="section-title">À lire aussi</h2>
+  <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <article class="group relative flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-teal-300">
+  <img src="/images/logo-multicluster.webp" alt="" width="800" height="500" loading="lazy" decoding="async" class="aspect-[8/5] w-full object-cover">
+  <div class="flex flex-1 flex-col p-6">
+    <p class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500">
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><time datetime="2024-09-15T00:00:00+02:00">15 septembre 2024</time></span>
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>5 min de lecture</span>
+    </p>
+    <h3 class="mt-3 font-serif text-2xl font-semibold leading-snug text-slate-900">
+      <a href="/fr/multi-cluster-kubernetes" class="after:absolute after:inset-0 group-hover:text-teal-700">Multi-cluster Kubernetes : pourquoi et comment gérer plusieurs clusters</a>
+    </h3>
+    <p class="mt-2 line-clamp-3 text-slate-600">Grâce à son architecture modulaire, flexible et extensible, Kubernetes permet de mettre en place une architecture multi-cluster pour répondre à des besoins spécifiques. Pourquoi multiplier les clusters, et avec quels outils les gérer ?</p>
+    <p class="mt-auto pt-4 inline-flex items-center gap-1 font-medium text-teal-700">Lire l'article <svg class="size-4 transition group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+  </div>
+</article>
+    <article class="group relative flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-teal-300">
+  <img src="/images/logo-kubernetes.webp" alt="" width="800" height="500" loading="lazy" decoding="async" class="aspect-[8/5] w-full object-cover">
+  <div class="flex flex-1 flex-col p-6">
+    <p class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500">
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><time datetime="2024-09-09T00:00:00+02:00">9 septembre 2024</time></span>
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 min de lecture</span>
+    </p>
+    <h3 class="mt-3 font-serif text-2xl font-semibold leading-snug text-slate-900">
+      <a href="/fr/qu-est-ce-que-kubernetes" class="after:absolute after:inset-0 group-hover:text-teal-700">Qu'est-ce que Kubernetes ? Bien plus qu'un orchestrateur de conteneurs</a>
+    </h3>
+    <p class="mt-2 line-clamp-3 text-slate-600">Depuis plus de dix ans, Kubernetes s'est imposé dans les entreprises. Pourtant, ce n'est « qu'un » orchestrateur de conteneurs. Prenons cinq minutes pour comprendre ce qui fait vraiment sa force.</p>
+    <p class="mt-auto pt-4 inline-flex items-center gap-1 font-medium text-teal-700">Lire l'article <svg class="size-4 transition group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+  </div>
+</article>
+    <article class="group relative flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-teal-300">
+  <img src="/images/logo-operator.webp" alt="" width="800" height="500" loading="lazy" decoding="async" class="aspect-[8/5] w-full object-cover">
+  <div class="flex flex-1 flex-col p-6">
+    <p class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500">
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><time datetime="2024-08-01T00:00:00+02:00">1er août 2024</time></span>
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>6 min de lecture</span>
+    </p>
+    <h3 class="mt-3 font-serif text-2xl font-semibold leading-snug text-slate-900">
+      <a href="/fr/operator-or-not-operator" class="after:absolute after:inset-0 group-hover:text-teal-700">Operator ou pas Operator ? Avantages et limites des Operators Kubernetes</a>
+    </h3>
+    <p class="mt-2 line-clamp-3 text-slate-600">Le modèle d'Operator occupe une place centrale dans l'écosystème Kubernetes en automatisant la gestion d'applications complexes au sein du cluster. Mais faut-il en déployer partout ? Avantages, limites et recommandations.</p>
+    <p class="mt-auto pt-4 inline-flex items-center gap-1 font-medium text-teal-700">Lire l'article <svg class="size-4 transition group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+  </div>
+</article>
+  </div>
 </section>
 
-<section class="relative md:py-8 py-8">
-  <div class="container relative">
-    <div class="grid grid-cols-1 grid-rows-1">
-      <p class="text-justify text-lg text-400">Si vous disposez des ressources en interne, il est également possible de développer une solution Edge à partir de Kubernetes. Cependant, si vous en êtes à ce stade, il est probable que ce livre ne vous apporte plus de nouvelles connaissances.</p>
-      <p class="text-justify text-lg text-400">Le Edge Computing avec Kubernetes ouvre la voie à des architectures plus réactives, résilientes et flexibles, répondant aux exigences croissantes des entreprises modernes en matière de traitement des données en temps réel. L'implémentation de Kubernetes dans des environnements Edge permet non seulement de tirer parti des avantages du Edge Computing, mais aussi de standardiser et d'uniformiser la gestion des ressources à travers des infrastructures dispersées, tout en maintenant une cohérence opérationnelle à l'échelle mondiale.</p>
+<section id="newsletter" class="scroll-mt-24 bg-teal-50" aria-labelledby="newsletter-title">
+  <div class="wrap grid items-center gap-10 py-16 lg:grid-cols-2 lg:py-24">
+    <div>
+      <p class="eyebrow"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Newsletter</p>
+      <h2 id="newsletter-title" class="section-title">Recevez gratuitement un chapitre du livre</h2>
+      <p class="mt-4 max-w-xl text-lg leading-relaxed text-slate-600">Inscrivez-vous à la newsletter des connaisseurs Kubernetes : vous recevez un chapitre de The Art of Kubernetes par email, puis les nouveaux articles, entretiens et actualités de l'écosystème. Pas de spam, désinscription en un clic.</p>
     </div>
-  </div><!--end container-->
-</section><!--end section auteur-->
-                </div>
-            </div>
-        </div>
-    </div><!--end container-->
-</section><!--end section-->
-<!-- End Content -->
-
-<section class="relative md:py-24 py-8"><!-- Section Auteur -->
-  <div class="container relative">
-    <div class="flex flex-col md:flex-row items-center">
-      <div class="basis-1/2">
-        <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">À propos de l'auteur…</h6>
-        <h3 class="font-semibold text-2xl leading-normal mb-4">À qui s'adresse ce livre ?</h3>
-        <p class="text-slate-400 max-w-xl mb-6">Bonjour ! Je m’appelle Florian Grignon. Je suis Certifié Administrateur Kubernetes (CKA) et Formateur autour des technologies Cloud Native (Terraform et Kubernetes). J’accompagne au quotidien des entreprises dans leur apprentissage et la mise en place de leur Infrastructure Cloud Native. L’infrastructure est trop souvent mal comprise, prise en compte trop tard, voire laissée à l’abandon. Pourtant, avec des solutions comme Kubernetes, il est maintenant possible, même pour de petites entreprises, de maîtriser leur infrastructure.</p>
-        <p class="text-slate-400 max-w-xl mb-6">J'ai écrit The Art of Kubernetes pour toutes les personnes qui sont amenées à travailler avec Kubernetes, afin de les aider à appréhender cette technologie.</p>
-
-        <div class="flex justify-center">
-          <a href="#chapitres" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white">Voir les chapitres <i class="mdi mdi-chevron-right align-middle ms-0.5"></i></a>
-        </div>
-      </div>
-
-      <div class="basis-1/2 flex justify-center pt-8">
-          <img src="/theme/assets/images/auteur-florian-grignon.webp" class="rounded-full shadow dark:shadow-gray-700 max-h-40 max-w-40 md:max-h-96 md:max-w-96" alt="Auteur de The Art of Kubernetes, Florian Grignon">
-      </div>
+    <div class="min-h-56 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <script async src="https://eocampaign1.com/form/7f014dd2-69c3-11ef-b4cf-7d716c80cc13.js" data-form="7f014dd2-69c3-11ef-b4cf-7d716c80cc13"></script>
     </div>
-  </div><!--end container-->
-</section><!--end section auteur-->
-<!-- End Auteur -->
-<section class="relative lg:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="contact">
-    <div class="container relative">
-        <div class="grid grid-cols-1 pb-6 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">Rejoignez la communauté The Art of Kubernetes</h3>
-
-            <p class="text-slate-400 max-w-xl mx-auto">En vous inscrivant à la newsletter, vous recevrez un chapitre gratuitement du livre.</p>
-        </div><!--end grid-->
-
-        <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-6">
-            <div class="lg:col-span-7 md:col-span-6">
-                <img src="/theme/assets/images/contact.svg" alt="">
-            </div>
-
-            <div class="lg:col-span-5 md:col-span-6">
-                <div class="lg:ms-5">
-                    <div class="bg-white dark:bg-slate-900 rounded-md shadow dark:shadow-gray-700 p-6">
-                      <script async src="https://eocampaign1.com/form/7f014dd2-69c3-11ef-b4cf-7d716c80cc13.js" data-form="7f014dd2-69c3-11ef-b4cf-7d716c80cc13"></script>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!--end container-->
-</section><!--end section-->
-
-<!-- Footer Start -->
-<footer class="footer bg-dark-footer relative text-gray-200 dark:text-gray-200">
-    <div class="py-[30px] px-0 border-t border-slate-800">
-        <div class="container relative text-center">
-            <div class="grid lg:grid-cols-12 md:grid-cols-3 grid-cols-1 items-center">
-
-                <div class="lg:col-span-3 md:text-start text-center">
-                    <a href="#" class="text-[22px] focus:outline-none">
-                        <img src="/theme/assets/images/TheArtOfKubernetes-logo-light.png" class="mx-auto md:me-auto md:ms-0" alt="">
-                    </a>
-                </div>
-
-                <div class="lg:col-span-5 text-center mt-6 md:mt-0">
-                  <p class="mb-0">Copyright 2024-<script>document.write(new Date().getFullYear())</script> © Grignon Florian.<br/>All rights reserved.</p>
-                </div>
-
-            </div><!--end grid-->
-        </div><!--end container-->
+  </div>
+</section>  </main>
+<footer class="bg-night text-slate-300">
+  <div class="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+    <div>
+      <a href="/" class="inline-block rounded-md" aria-label="The Art of Kubernetes – Accueil">
+        <img src="/theme/assets/images/logo-the-art-of-kubernetes-light.webp" alt="The Art of Kubernetes" width="480" height="182" loading="lazy" class="h-14 w-auto">
+      </a>
+      <p class="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">Le livre pour comprendre Kubernetes, son écosystème, et bâtir une plateforme sur mesure.</p>
     </div>
-</footer><!--end footer-->
-<!-- Footer End -->
-        <!-- Back to top -->
-        <a href="#" onclick="topFunction()" id="back-to-top" class="back-to-top fixed hidden text-lg rounded-full z-10 bottom-5 right-5 size-9 text-center bg-teal-500 text-white leading-9"><i class="mdi mdi-arrow-up"></i></a>
-        <!-- Back to top -->
 
-        <!-- JAVASCRIPTS -->
-        <script src="/theme/assets/libs/feather-icons/feather.min.js"></script>
-<script src="/theme/assets/libs/gumshoejs/gumshoe.polyfills.min.js"></script>
-<script src="/theme/assets/libs/tobii/js/tobii.min.js"></script>
-<script src="/theme/assets/libs/tiny-slider/min/tiny-slider.js"></script>
-<script src="/theme/assets/js/plugins.init.js"></script>
-<script src="/theme/assets/js/app.js"></script>        <!-- JAVASCRIPTS -->
-    </body>
+    <nav aria-label="Le livre">
+      <p class="font-semibold text-white">Le livre</p>
+      <ul class="mt-4 grid gap-2 text-sm">
+        <li><a href="/#livre" class="footer-link">Le livre</a></li>
+        <li><a href="/#sommaire" class="footer-link">Sommaire</a></li>
+        <li><a href="/#avis" class="footer-link">Avis</a></li>
+        <li><a href="/#auteur" class="footer-link">L'auteur</a></li>
+        <li><a href="/#faq" class="footer-link">FAQ</a></li>
+        <li><a href="/fr/articles" class="footer-link">Articles Kubernetes</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <p class="font-semibold text-white">Contact</p>
+      <p class="mt-4 text-sm"><a href="mailto:bonjour@theartofkubernetes.com" class="footer-link inline-flex items-center gap-2"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>bonjour@theartofkubernetes.com</a></p>
+      <div class="mt-6"><a href="https://www.amazon.fr/dp/B0DMHYT348" class="btn btn-buy btn-sm " target="_blank" rel="noopener" data-track="buy-amazon">
+  <svg class="size-5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+  <span>Acheter sur Amazon.fr · 9,99 €</span>
+</a></div>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <p class="wrap py-6 text-xs text-slate-400">© 2024–2026 Florian Grignon. Tous droits réservés.</p>
+  </div>
+</footer>  <script src="/theme/assets/js/site.js" defer></script>
+</body>
 </html>

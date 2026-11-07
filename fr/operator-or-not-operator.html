@@ -1,306 +1,442 @@
-
-<!DOCTYPE html>
-<html lang="fr" class="light scroll-smooth" dir="ltr">
+<!doctype html>
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Operator ou ne pas Operator, telle est la question</title>
-  
-<meta name="author" content="Florian Grignon" />
-<meta name="description" content="L&#39;un des atouts majeurs de Kubernetes réside dans sa capacité à être extensible et à s&#39;adapter à une multitude de cas d&#39;usage grâce à des abstractions avancées. Parmi celles-ci, le modèle d’Operator occupe une place centrale en automatisant la gestion d&#39;applications complexes directement au sein du cluster Kubernetes." />
-<meta name="keywords" content="kubernetes, operator, administration, architecture, infrastructure">
+  <title>Operators Kubernetes : avantages, limites et bons usages</title>
+  <meta name="description" content="Les Operators automatisent la gestion d&#39;applications dans Kubernetes. Avantages, risques et cas où les utiliser : l&#39;avis de l&#39;auteur de The Art of Kubernetes.">
+  <meta name="author" content="Florian Grignon">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://theartofkubernetes.com/fr/operator-or-not-operator">
 
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="The Art of Kubernetes">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Operators Kubernetes : avantages, limites et bons usages">
+  <meta property="og:description" content="Les Operators automatisent la gestion d&#39;applications dans Kubernetes. Avantages, risques et cas où les utiliser : l&#39;avis de l&#39;auteur de The Art of Kubernetes.">
+  <meta property="og:url" content="https://theartofkubernetes.com/fr/operator-or-not-operator">
+  <meta property="og:image" content="https://theartofkubernetes.com/images/logo-operator.webp">
+  <meta property="og:image:width" content="800">
+  <meta property="og:image:height" content="500">
+  <meta property="og:image:alt" content="Operator ou pas Operator ? Avantages et limites des Operators Kubernetes">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="article:published_time" content="2024-08-01T00:00:00+02:00">
+  <meta property="article:modified_time" content="2026-11-07T00:00:00+01:00">
+  <meta property="article:author" content="Florian Grignon">
+  <meta property="article:tag" content="kubernetes">
+  <meta property="article:tag" content="operator">
+  <meta property="article:tag" content="operators kubernetes">
+  <meta property="article:tag" content="crd">
+  <meta property="article:tag" content="administration">
+  <meta property="article:tag" content="architecture">
+  <meta property="article:tag" content="infrastructure">
 
-  
-  <meta name="website" content="https://theartofkubernetes.com">
-  <meta name="email" content="bonjour@theartofkubernetes.com">
-  <meta name="version" content="1.0.0">
-  
-  <!-- favicon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/theme/assets/images/apple-touch-icon.png">
+  <link rel="preload" href="/theme/assets/fonts/libre-franklin-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/theme/assets/fonts/crimson-pro-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/theme/assets/css/site.css">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="192x192" href="/theme/assets/images/android-chrome-192x192.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/theme/assets/images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/theme/assets/images/favicon-16x16.png">
-  <link href="/theme/assets/images/favicon.ico" rel="shortcut icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="/theme/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f2a2e">
+  <link rel="alternate" type="application/atom+xml" href="https://theartofkubernetes.com/feeds/all.atom.xml" title="The Art of Kubernetes – Articles Kubernetes">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://theartofkubernetes.com/fr/operator-or-not-operator#article",
+      "mainEntityOfPage": "https://theartofkubernetes.com/fr/operator-or-not-operator",
+      "url": "https://theartofkubernetes.com/fr/operator-or-not-operator",
+      "headline": "Operator ou pas Operator ? Avantages et limites des Operators Kubernetes",
+      "description": "Les Operators automatisent la gestion d\u0027applications dans Kubernetes. Avantages, risques et cas o\u00f9 les utiliser : l\u0027avis de l\u0027auteur de The Art of Kubernetes.",
+      "image": "https://theartofkubernetes.com/images/logo-operator.webp",
+      "datePublished": "2024-08-01T00:00:00+02:00",
+      "dateModified": "2026-11-07T00:00:00+01:00",
+      "inLanguage": "fr",
+      "wordCount": 1423,
+      "keywords": "kubernetes, operator, operators kubernetes, crd, administration, architecture, infrastructure",
+      "author": {"@id": "https://theartofkubernetes.com/#author"},
+      "publisher": {"@id": "https://theartofkubernetes.com/#author"},
+      "isPartOf": {"@id": "https://theartofkubernetes.com/#website"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://theartofkubernetes.com/"},
+        {"@type": "ListItem", "position": 2, "name": "Articles Kubernetes", "item": "https://theartofkubernetes.com/fr/articles"},
+        {"@type": "ListItem", "position": 3, "name": "Operator ou pas Operator ? Avantages et limites des Operators Kubernetes"}
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://theartofkubernetes.com/#website",
+      "url": "https://theartofkubernetes.com/",
+      "name": "The Art of Kubernetes"
+    },
+{
+      "@type": "Person",
+      "@id": "https://theartofkubernetes.com/#author",
+      "name": "Florian Grignon",
+      "url": "https://theartofkubernetes.com/#auteur",
+      "image": "https://theartofkubernetes.com/theme/assets/images/auteur-florian-grignon-480.webp",
+      "jobTitle": "Formateur Cloud Native et Certified Kubernetes Administrator (CKA)",
+      "description": "Certifi\u00e9 Kubernetes Administrator (CKA), formateur Cloud Native (Kubernetes, Terraform) et auteur de The Art of Kubernetes. Il accompagne les entreprises dans la conception et la mise en place de leur infrastructure Cloud Native.",
+      "knowsAbout": ["Kubernetes", "Cloud Native", "Platform as a Service", "Terraform", "DevOps"],
+      "hasCredential": {
+        "@type": "EducationalOccupationalCredential",
+        "name": "Certified Kubernetes Administrator (CKA)",
+        "credentialCategory": "certification"
+      }
+    }  ]
+}
+</script>
+</head>
+<body class="bg-white font-sans text-slate-700 antialiased">
+  <a href="#contenu" class="skip-link">Aller au contenu</a>
+<header class="site-header sticky top-0 z-40 border-b border-slate-200/80 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+  <div class="wrap flex h-16 items-center justify-between gap-3 lg:h-20">
+    <a href="/" class="shrink-0 rounded-md" aria-label="The Art of Kubernetes – Accueil">
+      <img src="/theme/assets/images/logo-the-art-of-kubernetes-dark.webp" alt="The Art of Kubernetes" width="480" height="182" class="h-10 w-auto lg:h-12">
+    </a>
 
-  <!-- Css -->
-<!-- Main Css -->
-<link href="/theme/assets/libs/tobii/css/tobii.min.css" rel="stylesheet">
-<link href="/theme/assets/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
-<link href="/theme/assets/libs/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="/theme/assets/css/tailwind.css"></head>
+    <nav aria-label="Navigation principale" class="hidden lg:block">
+      <ul class="flex items-center gap-8 text-[15px] font-medium text-slate-700">
+        <li><a href="/#livre" class="nav-link">Le livre</a></li>
+        <li><a href="/#sommaire" class="nav-link">Sommaire</a></li>
+        <li><a href="/#avis" class="nav-link">Avis</a></li>
+        <li><a href="/#auteur" class="nav-link">L'auteur</a></li>
+        <li><a href="/fr/articles" class="nav-link">Articles</a></li>
+      </ul>
+    </nav>
 
-<body class="font-libre_franklin text-base text-black dark:text-white bg-white dark:bg-slate-900">
-    <!-- Loader Start -->
-    <!-- <div id="preloader">
-        <div id="status">
-            <div class="logo">
-                <img src="/theme/assets/images/logo-icon-64.png" class="d-block mx-auto animate-[spin_10s_linear_infinite]" alt="">
-            </div>
-            <div class="justify-content-center">
-                <div class="text-center">
-                    <h4 class="mb-0 mt-2 text-lg font-semibold">Upcover</h4>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- Loader End -->
-<!-- Navbar Start -->
-<nav class="navbar" id="navbar">
-    <div class="container relative flex flex-wrap items-center justify-between">
-        <a class="navbar-brand md:me-8" href="/index.html">
-            <span class="inline-block dark:hidden">
-                <img src="/theme/assets/images/TheArtOfKubernetes-logo-dark.png" class="l-dark" style="max-height: 100px;" alt="">
-                <img src="/theme/assets/images/TheArtOfKubernetes-logo-light.png" class="l-light" style="max-height: 100px;" alt="">
-            </span>
-            <img src="/theme/assets/images/TheArtOfKubernetes-logo-light.png" class="hidden dark:inline-block" style="max-height: 100px;" alt="">
+    <div class="flex items-center gap-2">
+      <a href="https://www.amazon.fr/dp/B0DMHYT348" class="btn btn-buy btn-sm" target="_blank" rel="noopener" data-track="buy-amazon-header">
+        <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <span class="sm:hidden">Acheter</span><span class="hidden sm:inline">Acheter sur Amazon</span>
+      </a>
+      <button type="button" class="inline-flex size-10 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 lg:hidden" aria-expanded="false" aria-controls="menu-mobile" data-menu-toggle>
+        <span class="sr-only">Menu</span>
+        <svg class="size-6 menu-open-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <svg class="size-6 menu-close-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+  </div>
+
+  <nav id="menu-mobile" aria-label="Navigation principale" class="hidden border-t border-slate-200 bg-white lg:hidden">
+    <ul class="wrap grid py-2 text-base font-medium text-slate-800">
+      <li><a href="/#livre" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>Le livre</a></li>
+      <li><a href="/#sommaire" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>Sommaire</a></li>
+      <li><a href="/#avis" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>Avis</a></li>
+      <li><a href="/#auteur" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>L'auteur</a></li>
+      <li><a href="/fr/articles" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>Articles</a></li>
+    </ul>
+  </nav>
+</header>  <main id="contenu">
+<article>
+  <header class="relative isolate overflow-hidden bg-night text-white">
+    <img src="/theme/assets/images/mountains-960.webp" alt="" width="960" height="540" class="absolute inset-0 -z-10 size-full object-cover opacity-30">
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-night/40 to-night"></div>
+    <div class="wrap max-w-4xl py-12 lg:py-16">
+      <nav aria-label="Fil d'Ariane" class="text-sm text-slate-300">
+        <ol class="flex flex-wrap items-center gap-1.5">
+          <li><a href="/" class="hover:text-white">Accueil</a></li>
+          <li aria-hidden="true"><svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"></polyline></svg></li>
+          <li><a href="/fr/articles" class="hover:text-white">Articles Kubernetes</a></li>
+          <li aria-hidden="true"><svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"></polyline></svg></li>
+          <li aria-current="page" class="text-slate-400">Operator ou pas Operator ? Avantages et limites des Operators Kubernetes</li>
+        </ol>
+      </nav>
+      <h1 class="mt-6 font-serif text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">Operator ou pas Operator ? Avantages et limites des Operators Kubernetes</h1>
+      <p class="mt-5 max-w-3xl text-lg leading-relaxed text-slate-200">Le modèle d'Operator occupe une place centrale dans l'écosystème Kubernetes en automatisant la gestion d'applications complexes au sein du cluster. Mais faut-il en déployer partout ? Avantages, limites et recommandations.</p>
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-300">
+        <a href="/#auteur" class="inline-flex items-center gap-3 hover:text-white" rel="author">
+          <img src="/theme/assets/images/auteur-florian-grignon-480.webp" alt="" width="40" height="40" class="size-10 rounded-full bg-white object-cover">
+          <span>Par <span class="font-semibold text-white">Florian Grignon</span></span>
         </a>
-        <!-- Navbar Manu -->
-        <div class="navigation lg_992:order-1 lg_992:flex hidden ms-auto" id="menu-collapse">
-            <ul class="navbar-nav nav-light sidebar-nav" id="navbar-navlist">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/#livre">Le Livre</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/#chapitres">Chapitres</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/#editions">Éditions</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/#publications">Publications</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="nav-icons flex items-center lg_992:order-2 ms-auto md:ms-8">
-            <!-- Navbar Button -->
-            <ul class="invisible lg:visible list-none menu-social mb-0">
-                <li class="inline">
-                    <a href="/#editions" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white uppercase">Acheter</a>
-                </li>
-            </ul>
-
-            <!-- Navbar Collapse Manu Button -->
-            <button data-collapse="menu-collapse" type="button" class="collapse-btn inline-flex items-center ms-2 text-dark dark:text-white lg_992:hidden" aria-controls="menu-collapse" aria-expanded="false">
-                <span class="sr-only">Navigation Menu</span>
-                <i class="mdi mdi-menu text-[24px]"></i>
-            </button>
-        </div>
+        <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Publié le <time datetime="2024-08-01T00:00:00+02:00">1er août 2024</time></span>
+        <span class="inline-flex items-center gap-1.5">Mis à jour le <time datetime="2026-11-07T00:00:00+01:00">7 novembre 2026</time></span>
+        <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>6 min de lecture</span>
+      </div>
     </div>
-</nav>
-<!-- Navbar End -->
-<!-- Start Hero -->
-<section class="relative table w-full py-36 lg:py-64 overflow-hidden" id="livre">
-    <div class="absolute inset-0 overflow-hidden">
-        <div class="absolute image-wrap -top-[350px] -bottom-[350px] -start-[100px] -end-[100px] min-w-full w-auto min-h-full h-auto overflow-hidden m-auto bg-[url('/theme/assets/images/Mountains.jpg')] bg-no-repeat bg-center bg-cover"></div>
-    </div>
-    <div class="absolute inset-0 bg-black/70"></div>
+  </header>
 
-    <div class="container relative">
-        <div class="grid grid-cols-1 text-center">
-            <h4 id="operator-or-not-operator" class="text-white font-semibold lg:leading-normal leading-normal tracking-wide text-4xl lg:text-5xl my-5">Operator ou ne pas Operator, telle est la question</h4>
-            <p class="text-white/70 text-lg max-w-xl mx-auto">L'un des atouts majeurs de Kubernetes réside dans sa capacité à être extensible et à s'adapter à une multitude de cas d'usage grâce à des abstractions avancées. Parmi celles-ci, le modèle d’Operator occupe une place centrale en automatisant la gestion d'applications complexes directement au sein du cluster Kubernetes.</p>
-        </div>
-    </div><!--end container-->
-</section><!--end section-->
-<div class="relative">
-    <div class="absolute block w-full h-auto bottom-[25px] z-1 start-0">
-        <a href="#about"><i class="mdi mdi-arrow-down absolute top-0 start-0 end-0 text-center inline-flex items-center justify-center rounded-full bg-white dark:bg-slate-900 h-12 w-12 mx-auto shadow-md dark:shadow-gray-800"></i></a>
-    </div>
+  <div class="wrap max-w-4xl">
+    <img src="/images/logo-operator.webp" alt="" width="800" height="500" class="-mt-px w-full rounded-b-3xl object-cover sm:mt-8 sm:rounded-3xl" fetchpriority="high">
+  </div>
 
-    <div class="shape absolute sm:-bottom-px -bottom-[2px] start-0 end-0 overflow-hidden text-white dark:text-slate-900">
-        <svg class="w-full h-auto scale-[2.0] origin-top" viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
-        </svg>
-    </div>
+  <div class="wrap max-w-4xl py-12 lg:py-16">
+    <div class="prose prose-lg prose-slate mx-auto max-w-3xl">
+      <p>Kubernetes est conçu pour prendre en charge tout type d'application conteneurisée de
+manière performante et résiliente. Sa flexibilité constitue un atout majeur : elle lui
+permet d'étendre ses fonctionnalités afin de supporter les divers services et outils d'une
+plateforme, tout en optimisant l'utilisation des ressources d'infrastructure d'une
+entreprise.</p>
+<div class="section" id="gerer-le-cycle-de-vie-des-applications-dans-kubernetes">
+<h2>Gérer le cycle de vie des applications dans Kubernetes</h2>
+<p>Les outils intégrés à une plateforme facilitent la gestion du cycle de vie des applications
+et des services. Par exemple, un bon système de déploiement continu (CD) permet de gérer
+efficacement les déploiements au sein de votre parc.</p>
+<p>Un autre système de gestion du cycle de vie des applications s'est imposé dans
+l'écosystème Kubernetes : celui des <strong>Operators</strong>. Ces derniers occupent désormais une place
+centrale en automatisant la gestion d'applications complexes directement au sein du
+cluster Kubernetes.</p>
+<p>Comme je le développe dans <a class="reference external" href="/">The Art of Kubernetes</a>, Kubernetes et son écosystème
+permettent de définir des plateformes efficaces pour chaque entreprise, avec les outils
+adaptés pour gérer le cycle de vie des applications et des services. Pour des raisons que
+je vais détailler, je recommande pourtant de recourir aux Operators uniquement dans des cas
+spécifiques. Dans d'autres situations, vous pouvez facilement gérer le service vous-même ou
+opter pour un service externalisé.</p>
 </div>
-<!-- End Hero -->
+<div class="section" id="qu-est-ce-qu-un-operator-kubernetes">
+<h2>Qu'est-ce qu'un Operator Kubernetes ?</h2>
+<p>Un Operator est une extension de Kubernetes qui encapsule la logique opérationnelle d'une
+application spécifique dans des contrôleurs personnalisés, en s'appuyant sur des
+<em>Custom Resource Definitions</em> (CRD), une fonctionnalité de Kubernetes qui permet de définir
+de nouvelles ressources. C'est en quelque sorte un « opérateur humain » codifié, capable de
+gérer des tâches complexes telles que le déploiement, la mise à jour, la sauvegarde, la
+restauration et même la mise à l'échelle de l'application, le tout de manière automatisée.</p>
+<p>Un Operator surveille ces ressources personnalisées et réagit aux événements associés en
+exécutant des actions prédéfinies pour gérer l'état de l'application. Il gère ainsi le
+cycle de vie d'une application ou d'un service, <em>stateful</em> ou <em>stateless</em>, de son
+installation à sa désinstallation, en passant par ses différents états fonctionnels. Il
+ajoute une couche de logique supplémentaire entre l'administrateur et l'application, ce qui
+nécessite des droits élevés, au minimum équivalents à ceux de l'administrateur du service
+concerné.</p>
+<p>Prenons l'exemple de l'Operator PostgreSQL <a class="reference external" href="https://cloudnative-pg.io/">CloudNativePG</a>.
+Il met à disposition de l'administrateur du cluster des CRD comme <tt class="docutils literal">Cluster</tt>, <tt class="docutils literal">Backup</tt>
+ou <tt class="docutils literal">ScheduledBackup</tt>. Pour déployer un cluster PostgreSQL à l'intérieur de votre cluster
+Kubernetes, il suffit de créer un objet <tt class="docutils literal">Cluster</tt> dans l'API Kubernetes avec les bons
+paramètres, puis de laisser l'Operator faire sa magie : il déploiera les Pods, Services et
+PersistentVolumes nécessaires pour obtenir un cluster PostgreSQL fonctionnel.</p>
+</div>
+<div class="section" id="l-automatisation-une-arme-a-double-tranchant">
+<h2>L'automatisation, une arme à double tranchant</h2>
+<p>L'avantage principal des Operators réside dans leur capacité à automatiser des tâches
+complexes qui, autrement, nécessiteraient une intervention humaine. Par exemple, la mise à
+jour d'une base de données <em>stateful</em>, avec toutes ses spécificités, peut être entièrement
+gérée par un Operator, minimisant ainsi les risques d'erreurs.</p>
+<blockquote class="pull-quote">
+Si les Operators automatisent l'exploitation d'un service, ils posent également un défi
+en déléguant les décisions critiques à un logiciel plutôt qu'à un expert humain.</blockquote>
+<p>Cependant, ce même avantage peut se transformer en inconvénient : l'administrateur risque
+de se reposer entièrement sur l'Operator et de perdre la connaissance approfondie de la
+logique de l'application. Il pourrait alors négliger la documentation et ne plus maîtriser
+suffisamment l'application pour la déployer et la maintenir en état de fonctionnement, ce
+qui pourrait avoir des conséquences graves en cas de problème majeur. L'opérateur humain
+doit rester expert des services qu'il administre.</p>
+<p>C'est un peu comme balayer la poussière sous le tapis : la poussière est toujours là, et
+vous risquez toujours d'y être allergique. Il n'existe pas de raccourci pour maîtriser un
+logiciel et atteindre un haut niveau de service : cela nécessite une solide expertise, de
+la pratique, ainsi qu'un investissement en temps.</p>
+<blockquote class="pull-quote">
+Les choix que vous déléguez à un Operator ne vous exemptent pas d'en assumer les
+conséquences, qu'elles soient positives ou négatives.</blockquote>
+</div>
+<div class="section" id="standardisation-et-reproductibilite-une-promesse-trompeuse">
+<h2>Standardisation et reproductibilité : une promesse trompeuse ?</h2>
+<p>Les Operators jouent un rôle essentiel dans la standardisation de la gestion des
+applications et des services, en garantissant que les meilleures pratiques sont appliquées
+de manière cohérente à travers différents environnements. Cette reproductibilité s'avère
+particulièrement utile dans des contextes multi-environnements ou
+<a class="reference external" href="https://theartofkubernetes.com/fr/multi-cluster-kubernetes">multi-clusters</a>, où il est crucial que les applications
+soient déployées et maintenues de manière uniforme.</p>
+<p>Cette standardisation peut cependant s'avérer trompeuse. En ajoutant une couche automatisée
+qui gère le cycle de vie du logiciel, comment être certain que ce logiciel se trouve dans
+le même état dans deux environnements différents ? Cela devient presque impossible si vous
+ne contrôlez pas l'ensemble de l'état de l'Operator, qui dépend de tout l'environnement. Cela
+pose un réel problème dans les environnements d'intégration continue (CI), où la
+reproductibilité et l'idempotence sont des notions essentielles pour garantir la fiabilité
+des résultats.</p>
+</div>
+<div class="section" id="des-operators-qui-ne-couvrent-pas-tous-les-besoins">
+<h2>Des Operators qui ne couvrent pas tous les besoins</h2>
+<p>Les Operators disponibles ne couvrent pas nécessairement l'ensemble des besoins
+opérationnels d'une application. Il est donc possible qu'un Operator limite votre capacité à
+maintenir le service dans un état pleinement fonctionnel. Une migration de l'application
+ou du service est-elle prise en compte par l'Operator ? Et même si c'est le cas,
+préférez-vous effectuer la migration à l'aide d'un Operator automatisé ou d'un opérateur
+humain ?</p>
+</div>
+<div class="section" id="resilience-qui-decide-en-cas-d-incident">
+<h2>Résilience : qui décide en cas d'incident ?</h2>
+<p>En automatisant la gestion des erreurs et en surveillant continuellement l'état des
+applications, les Operators contribuent à améliorer la disponibilité et la résilience des
+services. Un Operator peut par exemple détecter un dysfonctionnement et prendre
+automatiquement des mesures correctives, comme le redémarrage d'un composant défaillant ou
+la restauration à partir d'une sauvegarde.</p>
+<p>Mais là encore, le choix de la résolution des dysfonctionnements est laissé à un composant
+logiciel plutôt qu'à un expert de l'application. Cette automatisation peut entraîner
+l'application dans un état non seulement indésirable, mais aussi problématique, sans
+possibilité de retour en arrière.</p>
+</div>
+<div class="section" id="le-vrai-interet-des-operators-sur-mesure-pour-vos-applications">
+<h2>Le vrai intérêt : des Operators sur mesure pour vos applications</h2>
+<p>Je vais probablement m'écarter de ce que vous avez déjà entendu à propos des Operators,
+mais je pense que leur efficacité et leur utilité résident dans les <strong>Operators
+personnalisés pour vos propres applications</strong>. En développant un Operator adapté à vos
+besoins, vous pouvez l'utiliser facilement comme un service au sein de votre plateforme
+Kubernetes, sans dépendre de nombreux outils tiers. La logique de gestion du cycle de vie de
+vos applications étant intégrée dans l'Operator, vous pouvez instancier votre application
+aisément pour la tester depuis une autre plateforme.</p>
+<p>Attention cependant : le développement d'un Operator peut s'avérer complexe et nécessite une
+compréhension approfondie de Kubernetes. Cette complexité peut constituer une barrière à
+l'adoption, en particulier pour les petites équipes ou les entreprises qui ne disposent pas
+des compétences nécessaires en interne.</p>
+</div>
+<div class="section" id="maintenance-et-charge-cognitive-le-cout-cache-des-operators">
+<h2>Maintenance et charge cognitive : le coût caché des Operators</h2>
+<p>Comme tout composant logiciel de votre cluster, un Operator doit être maintenu, mis à jour
+et corrigé en cas de bugs ou de vulnérabilités. Cela implique un effort de maintenance
+continu, qui peut devenir coûteux si l'Operator est complexe ou s'il doit évoluer avec
+l'application qu'il gère. Cet effort doit également être pris en compte dans les cas
+critiques, comme une migration de l'application.</p>
+<p>Pour les équipes qui gèrent déjà un grand nombre d'outils et de services, l'ajout
+d'Operators peut aussi contribuer à une surcharge cognitive. Comprendre et gérer les
+différents Operators déployés dans un cluster peut devenir complexe, en particulier lorsque
+chacun a ses propres configurations et comportements.</p>
+</div>
+<div class="section" id="conclusion-utiliser-les-operators-avec-parcimonie">
+<h2>Conclusion : utiliser les Operators avec parcimonie</h2>
+<p>Les Operators sont aujourd'hui très (voire trop) répandus : plus de 277 étaient déjà
+référencés sur <a class="reference external" href="https://operatorhub.io/">OperatorHub</a> en 2024, et il est désormais possible
+de déployer presque n'importe quel composant logiciel open source avec un Operator. Il est
+cependant crucial de bien peser les avantages et les inconvénients d'un Operator par
+rapport à d'autres méthodes pour gérer le cycle de vie d'un composant logiciel.</p>
+<p>Je vous recommande donc d'utiliser les Operators avec parcimonie : principalement pour
+transformer vos propres applications en services au sein d'une plateforme, et dans les cas
+où vous n'avez pas d'autre choix.</p>
+</div>
 
-<!-- Start Content -->
-<section class="relative md:py-24 py-16">
-    <div class="container relative">
-        <div class="grid md:grid-cols-1 grid-cols-1 items-center">
-            <div class="md:col-span-12">
-                <div class="lg:ms-12">
-                    <section class="relative md:py-24 py-16"><!-- Section Auteur -->
-  <div class="container relative">
-    <div class="grid grid-cols-1 grid-rows-1">
-      <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">Florian Grignon, le 01/08/2024</h6>
-      <h3 class="font-semibold text-2xl leading-normal mb-4">Operator or not Operator, telle est la question</h3>
-
-      <p class="text-justify text-lg text-400">Nous constatons que Kubernetes est conçu pour prendre en charge tout type d’application conteneurisée de manière performante et résiliente. Sa flexibilité constitue un atout majeur, permettant à Kubernetes d'étendre ses fonctionnalités afin de supporter divers services et outils d’une plateforme, tout en optimisant l’utilisation des ressources d’infrastructure d’une entreprise. Les outils intégrés à une plateforme facilitent la gestion du cycle de vie des applications et des services. Par exemple, un bon système de déploiement continu (CD) permet de gérer efficacement les déploiements au sein de votre parc.</p>
-
-      <p class="text-justify text-lg text-400">Un autre système de gestion du cycle de vie des applications, qui s'est imposé dans l'écosystème Kubernetes, est celui des Operators. Ces derniers occupent désormais une place centrale en automatisant la gestion d'applications complexes directement au sein du cluster Kubernetes.</p>
     </div>
-  </div><!--end container-->
-</section>
+  </div>
+</article>
 
-<section class="relative md:py-8 py-8 bg-slate-50 dark:bg-slate-800" id="services">
-    <div class="container relative">
-        <div class="grid grid-cols-1 pb-6 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">Les Operators sont une autre manière de gérer le cycle de vie des applications et services au sein d’un cluster.</h3>
-        </div>
-    </div>
-</section>
-
-<section class="relative md:py-8 py-8">
-  <div class="container relative">
-    <div class="grid grid-cols-1 grid-rows-1">
-      <p class="text-justify text-lg text-400">Techniquement, un Operator automatise les interventions manuelles de l'administrateur d’une application en encapsulant la logique opérationnelle d'une application spécifique dans des contrôleurs personnalisés, souvent en s'appuyant sur des Custom Resource Definitions (CRD). Ainsi, il abstrait complètement la gestion du cycle de vie et l’automatisation de tâches complexes pour les applications.</p>
-      <p class="text-justify text-lg text-400">En pratique, un Operator permet de gérer le cycle de vie d’une application ou d’un service, qu'il soit stateful ou stateless, de son installation à sa désinstallation, en passant par ses différents états fonctionnels. Il ajoute une couche supplémentaire de logique entre l'administrateur et l’application, ce qui nécessite des droits élevés, au minimum équivalents à ceux de l’administrateur du service concerné.</p>
-      <p class="text-justify text-lg text-400">Comme nous l'avons observé tout au long de cet ouvrage, Kubernetes et son écosystème permettent de définir des plateformes efficaces pour chaque entreprise. Cela signifie que Kubernetes, associé aux outils disponibles pour gérer le cycle de vie des applications et des services, offre une solution performante.</p>
-      <p class="text-justify text-lg text-400">Pour des raisons que je vais détailler, je recommande de recourir aux Operators uniquement dans des cas spécifiques. Dans d'autres situations, vous pouvez facilement gérer le service vous-même ou opter pour un service externalisé.</p>
-      <p class="text-justify text-lg text-400">Ce post explore les avantages et les inconvénients des Operators, qui sont devenus incontournables pour de nombreuses entreprises souhaitant tirer le meilleur parti de Kubernetes.</p>
-    </div>
-  </div><!--end container-->
-</section>
-
-<section class="relative md:py-8 py-8 bg-slate-50 dark:bg-slate-800" id="services">
-    <div class="container relative">
-        <div class="grid grid-cols-1 pb-6 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">En automatisant la gestion des erreurs et en surveillant continuellement l'état des applications, les Operators contribuent à améliorer la disponibilité et la résilience des services.</h3>
-        </div>
-    </div>
-</section>
-
-<section class="relative md:py-8 py-8">
-  <div class="container relative">
-    <div class="grid grid-cols-1 grid-rows-1">
-      <p class="text-justify text-lg text-400">Un Operator est une extension de Kubernetes qui encapsule la logique opérationnelle d'une application spécifique. C'est en quelque sorte un "opérateur humain" codifié, capable de gérer des tâches complexes telles que le déploiement, la mise à jour, la sauvegarde, la restauration et même la mise à l’échelle de l’application, le tout de manière automatisée. Les Operators sont construits sur la base des Custom Resource Definitions (CRDs), une fonctionnalité de Kubernetes qui permet de définir de nouvelles ressources personnalisées. Un Operator surveille ces ressources et réagit aux événements associés en exécutant des actions prédéfinies pour gérer l'état de l'application. Prenons l’exemple de l’Operator PostgreSQL CloudNativePG. Les CRD suivants seront mis à disposition de l’administrateur du cluster : Cluster, Backup, ScheduleBackup… Pour déployer un cluster PostgreSQL à l’intérieur de votre cluster Kubernetes, il suffit de créer un objet CRD Cluster dans l’API Kubernetes avec les bons paramètres, puis de laisser l’Operator faire sa magie. L’Operator déploiera ensuite les Pods, Services et PersistentVolumes nécessaires pour obtenir un cluster PostgreSQL fonctionnel au sein du cluster.</p>
-    </div>
-  </div><!--end container-->
-</section>
-
-<section class="relative md:py-8 py-8 bg-slate-50 dark:bg-slate-800" id="services">
-    <div class="container relative">
-        <div class="grid grid-cols-1 pb-6 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">Si les Operators automatisent l’exploitation d’un service, ils posent également un défi en déléguant les décisions critiques à un logiciel plutôt qu'à un expert humain.</h3>
-        </div>
-    </div>
-</section>
-
-<section class="relative md:py-8 py-8">
-  <div class="container relative">
-    <div class="grid grid-cols-1 grid-rows-1">
-      <p class="text-justify text-lg text-400">L'avantage principal des Operators réside dans leur capacité à automatiser des tâches complexes qui, autrement, nécessiteraient une intervention humaine. Par exemple, la mise à jour d'une base de données stateful, avec toutes ses spécificités, peut être entièrement gérée par un Operator, minimisant ainsi les risques d'erreurs. Cependant, ce même avantage peut aussi se transformer en inconvénient, car l'administrateur risque de se reposer entièrement sur l'Operator, perdant ainsi la connaissance approfondie de la logique de l’application. Il pourrait alors négliger la documentation et ne plus avoir la connaissance suffisante de l’application pour déployer et maintenir l'application en état fonctionnel, ce qui pourrait avoir des conséquences graves en cas de problème majeur. L’administrateur, ou opérateur humain, doit rester experte des services qu’il ou elle administre.</p>
-    </div>
-  </div><!--end container-->
-</section>
-
-<section class="relative md:py-8 py-8 bg-slate-50 dark:bg-slate-800" id="services">
-    <div class="container relative">
-        <div class="grid grid-cols-1 pb-6 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">Les choix que vous déléguez à un Operator ne vous exemptent pas d’en assumer les conséquences, qu’elles soient positives ou négatives.</h3>
-        </div>
-    </div>
-</section>
-
-<section class="relative md:py-8 py-8">
-  <div class="container relative">
-    <div class="grid grid-cols-1 grid-rows-1">
-      <p class="text-justify text-lg text-400">C’est un peu comme balayer la poussière sous le tapis : la poussière est toujours là, et vous risquez toujours d’y être allergique. Il n’existe donc pas de raccourci pour maîtriser un logiciel et atteindre un haut niveau de service : cela nécessite une solide expertise, de la pratique, ainsi qu’un investissement en temps.</p>
-      <p class="text-justify text-lg text-400">Les Operators jouent un rôle essentiel dans la standardisation de la gestion des applications et des services, garantissant que les meilleures pratiques sont appliquées de manière cohérente à travers différents environnements. Cette reproductibilité s'avère particulièrement utile dans des contextes multi-environnements ou multi-clusters, où il est crucial que les applications soient déployées et maintenues de manière uniforme. Cependant, cette standardisation peut s'avérer trompeuse. En effet, en ajoutant une couche automatisée qui gère le cycle de vie du logiciel, comment pouvez-vous être certain que ce logiciel se trouve dans le même état dans deux environnements différents ? Cela devient presque impossible si vous ne contrôlez pas l'ensemble de l'état de l’Operator, qui dépend de tout l’environnement. Cela pose un réel problème dans les environnements d'intégration continue (CI), où la reproductibilité et l’idempotence sont des notions essentielles pour garantir la fiabilité des résultats.</p>
-      <p class="text-justify text-lg text-400">De plus, les Operators disponibles pour les applications ne couvrent pas nécessairement l'ensemble des besoins opérationnels. Il est donc envisageable qu'un Operator limite vos capacités à maintenir le service dans un état pleinement fonctionnel. Par exemple, une migration de l’application ou du service est-elle prise en compte par l’Operator ? Et même dans le cas où cela serait le cas, préférez-vous effectuer la migration à l'aide d'un Operator automatisé ou bien d'un opérateur humain ?</p>
-      <p class="text-justify text-lg text-400">En automatisant la gestion des erreurs et en surveillant continuellement l'état des applications, les Operators contribuent à améliorer la disponibilité et la résilience des services. Par exemple, un Operator peut détecter un dysfonctionnement et prendre automatiquement des mesures correctives, telles que le redémarrage d'un composant défaillant ou la restauration à partir d'une sauvegarde. Cependant, cela peut également constituer un désavantage, car le choix de la résolution des dysfonctionnements est laissé à un composant logiciel plutôt qu’à un expert de l’application. Cette automatisation peut entraîner l’application dans un état non seulement indésirable, mais aussi problématique, sans possibilité de retour en arrière.</p>
-
-      <p class="text-justify text-lg text-400 mt-6">Je vais probablement m'écarter de ce que vous avez déjà entendu à propos des Operators, mais je pense que leur efficacité et leur utilité résident dans les Operators personnalisés pour vos applications. En développant un Operator spécifiquement adapté à vos besoins, vous pouvez l'utiliser facilement comme un service au sein de votre plateforme Kubernetes, sans dépendre de nombreux outils tiers. La logique de gestion du cycle de vie de vos applications étant intégrée dans l’Operator, vous pouvez instancier votre application aisément pour la tester depuis une autre plateforme. Attention cependant, le développement d’un Operator peut s’avérer complexe et nécessite une compréhension approfondie de Kubernetes. Cette complexité peut constituer une barrière à l'adoption, en particulier pour les petites équipes ou les entreprises qui ne disposent pas des compétences nécessaires en interne.</p>
-      <p class="text-justify text-lg text-400">Comme tout composant logiciel dans votre cluster, un Operator doit être maintenu, mis à jour et corrigé en cas de bugs ou de vulnérabilités. Cela implique un effort de maintenance continu, qui peut devenir coûteux si l'Operator est complexe ou s'il doit évoluer avec l'application qu'il gère. Cet effort doit également être pris en compte dans les cas critiques, comme par exemple une migration de l’application.</p>
-      <p class="text-justify text-lg text-400">Pour les équipes qui gèrent déjà un grand nombre d'outils et de services, l'ajout d'Operators peut contribuer à une surcharge cognitive. Comprendre et gérer les différents Operators déployés dans un cluster peut devenir complexe, en particulier lorsque chaque Operator a ses propres configurations et comportements spécifiques.</p>
-      <p class="text-justify text-lg text-400 mt-6">Les Operators sont aujourd'hui très (voire trop) répandus. Plus de 277 sont listés sur OperatorHub à la disposition de la communauté Kubernetes. Il est désormais possible de déployer presque n’importe quel composant logiciel open-source avec un Operator. Cependant, il est crucial de bien peser les avantages et les inconvénients de l’utilisation d’un Operator par rapport à d’autres méthodes pour gérer le cycle de vie d’un composant logiciel.</p>
-    </div>
-  </div><!--end container-->
-</section>
-
-<section class="relative md:py-8 py-8">
-  <div class="container relative">
-    <div class="grid grid-cols-1 grid-rows-1">
-      <p class="text-justify text-lg text-400">Je vous recommande donc d’utiliser les Operators avec parcimonie, principalement pour transformer vos applications en services au sein d’une plateforme, ainsi que dans les cas où vous n’auriez d’autre choix.</p>
-    </div>
-  </div><!--end container-->
-</section>
-                </div>
-            </div>
-        </div>
-    </div><!--end container-->
-</section><!--end section-->
-<!-- End Content -->
-
-<section class="relative md:py-24 py-8"><!-- Section Auteur -->
-  <div class="container relative">
-    <div class="flex flex-col md:flex-row items-center">
-      <div class="basis-1/2">
-        <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">À propos de l'auteur…</h6>
-        <h3 class="font-semibold text-2xl leading-normal mb-4">À qui s'adresse ce livre ?</h3>
-        <p class="text-slate-400 max-w-xl mb-6">Bonjour ! Je m’appelle Florian Grignon. Je suis Certifié Administrateur Kubernetes (CKA) et Formateur autour des technologies Cloud Native (Terraform et Kubernetes). J’accompagne au quotidien des entreprises dans leur apprentissage et la mise en place de leur Infrastructure Cloud Native. L’infrastructure est trop souvent mal comprise, prise en compte trop tard, voire laissée à l’abandon. Pourtant, avec des solutions comme Kubernetes, il est maintenant possible, même pour de petites entreprises, de maîtriser leur infrastructure.</p>
-        <p class="text-slate-400 max-w-xl mb-6">J'ai écrit The Art of Kubernetes pour toutes les personnes qui sont amenées à travailler avec Kubernetes, afin de les aider à appréhender cette technologie.</p>
-
-        <div class="flex justify-center">
-          <a href="#chapitres" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white">Voir les chapitres <i class="mdi mdi-chevron-right align-middle ms-0.5"></i></a>
-        </div>
+<aside class="wrap my-16" aria-labelledby="book-cta-title">
+  <div class="relative grid items-center gap-8 overflow-hidden rounded-3xl bg-night p-6 text-white sm:grid-cols-[150px_1fr] sm:p-10 lg:grid-cols-[190px_1fr] lg:gap-12">
+    <img src="/theme/assets/images/mountains-960.webp" alt="" width="960" height="540" loading="lazy" class="pointer-events-none absolute inset-0 size-full object-cover opacity-25">
+    <img src="/images/the-art-of-kubernetes-couverture-400.webp" alt="The Art of Kubernetes - French Edition, Florian Grignon" width="400" height="568" loading="lazy" class="relative mx-auto w-36 rounded-md shadow-2xl ring-1 ring-white/10 sm:w-full">
+    <div class="relative">
+      <p class="eyebrow text-teal-300">Pour aller plus loin</p>
+      <h2 id="book-cta-title" class="font-serif text-3xl font-semibold leading-tight text-white sm:text-4xl">Maîtrisez Kubernetes avec The Art of Kubernetes</h2>
+      <p class="mt-4 max-w-2xl text-slate-200">Fondamentaux, architecture, plateforme sur mesure (PaaS), sécurité, écosystème et retours d'expérience : le livre de référence en français pour faire des choix éclairés avec Kubernetes.</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="https://www.amazon.fr/dp/B0DMHYT348" class="btn btn-buy  " target="_blank" rel="noopener" data-track="buy-amazon">
+  <svg class="size-5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+  <span>Acheter sur Amazon.fr · 9,99 €</span>
+</a>
+        <a href="#newsletter" class="btn btn-ghost-light"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg><span>Recevoir un chapitre gratuit</span></a>
       </div>
-
-      <div class="basis-1/2 flex justify-center pt-8">
-          <img src="/theme/assets/images/auteur-florian-grignon.webp" class="rounded-full shadow dark:shadow-gray-700 max-h-40 max-w-40 md:max-h-96 md:max-w-96" alt="Auteur de The Art of Kubernetes, Florian Grignon">
-      </div>
     </div>
-  </div><!--end container-->
-</section><!--end section auteur-->
-<!-- End Auteur -->
-<section class="relative lg:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="contact">
-    <div class="container relative">
-        <div class="grid grid-cols-1 pb-6 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">Rejoignez la communauté The Art of Kubernetes</h3>
-
-            <p class="text-slate-400 max-w-xl mx-auto">En vous inscrivant à la newsletter, vous recevrez un chapitre gratuitement du livre.</p>
-        </div><!--end grid-->
-
-        <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-6">
-            <div class="lg:col-span-7 md:col-span-6">
-                <img src="/theme/assets/images/contact.svg" alt="">
-            </div>
-
-            <div class="lg:col-span-5 md:col-span-6">
-                <div class="lg:ms-5">
-                    <div class="bg-white dark:bg-slate-900 rounded-md shadow dark:shadow-gray-700 p-6">
-                      <script async src="https://eocampaign1.com/form/7f014dd2-69c3-11ef-b4cf-7d716c80cc13.js" data-form="7f014dd2-69c3-11ef-b4cf-7d716c80cc13"></script>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!--end container-->
-</section><!--end section-->
-
-<!-- Footer Start -->
-<footer class="footer bg-dark-footer relative text-gray-200 dark:text-gray-200">
-    <div class="py-[30px] px-0 border-t border-slate-800">
-        <div class="container relative text-center">
-            <div class="grid lg:grid-cols-12 md:grid-cols-3 grid-cols-1 items-center">
-
-                <div class="lg:col-span-3 md:text-start text-center">
-                    <a href="#" class="text-[22px] focus:outline-none">
-                        <img src="/theme/assets/images/TheArtOfKubernetes-logo-light.png" class="mx-auto md:me-auto md:ms-0" alt="">
-                    </a>
-                </div>
-
-                <div class="lg:col-span-5 text-center mt-6 md:mt-0">
-                  <p class="mb-0">Copyright 2024-<script>document.write(new Date().getFullYear())</script> © Grignon Florian.<br/>All rights reserved.</p>
-                </div>
-
-            </div><!--end grid-->
-        </div><!--end container-->
+  </div>
+</aside>
+<section class="wrap max-w-4xl" aria-labelledby="author-box-title">
+  <div class="flex flex-col gap-6 rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-200 sm:flex-row sm:items-center sm:p-8">
+    <img src="/theme/assets/images/auteur-florian-grignon-480.webp" alt="Portrait dessiné de Florian Grignon" width="96" height="96" loading="lazy" class="size-24 shrink-0 rounded-full object-cover ring-4 ring-white">
+    <div>
+      <h2 id="author-box-title" class="text-sm font-semibold uppercase tracking-wider text-teal-700">À propos de l'auteur</h2>
+      <p class="mt-1 font-serif text-2xl font-semibold text-slate-900">Florian Grignon</p>
+      <p class="mt-2 text-slate-600">Certifié Kubernetes Administrator (CKA), formateur Cloud Native (Kubernetes, Terraform) et auteur de The Art of Kubernetes. Il accompagne les entreprises dans la conception et la mise en place de leur infrastructure Cloud Native.</p>
     </div>
-</footer><!--end footer-->
-<!-- Footer End -->
-        <!-- Back to top -->
-        <a href="#" onclick="topFunction()" id="back-to-top" class="back-to-top fixed hidden text-lg rounded-full z-10 bottom-5 right-5 size-9 text-center bg-teal-500 text-white leading-9"><i class="mdi mdi-arrow-up"></i></a>
-        <!-- Back to top -->
+  </div>
+</section>
 
-        <!-- JAVASCRIPTS -->
-        <script src="/theme/assets/libs/feather-icons/feather.min.js"></script>
-<script src="/theme/assets/libs/gumshoejs/gumshoe.polyfills.min.js"></script>
-<script src="/theme/assets/libs/tobii/js/tobii.min.js"></script>
-<script src="/theme/assets/libs/tiny-slider/min/tiny-slider.js"></script>
-<script src="/theme/assets/js/plugins.init.js"></script>
-<script src="/theme/assets/js/app.js"></script>        <!-- JAVASCRIPTS -->
-    </body>
+<section class="wrap py-16 lg:py-24" aria-labelledby="related-title">
+  <h2 id="related-title" class="section-title">À lire aussi</h2>
+  <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <article class="group relative flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-teal-300">
+  <img src="/images/logo-multicluster.webp" alt="" width="800" height="500" loading="lazy" decoding="async" class="aspect-[8/5] w-full object-cover">
+  <div class="flex flex-1 flex-col p-6">
+    <p class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500">
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><time datetime="2024-09-15T00:00:00+02:00">15 septembre 2024</time></span>
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>5 min de lecture</span>
+    </p>
+    <h3 class="mt-3 font-serif text-2xl font-semibold leading-snug text-slate-900">
+      <a href="/fr/multi-cluster-kubernetes" class="after:absolute after:inset-0 group-hover:text-teal-700">Multi-cluster Kubernetes : pourquoi et comment gérer plusieurs clusters</a>
+    </h3>
+    <p class="mt-2 line-clamp-3 text-slate-600">Grâce à son architecture modulaire, flexible et extensible, Kubernetes permet de mettre en place une architecture multi-cluster pour répondre à des besoins spécifiques. Pourquoi multiplier les clusters, et avec quels outils les gérer ?</p>
+    <p class="mt-auto pt-4 inline-flex items-center gap-1 font-medium text-teal-700">Lire l'article <svg class="size-4 transition group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+  </div>
+</article>
+    <article class="group relative flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-teal-300">
+  <img src="/images/logo-kubernetes.webp" alt="" width="800" height="500" loading="lazy" decoding="async" class="aspect-[8/5] w-full object-cover">
+  <div class="flex flex-1 flex-col p-6">
+    <p class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500">
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><time datetime="2024-09-09T00:00:00+02:00">9 septembre 2024</time></span>
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 min de lecture</span>
+    </p>
+    <h3 class="mt-3 font-serif text-2xl font-semibold leading-snug text-slate-900">
+      <a href="/fr/qu-est-ce-que-kubernetes" class="after:absolute after:inset-0 group-hover:text-teal-700">Qu'est-ce que Kubernetes ? Bien plus qu'un orchestrateur de conteneurs</a>
+    </h3>
+    <p class="mt-2 line-clamp-3 text-slate-600">Depuis plus de dix ans, Kubernetes s'est imposé dans les entreprises. Pourtant, ce n'est « qu'un » orchestrateur de conteneurs. Prenons cinq minutes pour comprendre ce qui fait vraiment sa force.</p>
+    <p class="mt-auto pt-4 inline-flex items-center gap-1 font-medium text-teal-700">Lire l'article <svg class="size-4 transition group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+  </div>
+</article>
+    <article class="group relative flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-teal-300">
+  <img src="/images/logo-edge.webp" alt="" width="800" height="500" loading="lazy" decoding="async" class="aspect-[8/5] w-full object-cover">
+  <div class="flex flex-1 flex-col p-6">
+    <p class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500">
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><time datetime="2024-08-14T00:00:00+02:00">14 août 2024</time></span>
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>4 min de lecture</span>
+    </p>
+    <h3 class="mt-3 font-serif text-2xl font-semibold leading-snug text-slate-900">
+      <a href="/fr/edge-computing-avec-kubernetes" class="after:absolute after:inset-0 group-hover:text-teal-700">Edge computing avec Kubernetes : architectures et outils</a>
+    </h3>
+    <p class="mt-2 line-clamp-3 text-slate-600">Kubernetes est un outil puissant pour orchestrer des environnements décentralisés, où les ressources sont dispersées géographiquement et où la latence, la bande passante et la résilience sont critiques. Tour d'horizon des architectures possibles.</p>
+    <p class="mt-auto pt-4 inline-flex items-center gap-1 font-medium text-teal-700">Lire l'article <svg class="size-4 transition group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+  </div>
+</article>
+  </div>
+</section>
+
+<section id="newsletter" class="scroll-mt-24 bg-teal-50" aria-labelledby="newsletter-title">
+  <div class="wrap grid items-center gap-10 py-16 lg:grid-cols-2 lg:py-24">
+    <div>
+      <p class="eyebrow"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Newsletter</p>
+      <h2 id="newsletter-title" class="section-title">Recevez gratuitement un chapitre du livre</h2>
+      <p class="mt-4 max-w-xl text-lg leading-relaxed text-slate-600">Inscrivez-vous à la newsletter des connaisseurs Kubernetes : vous recevez un chapitre de The Art of Kubernetes par email, puis les nouveaux articles, entretiens et actualités de l'écosystème. Pas de spam, désinscription en un clic.</p>
+    </div>
+    <div class="min-h-56 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <script async src="https://eocampaign1.com/form/7f014dd2-69c3-11ef-b4cf-7d716c80cc13.js" data-form="7f014dd2-69c3-11ef-b4cf-7d716c80cc13"></script>
+    </div>
+  </div>
+</section>  </main>
+<footer class="bg-night text-slate-300">
+  <div class="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+    <div>
+      <a href="/" class="inline-block rounded-md" aria-label="The Art of Kubernetes – Accueil">
+        <img src="/theme/assets/images/logo-the-art-of-kubernetes-light.webp" alt="The Art of Kubernetes" width="480" height="182" loading="lazy" class="h-14 w-auto">
+      </a>
+      <p class="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">Le livre pour comprendre Kubernetes, son écosystème, et bâtir une plateforme sur mesure.</p>
+    </div>
+
+    <nav aria-label="Le livre">
+      <p class="font-semibold text-white">Le livre</p>
+      <ul class="mt-4 grid gap-2 text-sm">
+        <li><a href="/#livre" class="footer-link">Le livre</a></li>
+        <li><a href="/#sommaire" class="footer-link">Sommaire</a></li>
+        <li><a href="/#avis" class="footer-link">Avis</a></li>
+        <li><a href="/#auteur" class="footer-link">L'auteur</a></li>
+        <li><a href="/#faq" class="footer-link">FAQ</a></li>
+        <li><a href="/fr/articles" class="footer-link">Articles Kubernetes</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <p class="font-semibold text-white">Contact</p>
+      <p class="mt-4 text-sm"><a href="mailto:bonjour@theartofkubernetes.com" class="footer-link inline-flex items-center gap-2"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>bonjour@theartofkubernetes.com</a></p>
+      <div class="mt-6"><a href="https://www.amazon.fr/dp/B0DMHYT348" class="btn btn-buy btn-sm " target="_blank" rel="noopener" data-track="buy-amazon">
+  <svg class="size-5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+  <span>Acheter sur Amazon.fr · 9,99 €</span>
+</a></div>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <p class="wrap py-6 text-xs text-slate-400">© 2024–2026 Florian Grignon. Tous droits réservés.</p>
+  </div>
+</footer>  <script src="/theme/assets/js/site.js" defer></script>
+</body>
 </html>

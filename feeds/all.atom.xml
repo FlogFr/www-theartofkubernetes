@@ -1,270 +1,444 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>The Art of Kubernetes</title><link href="https://theartofkubernetes.com/" rel="alternate"></link><link href="https://theartofkubernetes.com/feeds/all.atom.xml" rel="self"></link><id>https://theartofkubernetes.com/</id><updated>2024-09-15T00:00:00+02:00</updated><entry><title>Multi Cluster Kubernetes</title><link href="https://theartofkubernetes.com/fr/multi-cluster-kubernetes" rel="alternate"></link><published>2024-09-15T00:00:00+02:00</published><updated>2024-09-15T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-09-15:/fr/multi-cluster-kubernetes</id><summary type="html">Kubernetes, grâce à son architecture hautement modulable, flexible et extensible permet facilement de mettre en place une architecture multi clusters pour répondre à des besoins spécifiques.</summary><content type="html">&lt;section class="relative md:py-8 py-8"&gt;&lt;!-- Section Auteur --&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;
-      Florian Grignon, le 15/09/2024
-      &lt;a href="/assets/Article-Kubernetes-Multi-Cluster.pdf" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-right font-medium rounded-md bg-teal-500 text-white uppercase"&gt;Version PDF&lt;/a&gt;
-      &lt;/h6&gt;
-      &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Multi Cluster Kubernetes&lt;/h3&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Il est possible que vous ressentiez le besoin de disposer de plusieurs clusters. Cela implique, ni plus ni moins, d’avoir plusieurs control plan, donc plusieurs cerveaux.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Le besoin le plus répandu pour la mise en place de multiples clusters est l’isolation des ressources par environnement. Il est essentiel de bien définir ce que chaque environnement inclut ou exclut. Les équipes applicatives auront besoin, au minimum, d’un environnement de développement, d’un environnement de test fonctionnel, d’un environnement de pré-production (staging), et, bien entendu, d’un environnement de production pour livrer le produit aux clients. Il est également envisageable d’ajouter un environnement d’intégration, permettant de vérifier la compatibilité entre les différentes applications et leurs dépendances, ou encore un environnement de performance, conçu pour tester la robustesse du produit dans des conditions identiques à celles de la production, sans impacter les autres environnements.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Un autre besoin réside dans l’isolation des données par zone géographique. Il serait, par exemple, non conforme de faire communiquer la charge de travail d’un cluster en Europe avec celle d’un cluster situé aux États-Unis. Pour répondre à ce besoin, vous pouvez instancier un cluster par zone, agissant comme un isolant des données.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Maintenant que vous disposez de plusieurs clusters, il est probable que vous souhaitiez répartir vos charges de travail de manière optimisée entre ces différents environnements. Un outil particulièrement intéressant pour accomplir cela est Kubestellar. Cet outil présente l'avantage de ne nécessiter aucune modification de l'architecture de vos clusters Kubernetes existants. Il permet de centraliser la gestion de l'ensemble des ressources de vos clusters multiples, offrant ainsi une gestion simplifiée et unifiée depuis un point unique.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Il est également possible que vous envisagiez d’interconnecter vos clusters, notamment dans le but de mutualiser certains services de vos plateformes afin de réduire les coûts. Un &lt;a href="https://multicluster.sigs.k8s.io/"&gt;Special Interest Group (SIG)&lt;/a&gt; nommé Multicluster se penche sur cette problématique et propose des recommandations, des bonnes pratiques ainsi qu’une ligne de conduite pour y répondre. L’idée centrale consiste à fédérer plusieurs clusters Kubernetes afin de gérer les charges de travail de manière centralisée via une API Kubernetes unique. Dans cette approche, un cluster Kubernetes joue le rôle de « Hub » (cluster central) et communique avec des clusters dits « Spoke » (clusters satellites). Ce modèle de distribution, connu sous le nom de &lt;a href="https://en.wikipedia.org/wiki/Spoke%E2%80%93hub_distribution_paradigm"&gt;Hub and Spoke&lt;/a&gt;, est soutenu par plusieurs extensions de l’API Kubernetes.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Un Custom Resource Definition (CRD) Work représente une charge de travail constituée de plusieurs manifestes, ainsi que le cluster Spoke cible sur lequel elle doit être déployée. Un contrôleur, appelé Work Controller, prend en charge le déploiement de cette charge sur le cluster désigné. Quant à la gestion réseau des services, les CRD ServiceExport et ServiceImport font leur apparition, représentant respectivement l’exposition d’un service et son importation. Bien que leur implémentation, en termes conceptuels, reste relativement simple et proche des objets Service, ces objets sont spécifiquement adaptés aux environnements cloud.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;&lt;!--end container--&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8"&gt;
-    &lt;div class="container relative"&gt;
-      &lt;div class="grid grid-cols-1 pb-6 text-center"&gt;
-          &lt;img src="/images/Diag MultiCluster Hub and Spoke.png" width="100%" class="shadow dark:shadow-gray-700" alt="Fonctionnalités de Kubernetes" &gt;
-          &lt;p class="text-justify text-lg text-400"&gt;La fédération de clusters est possible avec une architecture satellite. On peut déployer des objets Work dans l’API centrale, et les contrôleurs des clusters satellites prennent en charge leur déploiement. Cependant, les pods des clusters ne peuvent pas communiquer directement entre eux, sauf via les services exposés par ServiceImport et ServiceExport.&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8"&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Cette stratégie multi-clusters comporte plusieurs avantages notables. Tout d’abord, il s’agit d’une solution développée par le projet Kubernetes, qui devrait donc continuer à évoluer et être maintenue dans les années à venir. Un autre avantage réside dans son architecture : elle permet d'être mise en place même après le déploiement de plusieurs clusters, pouvant ainsi être vue comme une amélioration naturelle de votre infrastructure. Cette architecture répond au besoin de distribution de charge sur plusieurs localisations avec des exigences d’interconnexion moindres comparé à une stratégie d’extension de clusters. La limite de cette architecture est que les Pods des différents clusters ne communiquent pas directement entre eux ; il est nécessaire de mettre en place le système ServiceExport / ServiceImport afin qu’ils puissent interagir avec les services des autres clusters.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Il existe également d'autres solutions, certes moins "officielles", mais redoutablement efficaces. Si vous avez besoin d’interconnecter vos clusters afin que vos applications déployées sur un cluster puissent découvrir les services d’un autre comme s’ils faisaient partie du même cluster, &lt;a href="https://docs.liqo.io/en/latest/introduction.html"&gt;Liqo&lt;/a&gt; est un outil minimaliste, open-source, et facile à prendre en main. &lt;a href="https://docs.liqo.io/en/latest/introduction.html"&gt;Liqo&lt;/a&gt; permet également une certaine gestion de la répartition des charges de travail entre les différents clusters interconnectés. Il se distingue par sa simplicité de déploiement, puisqu’il ne requiert aucune modification des configurations existantes des clusters. Cependant, intégrer plusieurs clusters hétérogènes, notamment ceux gérés par différents fournisseurs Cloud, peut rendre sa configuration et sa gestion plus complexes. De plus, la latence des interconnexions réseau peut varier en fonction des distances géographiques entre les clusters, impactant ainsi les performances des applications distribuées.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Un autre projet, spécialisé dans l’interconnexion des clusters de manière sécurisée et performante, mais sans gestion de charge distribuée, est &lt;a href="https://submariner.io"&gt;Submariner&lt;/a&gt;. Ce projet, désormais incubé par la CNCF, a été développé pour répondre aux défis de la connectivité réseau dans des environnements multi-cluster. &lt;a href="https://submariner.io"&gt;Submariner&lt;/a&gt; vise les déploiements nécessitant une communication entre clusters tout en maintenant une stricte isolation réseau.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;&lt;a href="https://submariner.io"&gt;Submariner&lt;/a&gt; permet d’établir une connectivité transparente en configurant automatiquement des tunnels sécurisés et performants, permettant ainsi aux pods d’un cluster d’accéder aux services d’un autre comme s’ils étaient sur le même réseau. Ce qui différencie Submariner, c’est son approche décentralisée qui ne nécessite aucun point de gestion centralisé pour orchestrer la connectivité, renforçant ainsi la disponibilité du réseau.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;D’un point de vue technique, Submariner repose sur des tunnels VPN chiffrés, utilisant des technologies éprouvées comme IPsec ou WireGuard, garantissant ainsi une communication sécurisée entre les clusters Kubernetes. Cette approche facilite l’extension des réseaux tout en maintenant des niveaux de sécurité élevés.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;&lt;!--end container--&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8"&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Le concept de Plateforme en tant que Service (PaaS) que nous avons abordé dans ce livre est parfaitement compatible avec une architecture multi-cluster et vous laisse une certaine liberté quant à son implémentation. Cela se traduit concrètement par l'implémentation d’une plateforme par cluster, ou bien seulement d’une partie de la plateforme par cluster, tout en mutualisant certains services et outils sur d’autres clusters. Encore une fois, il est préférable de limiter le nombre d’outils et de services dans une plateforme au strict minimum, ainsi que le nombre d’instances associées. Bien que plusieurs outils de gestion permettent de gagner du temps dans l’exploitation des services, il convient de rester vigilant quant à la complexité supplémentaire qu’ils peuvent ajouter à la suite logicielle que vous devrez maîtriser. Je me répète, mais il est crucial d’adopter une approche pragmatique avec les PaaS et de se concentrer sur les niveaux de service que la plateforme fournit, plutôt que sur la multiplication des outils, des services et des fonctionnalités.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;&lt;!--end container--&gt;
-&lt;/section&gt;</content><category term="kubernetes"></category><category term="kubernetes"></category><category term="multi-cluster"></category><category term="multi cluster"></category><category term="architecture"></category><category term="infrastructure"></category><category term="k8s"></category></entry><entry><title>Qu'est-ce que Kubernetes ?</title><link href="https://theartofkubernetes.com/fr/qu-est-ce-que-kubernetes" rel="alternate"></link><published>2024-09-09T00:00:00+02:00</published><updated>2024-09-09T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-09-09:/fr/qu-est-ce-que-kubernetes</id><summary type="html">Kubernetes a 10 ans, et a bien évolué durant tout ce temps. Prenons 5 minutes pour voir ce qu'est devenu Kubernetes.</summary><content type="html">&lt;section class="relative md:py-24 py-16"&gt;&lt;!-- Section Auteur --&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;
-      Florian Grignon, le 09/09/2024
-      &lt;a href="/assets/Article-Qu-est-ce-que-Kubernetes.pdf" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-right font-medium rounded-md bg-teal-500 text-white uppercase"&gt;Version PDF&lt;/a&gt;
-      &lt;/h6&gt;
-      &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Qu'est-ce que Kubernetes ?&lt;/h3&gt;
-
-      &lt;p class="text-justify text-lg text-400"&gt;Depuis quelques années, Kubernetes est présenté comme la technologie incontournable. Pourtant, si l'on s'en tient à sa définition stricte, il ne s'agit "que" d'un orchestrateur de conteneurs. Alors, pourquoi cette solution s'est-elle imposée comme indispensable dans tant d'entreprises depuis près de dix ans ?&lt;/p&gt;
-
-      &lt;p class="text-justify text-lg text-400 mt-6"&gt;La conteneurisation, couplée à l'architecture microservices, a profondément transformé le paysage de la gestion des infrastructures. Elle a facilité la gestion du cycle de vie des applications tout en rendant leur déploiement et leur évolution plus efficaces. Cette architecture "Cloud Native" a progressivement remplacé les approches de virtualisation traditionnelle, plus lourdes. Kubernetes a été conçu pour orchestrer ces conteneurs, en mettant un accent particulier sur la résilience et la performance. Il intègre des mécanismes permettant, par exemple, de redémarrer automatiquement les conteneurs défaillants ou de faire évoluer dynamiquement leur nombre pour absorber des pics de charge. Il est toutefois important de noter que certains aspects comme la sécurité, bien qu'essentiels, ne sont pas fournis nativement par Kubernetes.&lt;/p&gt;
-
-      &lt;p class="text-justify text-lg text-400 mt-6"&gt;Ce qui a véritablement permis à Kubernetes de surpasser ses concurrents réside dans sa flexibilité et son extensibilité. D'une part, Kubernetes offre une grande flexibilité grâce à son architecture modulaire, permettant ainsi de choisir et d’adapter ses composants en fonction des besoins spécifiques de chaque entreprise. Par exemple, bien que Kubernetes définisse un modèle réseau à respecter, il laisse une liberté totale quant à son implémentation via des solutions compatibles comme &lt;a href="https://cilium.io/"&gt;Cilium&lt;/a&gt;.&lt;/p&gt;
-
-      &lt;p class="text-justify text-lg text-400 mt-6"&gt;D'autre part, en tant que projet open-source, Kubernetes bénéficie d'une communauté dynamique qui développe rapidement des extensions pour enrichir ses fonctionnalités. Il est ainsi extrêmement facile d'ajouter, par exemple, l'extension CoreDNS pour permettre la découverte automatique des services au sein du cluster.&lt;/p&gt;
-
-      &lt;p class="text-justify text-lg text-400 mt-6"&gt;Grâce à cette flexibilité et cette extensibilité, Kubernetes répond non seulement aux attentes d'une infrastructure Cloud Native moderne, mais garantit également un très haut niveau de qualité de service.&lt;/p&gt;
-
-      &lt;p class="text-justify text-lg text-400 mt-6"&gt;L'association de l'architecture Cloud Native et de la puissance de Kubernetes change fondamentalement la perception de l'infrastructure. Celle-ci n'est plus seulement un socle technique pour faire fonctionner les applications ; elle devient une véritable plateforme capable de fournir des services et des outils standardisés. Ces outils simplifient la gestion du cycle de vie des applications : l'intégration d'un service de déploiement continu (Continuous Delivery), par exemple, permet de déployer automatiquement les services applicatifs. Par ailleurs, des services prêts à l'emploi, comme une base de données, peuvent être déployés facilement dans Kubernetes.&lt;/p&gt;
-
-      &lt;p class="text-justify text-lg text-400 mt-6"&gt;En somme, Kubernetes est bien plus qu’un simple orchestrateur de conteneurs : c’est une solution technologique conçue pour gérer de manière résiliente et performante des charges de travail conteneurisées. Grâce à son architecture flexible et extensible, couplée à une infrastructure Cloud Native, Kubernetes se positionne comme un outil de choix pour la mise en œuvre de plateformes. Il excelle notamment dans la gestion du cycle de vie des applications.&lt;/p&gt;
-
-      &lt;p class="text-justify text-lg text-400 mt-6"&gt;Aujourd'hui, il est possible d'implémenter des plateformes sur mesure, adaptées à chaque entreprise, offrant des niveaux de service élevés. Une plateforme en tant que service (Platform as a Service) ne représente pas seulement un atout technique, mais également un levier organisationnel. Elle constitue un cadre efficace de communication et de collaboration entre les équipes applicatives et celles en charge de l'infrastructure.&lt;/p&gt;
-
-      &lt;p class="text-justify text-lg text-400 mt-6"&gt;Dans &lt;a href="https://theartofkubernetes.com/"&gt;The Art of Kubernetes&lt;/a&gt;, j'explique comment nous pouvons devenir des artisans de l'infrastructure en affinant nos solutions pour optimiser l'infrastructure grâce à Kubernetes.&lt;/p&gt;
-
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/section&gt;</content><category term="kubernetes"></category><category term="kubernetes"></category><category term="paas"></category><category term="platform as a service"></category><category term="architecture"></category><category term="infrastructure"></category><category term="k8s"></category></entry><entry><title>Edge Computing avec Kubernetes</title><link href="https://theartofkubernetes.com/fr/edge-computing-avec-kubernetes" rel="alternate"></link><published>2024-08-14T00:00:00+02:00</published><updated>2024-08-14T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-08-14:/fr/edge-computing-avec-kubernetes</id><summary type="html">Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques</summary><content type="html">&lt;section class="relative md:py-8 py-8"&gt;&lt;!-- Section Auteur --&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;Florian Grignon, le 14/08/2024&lt;/h6&gt;
-      &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Edge Computing avec Kubernetes&lt;/h3&gt;
-
-      &lt;p class="text-justify text-lg text-400"&gt;L'Edge Computing, ou informatique en périphérie, est une approche décentralisée du traitement des données, où le calcul et le stockage sont effectués au plus près de la source de production des données, plutôt que dans un centre de données centralisé. Cette architecture permet de réduire la latence, d'améliorer la réactivité des applications, et de gérer les données de manière plus efficace localement, avant de les transférer éventuellement vers un cloud centralisé pour un traitement approfondi ou un stockage à long terme. En rapprochant la puissance de calcul des utilisateurs finaux, l'Edge Computing est particulièrement adapté aux environnements nécessitant une prise de décision en temps réel, tels que l'Internet des objets (IoT), les véhicules autonomes, ou encore les systèmes industriels intelligents.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;&lt;!--end container--&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8 bg-slate-50 dark:bg-slate-800" id="services"&gt;
-    &lt;div class="container relative"&gt;
-        &lt;div class="grid grid-cols-1 pb-6 text-center"&gt;
-            &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;L'un des principaux avantages du Edge Computing réside dans sa capacité à réduire la latence en traitant les données localement&lt;/h3&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8"&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Netflix a été l'une des premières entreprises à mettre en place des points de présence chez les fournisseurs d'accès Internet (FAI), stockant ainsi les films et séries au plus près des utilisateurs. Cette stratégie a permis une lecture optimale des contenus par les utilisateurs du monde entier. Sans aller jusqu'à déployer des points de présence au sein des FAI, ce qui n'est pas accessible à toutes les entreprises, l'architecture Edge Computing peut être réalisée sur plusieurs zones géographiques au sein de votre fournisseur d'infrastructure. Dans ce contexte, Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;L'un des principaux avantages du Edge Computing réside dans sa capacité à réduire la latence en traitant les données localement. Dans des secteurs tels que l'IoT, les véhicules autonomes ou les réseaux de capteurs industriels, la rapidité de traitement est essentielle. En utilisant Kubernetes pour orchestrer ces environnements, les entreprises peuvent déployer des microservices et des applications conteneurisées directement en périphérie du réseau. Cette approche permet non seulement de réduire les temps de réponse, mais aussi d'optimiser l'utilisation de la bande passante en évitant l'envoi de volumes massifs de données vers des centres de données centraux.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Kubernetes offre également une grande flexibilité pour le déploiement et la gestion des applications sur des infrastructures hétérogènes, typiques des environnements Edge. Que les ressources disponibles se trouvent sur des serveurs locaux, des dispositifs IoT, ou même des petits datacentres régionaux, Kubernetes permet de maintenir une homogénéité dans la gestion et l'orchestration des conteneurs. Cette standardisation facilite la scalabilité horizontale, essentielle dans le contexte du Edge, où la capacité de réponse doit s'adapter rapidement aux fluctuations de la demande.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Enfin, Kubernetes renforce la résilience des infrastructures Edge en assurant une gestion autonome des défaillances. En déployant des applications sur plusieurs nœuds en périphérie, Kubernetes garantit la continuité des services, même en cas de panne d'un des nœuds. Cette tolérance aux pannes est cruciale pour les applications critiques, qui ne peuvent se permettre de temps d'arrêt, comme dans la gestion des urgences ou les opérations industrielles.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;&lt;!--end container--&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8"&gt;&lt;!-- Section Auteur --&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid md:grid-cols-12 md:grid-rows-1 md:grid-rows-1 grid-cols-3 grid-rows-2 items-center gap-6"&gt;
-      &lt;div class="row-start-2 col-start-2 md:col-span-4 md:row-start-1"&gt;
-        &lt;div class="lg:me-8"&gt;
-          &lt;div class="relative"&gt;
-            &lt;img src="/images/logo-kubeedge.png" class="rounded-full shadow dark:shadow-gray-700" alt=""&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-
-      &lt;div class="row-start-1 col-span-3 md:col-span-8 md:row-start-1"&gt;
-        &lt;div class="lg:ms-8"&gt;
-          &lt;p class="text-justify text-lg text-400"&gt;L'implémentation du Edge Computing avec Kubernetes peut prendre plusieurs formes, en fonction des besoins spécifiques de l'entreprise et de l'architecture sous-jacente. Les approches les plus répandues incluent la distribution de la charge de travail sur plusieurs clusters Kubernetes, l'extension d'un cluster Kubernetes vers les périphéries du réseau, la fédération de plusieurs clusters, ou bien l'utilisation de plateformes clés en main dédiées au Edge, telles qu'&lt;a class="text-slate-400" href="https://lfedge.org/projects/open-horizon/"&gt;Open Horizon&lt;/a&gt; ou &lt;a class="text-slate-400" href="https://kubeedge.io/"&gt;KubeEdge&lt;/a&gt;.&lt;/p&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;&lt;!--end container--&gt;
-&lt;/section&gt;&lt;!--end section auteur--&gt;
-
-&lt;section class="relative md:py-8 py-8"&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;La manière la plus directe de faire du Edge est de déployer des points de présence sous forme de clusters Kubernetes en périphérie, répartis sur différents sites, chacun étant autonome mais interconnecté. Cette configuration est idéale pour les environnements où chaque site Edge a des exigences spécifiques en termes de traitement des données, mais où une certaine coordination entre les sites est nécessaire.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Une autre approche consiste à étendre un cluster Kubernetes centralisé vers les périphéries du réseau, en utilisant des nœuds distants pour exécuter des charges de travail spécifiques au Edge. Cette fonctionnalité de répartition de la charge de travail selon des règles métier est déjà implémentée et documentée dans Kubernetes. Cette méthode permet de centraliser la gestion tout en déployant des services spécifiques là où ils sont le plus nécessaires.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;La fédération de clusters est un cas particulier de gestion de plusieurs clusters Kubernetes. Kubernetes permet de gérer plusieurs clusters distribués comme une seule entité cohérente. Cette approche est particulièrement efficace pour orchestrer des déploiements multi-régionaux, où les applications doivent être disponibles et réactives dans plusieurs emplacements géographiques.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;De nombreuses entreprises intègrent Kubernetes avec des plateformes Edge spécialisées telles qu'&lt;a class="text-slate-400" href="https://lfedge.org/projects/open-horizon/"&gt;Open Horizon&lt;/a&gt; ou &lt;a class="text-slate-400" href="https://kubeedge.io/"&gt;KubeEdge&lt;/a&gt;, conçues pour faciliter le déploiement et la gestion des applications sur des infrastructures distribuées. Ces plateformes ajoutent des fonctionnalités spécifiques pour gérer les contraintes du Edge, comme la gestion intermittente de la connectivité réseau ou l'intégration avec des dispositifs IoT.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8 bg-slate-50 dark:bg-slate-800" id="services"&gt;
-    &lt;div class="container relative"&gt;
-        &lt;div class="grid grid-cols-1 pb-6 text-center"&gt;
-            &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques&lt;/h3&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8"&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Si vous disposez des ressources en interne, il est également possible de développer une solution Edge à partir de Kubernetes. Cependant, si vous en êtes à ce stade, il est probable que ce livre ne vous apporte plus de nouvelles connaissances.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Le Edge Computing avec Kubernetes ouvre la voie à des architectures plus réactives, résilientes et flexibles, répondant aux exigences croissantes des entreprises modernes en matière de traitement des données en temps réel. L'implémentation de Kubernetes dans des environnements Edge permet non seulement de tirer parti des avantages du Edge Computing, mais aussi de standardiser et d'uniformiser la gestion des ressources à travers des infrastructures dispersées, tout en maintenant une cohérence opérationnelle à l'échelle mondiale.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;&lt;!--end container--&gt;
-&lt;/section&gt;&lt;!--end section auteur--&gt;</content><category term="kubernetes"></category><category term="kubernetes"></category><category term="edge computing"></category><category term="edge"></category><category term="optimisation"></category><category term="architecture"></category><category term="infrastructure"></category><category term="périphérie"></category></entry><entry><title>Operator ou ne pas Operator, telle est la question</title><link href="https://theartofkubernetes.com/fr/operator-or-not-operator" rel="alternate"></link><published>2024-08-01T00:00:00+02:00</published><updated>2024-08-01T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-08-01:/fr/operator-or-not-operator</id><summary type="html">L'un des atouts majeurs de Kubernetes réside dans sa capacité à être extensible et à s'adapter à une multitude de cas d'usage grâce à des abstractions avancées. Parmi celles-ci, le modèle d’Operator occupe une place centrale en automatisant la gestion d'applications complexes directement au sein du cluster Kubernetes.</summary><content type="html">&lt;section class="relative md:py-24 py-16"&gt;&lt;!-- Section Auteur --&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;Florian Grignon, le 01/08/2024&lt;/h6&gt;
-      &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Operator or not Operator, telle est la question&lt;/h3&gt;
-
-      &lt;p class="text-justify text-lg text-400"&gt;Nous constatons que Kubernetes est conçu pour prendre en charge tout type d’application conteneurisée de manière performante et résiliente. Sa flexibilité constitue un atout majeur, permettant à Kubernetes d'étendre ses fonctionnalités afin de supporter divers services et outils d’une plateforme, tout en optimisant l’utilisation des ressources d’infrastructure d’une entreprise. Les outils intégrés à une plateforme facilitent la gestion du cycle de vie des applications et des services. Par exemple, un bon système de déploiement continu (CD) permet de gérer efficacement les déploiements au sein de votre parc.&lt;/p&gt;
-
-      &lt;p class="text-justify text-lg text-400"&gt;Un autre système de gestion du cycle de vie des applications, qui s'est imposé dans l'écosystème Kubernetes, est celui des Operators. Ces derniers occupent désormais une place centrale en automatisant la gestion d'applications complexes directement au sein du cluster Kubernetes.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;&lt;!--end container--&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8 bg-slate-50 dark:bg-slate-800" id="services"&gt;
-    &lt;div class="container relative"&gt;
-        &lt;div class="grid grid-cols-1 pb-6 text-center"&gt;
-            &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Les Operators sont une autre manière de gérer le cycle de vie des applications et services au sein d’un cluster.&lt;/h3&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8"&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Techniquement, un Operator automatise les interventions manuelles de l'administrateur d’une application en encapsulant la logique opérationnelle d'une application spécifique dans des contrôleurs personnalisés, souvent en s'appuyant sur des Custom Resource Definitions (CRD). Ainsi, il abstrait complètement la gestion du cycle de vie et l’automatisation de tâches complexes pour les applications.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;En pratique, un Operator permet de gérer le cycle de vie d’une application ou d’un service, qu'il soit stateful ou stateless, de son installation à sa désinstallation, en passant par ses différents états fonctionnels. Il ajoute une couche supplémentaire de logique entre l'administrateur et l’application, ce qui nécessite des droits élevés, au minimum équivalents à ceux de l’administrateur du service concerné.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Comme nous l'avons observé tout au long de cet ouvrage, Kubernetes et son écosystème permettent de définir des plateformes efficaces pour chaque entreprise. Cela signifie que Kubernetes, associé aux outils disponibles pour gérer le cycle de vie des applications et des services, offre une solution performante.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Pour des raisons que je vais détailler, je recommande de recourir aux Operators uniquement dans des cas spécifiques. Dans d'autres situations, vous pouvez facilement gérer le service vous-même ou opter pour un service externalisé.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Ce post explore les avantages et les inconvénients des Operators, qui sont devenus incontournables pour de nombreuses entreprises souhaitant tirer le meilleur parti de Kubernetes.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;&lt;!--end container--&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8 bg-slate-50 dark:bg-slate-800" id="services"&gt;
-    &lt;div class="container relative"&gt;
-        &lt;div class="grid grid-cols-1 pb-6 text-center"&gt;
-            &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;En automatisant la gestion des erreurs et en surveillant continuellement l'état des applications, les Operators contribuent à améliorer la disponibilité et la résilience des services.&lt;/h3&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8"&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Un Operator est une extension de Kubernetes qui encapsule la logique opérationnelle d'une application spécifique. C'est en quelque sorte un "opérateur humain" codifié, capable de gérer des tâches complexes telles que le déploiement, la mise à jour, la sauvegarde, la restauration et même la mise à l’échelle de l’application, le tout de manière automatisée. Les Operators sont construits sur la base des Custom Resource Definitions (CRDs), une fonctionnalité de Kubernetes qui permet de définir de nouvelles ressources personnalisées. Un Operator surveille ces ressources et réagit aux événements associés en exécutant des actions prédéfinies pour gérer l'état de l'application. Prenons l’exemple de l’Operator PostgreSQL CloudNativePG. Les CRD suivants seront mis à disposition de l’administrateur du cluster : Cluster, Backup, ScheduleBackup… Pour déployer un cluster PostgreSQL à l’intérieur de votre cluster Kubernetes, il suffit de créer un objet CRD Cluster dans l’API Kubernetes avec les bons paramètres, puis de laisser l’Operator faire sa magie. L’Operator déploiera ensuite les Pods, Services et PersistentVolumes nécessaires pour obtenir un cluster PostgreSQL fonctionnel au sein du cluster.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;&lt;!--end container--&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8 bg-slate-50 dark:bg-slate-800" id="services"&gt;
-    &lt;div class="container relative"&gt;
-        &lt;div class="grid grid-cols-1 pb-6 text-center"&gt;
-            &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Si les Operators automatisent l’exploitation d’un service, ils posent également un défi en déléguant les décisions critiques à un logiciel plutôt qu'à un expert humain.&lt;/h3&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8"&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;L'avantage principal des Operators réside dans leur capacité à automatiser des tâches complexes qui, autrement, nécessiteraient une intervention humaine. Par exemple, la mise à jour d'une base de données stateful, avec toutes ses spécificités, peut être entièrement gérée par un Operator, minimisant ainsi les risques d'erreurs. Cependant, ce même avantage peut aussi se transformer en inconvénient, car l'administrateur risque de se reposer entièrement sur l'Operator, perdant ainsi la connaissance approfondie de la logique de l’application. Il pourrait alors négliger la documentation et ne plus avoir la connaissance suffisante de l’application pour déployer et maintenir l'application en état fonctionnel, ce qui pourrait avoir des conséquences graves en cas de problème majeur. L’administrateur, ou opérateur humain, doit rester experte des services qu’il ou elle administre.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;&lt;!--end container--&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8 bg-slate-50 dark:bg-slate-800" id="services"&gt;
-    &lt;div class="container relative"&gt;
-        &lt;div class="grid grid-cols-1 pb-6 text-center"&gt;
-            &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Les choix que vous déléguez à un Operator ne vous exemptent pas d’en assumer les conséquences, qu’elles soient positives ou négatives.&lt;/h3&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8"&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;C’est un peu comme balayer la poussière sous le tapis : la poussière est toujours là, et vous risquez toujours d’y être allergique. Il n’existe donc pas de raccourci pour maîtriser un logiciel et atteindre un haut niveau de service : cela nécessite une solide expertise, de la pratique, ainsi qu’un investissement en temps.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Les Operators jouent un rôle essentiel dans la standardisation de la gestion des applications et des services, garantissant que les meilleures pratiques sont appliquées de manière cohérente à travers différents environnements. Cette reproductibilité s'avère particulièrement utile dans des contextes multi-environnements ou multi-clusters, où il est crucial que les applications soient déployées et maintenues de manière uniforme. Cependant, cette standardisation peut s'avérer trompeuse. En effet, en ajoutant une couche automatisée qui gère le cycle de vie du logiciel, comment pouvez-vous être certain que ce logiciel se trouve dans le même état dans deux environnements différents ? Cela devient presque impossible si vous ne contrôlez pas l'ensemble de l'état de l’Operator, qui dépend de tout l’environnement. Cela pose un réel problème dans les environnements d'intégration continue (CI), où la reproductibilité et l’idempotence sont des notions essentielles pour garantir la fiabilité des résultats.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;De plus, les Operators disponibles pour les applications ne couvrent pas nécessairement l'ensemble des besoins opérationnels. Il est donc envisageable qu'un Operator limite vos capacités à maintenir le service dans un état pleinement fonctionnel. Par exemple, une migration de l’application ou du service est-elle prise en compte par l’Operator ? Et même dans le cas où cela serait le cas, préférez-vous effectuer la migration à l'aide d'un Operator automatisé ou bien d'un opérateur humain ?&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;En automatisant la gestion des erreurs et en surveillant continuellement l'état des applications, les Operators contribuent à améliorer la disponibilité et la résilience des services. Par exemple, un Operator peut détecter un dysfonctionnement et prendre automatiquement des mesures correctives, telles que le redémarrage d'un composant défaillant ou la restauration à partir d'une sauvegarde. Cependant, cela peut également constituer un désavantage, car le choix de la résolution des dysfonctionnements est laissé à un composant logiciel plutôt qu’à un expert de l’application. Cette automatisation peut entraîner l’application dans un état non seulement indésirable, mais aussi problématique, sans possibilité de retour en arrière.&lt;/p&gt;
-
-      &lt;p class="text-justify text-lg text-400 mt-6"&gt;Je vais probablement m'écarter de ce que vous avez déjà entendu à propos des Operators, mais je pense que leur efficacité et leur utilité résident dans les Operators personnalisés pour vos applications. En développant un Operator spécifiquement adapté à vos besoins, vous pouvez l'utiliser facilement comme un service au sein de votre plateforme Kubernetes, sans dépendre de nombreux outils tiers. La logique de gestion du cycle de vie de vos applications étant intégrée dans l’Operator, vous pouvez instancier votre application aisément pour la tester depuis une autre plateforme. Attention cependant, le développement d’un Operator peut s’avérer complexe et nécessite une compréhension approfondie de Kubernetes. Cette complexité peut constituer une barrière à l'adoption, en particulier pour les petites équipes ou les entreprises qui ne disposent pas des compétences nécessaires en interne.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Comme tout composant logiciel dans votre cluster, un Operator doit être maintenu, mis à jour et corrigé en cas de bugs ou de vulnérabilités. Cela implique un effort de maintenance continu, qui peut devenir coûteux si l'Operator est complexe ou s'il doit évoluer avec l'application qu'il gère. Cet effort doit également être pris en compte dans les cas critiques, comme par exemple une migration de l’application.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Pour les équipes qui gèrent déjà un grand nombre d'outils et de services, l'ajout d'Operators peut contribuer à une surcharge cognitive. Comprendre et gérer les différents Operators déployés dans un cluster peut devenir complexe, en particulier lorsque chaque Operator a ses propres configurations et comportements spécifiques.&lt;/p&gt;
-      &lt;p class="text-justify text-lg text-400 mt-6"&gt;Les Operators sont aujourd'hui très (voire trop) répandus. Plus de 277 sont listés sur OperatorHub à la disposition de la communauté Kubernetes. Il est désormais possible de déployer presque n’importe quel composant logiciel open-source avec un Operator. Cependant, il est crucial de bien peser les avantages et les inconvénients de l’utilisation d’un Operator par rapport à d’autres méthodes pour gérer le cycle de vie d’un composant logiciel.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;&lt;!--end container--&gt;
-&lt;/section&gt;
-
-&lt;section class="relative md:py-8 py-8"&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Je vous recommande donc d’utiliser les Operators avec parcimonie, principalement pour transformer vos applications en services au sein d’une plateforme, ainsi que dans les cas où vous n’auriez d’autre choix.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;&lt;!--end container--&gt;
-&lt;/section&gt;</content><category term="kubernetes"></category><category term="kubernetes"></category><category term="operator"></category><category term="administration"></category><category term="architecture"></category><category term="infrastructure"></category></entry><entry><title>Kubernetes AutoScaler</title><link href="https://theartofkubernetes.com/fr/kubernetes-autoscaler" rel="alternate"></link><published>2024-05-20T00:00:00+02:00</published><updated>2024-05-20T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-05-20:/fr/kubernetes-autoscaler</id><summary type="html">Comment Auto Scaler verticalement et horizontalement votre Infrastructure Kubernetes avec Kubernetes AutoScaler</summary><content type="html">&lt;h6 class="text-teal-500 text-sm font-semibold uppercase mb-2"&gt;Kubernetes Autoscaler&lt;/h6&gt;
-&lt;p class="text-slate-400 max-w-xl mb-6"&gt;Kubernetes Autoscaler&lt;/p&gt;</content><category term="kubernetes"></category><category term="kubernetes"></category><category term="autoscaler"></category></entry><entry><title>Bienvenue</title><link href="https://theartofkubernetes.com/fr/bienvenue" rel="alternate"></link><published>2024-05-01T00:00:00+02:00</published><updated>2024-05-01T00:00:00+02:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-05-01:/fr/bienvenue</id><summary type="html">Vous venez de rejoindre les connaisseurs de Kubernetes</summary><content type="html">&lt;!-- Section Connaisseur Kubernetes --&gt;
-&lt;section class="relative"&gt;
-  &lt;div class="container relative"&gt;
-    &lt;div class="grid grid-cols-1 grid-rows-1"&gt;
-      &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Qu'est-ce que les connaisseurs de Kubernetes ?&lt;/h3&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;Bienvenue parmis les connaisseurs de Kubernetes. Les connaisseurs de Kubernetes est une communauté qui partage le maximum de connaissances à propos de ce magnifique outil qu'est Kubernetes. Nous offrons une vue exhaustive des possibilités et des limites de Kubernetes et de son écosystème étendu, afin de répondre à vos besoins d'infrastructure pour vos applications.&lt;/p&gt;
-
-      &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Vous recevrez bientot un chapitre gratuitement par email&lt;/h3&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;J'espère que le livre The Art of Kubernetes vous servira de guide, vous permettant de faire des choix éclairés et autonomes concernant l'utilisation de Kubernetes. Pour vous donner une idée de à quoi ressemble ce livre, je vous en partage un chapitre très bientôt par email.&lt;/p&gt;
-
-      &lt;h3 class="font-semibold text-2xl leading-normal mb-4"&gt;Ainsi que toutes les nouvelles autour de Kubernetes&lt;/h3&gt;
-      &lt;p class="text-justify text-lg text-400"&gt;La mailing list des connaisseurs de Kubernetes ne s'arrête pas qu'au livre. Vous serez prévenu en premier de toutes les publications d'articles, entretiens, podcasts intéressant autour de Kubernetes.&lt;/p&gt;
-
-      &lt;div class="container flex flex-col items-center"&gt;
-      &lt;div class="relative content-center mt-8"&gt;
-              &lt;a href="/" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white"&gt;Page d'accueil&lt;/a&gt;
-      &lt;/div&gt;
-      &lt;/div&gt;
-
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/section&gt;
-&lt;!-- End Section Connaisseur Kubernetes --&gt;</content><category term="none"></category><category term="bienvenue"></category></entry></feed>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>The Art of Kubernetes</title><link href="https://theartofkubernetes.com/" rel="alternate"></link><link href="https://theartofkubernetes.com/feeds/all.atom.xml" rel="self"></link><id>https://theartofkubernetes.com/</id><updated>2026-11-07T00:00:00+01:00</updated><entry><title>Multi-cluster Kubernetes : pourquoi et comment gérer plusieurs clusters</title><link href="https://theartofkubernetes.com/fr/multi-cluster-kubernetes" rel="alternate"></link><published>2024-09-15T00:00:00+02:00</published><updated>2026-11-07T00:00:00+01:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-09-15:/fr/multi-cluster-kubernetes</id><summary type="html">Grâce à son architecture modulaire, flexible et extensible, Kubernetes permet de mettre en place une architecture multi-cluster pour répondre à des besoins spécifiques. Pourquoi multiplier les clusters, et avec quels outils les gérer ?</summary><content type="html">&lt;p&gt;Il est possible que vous ressentiez le besoin de disposer de plusieurs clusters
+Kubernetes. Cela implique, ni plus ni moins, d'avoir plusieurs &lt;em&gt;control planes&lt;/em&gt;, donc
+plusieurs cerveaux.&lt;/p&gt;
+&lt;div class="section" id="pourquoi-utiliser-plusieurs-clusters-kubernetes"&gt;
+&lt;h2&gt;Pourquoi utiliser plusieurs clusters Kubernetes ?&lt;/h2&gt;
+&lt;p&gt;Le besoin le plus répandu est &lt;strong&gt;l'isolation des ressources par environnement&lt;/strong&gt;. Il est
+essentiel de bien définir ce que chaque environnement inclut ou exclut. Les équipes
+applicatives auront besoin, au minimum, d'un environnement de développement, d'un
+environnement de test fonctionnel, d'un environnement de pré-production (&lt;em&gt;staging&lt;/em&gt;) et,
+bien entendu, d'un environnement de production pour livrer le produit aux clients. Il est
+également envisageable d'ajouter un environnement d'intégration, qui permet de vérifier la
+compatibilité entre les différentes applications et leurs dépendances, ou encore un
+environnement de performance, conçu pour tester la robustesse du produit dans des
+conditions identiques à celles de la production, sans impacter les autres environnements.&lt;/p&gt;
+&lt;p&gt;Un autre besoin réside dans &lt;strong&gt;l'isolation des données par zone géographique&lt;/strong&gt;. Il serait,
+par exemple, non conforme de faire communiquer la charge de travail d'un cluster en Europe
+avec celle d'un cluster situé aux États-Unis. Pour répondre à ce besoin, vous pouvez
+instancier un cluster par zone, qui agit comme un isolant des données. C'est aussi une
+approche courante pour faire de l'&lt;a class="reference external" href="https://theartofkubernetes.com/fr/edge-computing-avec-kubernetes"&gt;edge computing avec Kubernetes&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="repartir-les-charges-de-travail-avec-kubestellar"&gt;
+&lt;h2&gt;Répartir les charges de travail avec KubeStellar&lt;/h2&gt;
+&lt;p&gt;Maintenant que vous disposez de plusieurs clusters, vous souhaiterez probablement répartir
+vos charges de travail de manière optimisée entre ces différents environnements. Un outil
+particulièrement intéressant pour cela est &lt;a class="reference external" href="https://kubestellar.io/"&gt;KubeStellar&lt;/a&gt;. Il
+présente l'avantage de ne nécessiter aucune modification de l'architecture de vos clusters
+Kubernetes existants, et permet de centraliser la gestion de l'ensemble des ressources de
+vos clusters depuis un point unique.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="federer-ses-clusters-le-modele-hub-and-spoke-du-sig-multicluster"&gt;
+&lt;h2&gt;Fédérer ses clusters : le modèle Hub and Spoke du SIG Multicluster&lt;/h2&gt;
+&lt;p&gt;Vous envisagez peut-être aussi d'interconnecter vos clusters, notamment pour mutualiser
+certains services de vos plateformes afin de réduire les coûts. Un
+&lt;a class="reference external" href="https://multicluster.sigs.k8s.io/"&gt;Special Interest Group (SIG) nommé Multicluster&lt;/a&gt; se
+penche sur cette problématique et propose des recommandations, des bonnes pratiques ainsi
+qu'une ligne de conduite pour y répondre.&lt;/p&gt;
+&lt;p&gt;L'idée centrale consiste à fédérer plusieurs clusters Kubernetes afin de gérer les charges
+de travail de manière centralisée via une API Kubernetes unique. Dans cette approche, un
+cluster joue le rôle de « Hub » (cluster central) et communique avec des clusters dits
+« Spoke » (clusters satellites). Ce modèle de distribution, connu sous le nom de
+&lt;a class="reference external" href="https://en.wikipedia.org/wiki/Spoke%E2%80%93hub_distribution_paradigm"&gt;Hub and Spoke&lt;/a&gt;,
+est soutenu par plusieurs extensions de l'API Kubernetes :&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;une CRD &lt;strong&gt;Work&lt;/strong&gt; représente une charge de travail constituée de plusieurs manifestes,
+ainsi que le cluster Spoke cible sur lequel elle doit être déployée. Un contrôleur, appelé
+&lt;em&gt;Work Controller&lt;/em&gt;, prend en charge le déploiement de cette charge sur le cluster désigné ;&lt;/li&gt;
+&lt;li&gt;les CRD &lt;strong&gt;ServiceExport&lt;/strong&gt; et &lt;strong&gt;ServiceImport&lt;/strong&gt; gèrent la partie réseau des services, en
+représentant respectivement l'exposition d'un service et son importation. Conceptuellement
+proches des objets Service, ils sont spécifiquement adaptés aux environnements
+multi-cluster.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="Architecture multi-cluster Kubernetes Hub and Spoke : des objets Work sont créés dans l'API du cluster Hub, les Work Controllers des clusters Spoke les déploient, et les services sont partagés via ServiceExport et ServiceImport." src="/images/kubernetes-multi-cluster-hub-and-spoke.webp" style="width: 800px; height: 500px;" /&gt;
+&lt;p class="caption"&gt;Fédération de clusters avec une architecture Hub and Spoke : les objets Work sont
+déployés dans l'API centrale et les contrôleurs des clusters satellites prennent en
+charge leur déploiement. Les Pods de clusters différents ne communiquent qu'au travers
+des services exposés par ServiceExport et ServiceImport.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="avantages-et-limites-de-l-approche-hub-and-spoke"&gt;
+&lt;h3&gt;Avantages et limites de l'approche Hub and Spoke&lt;/h3&gt;
+&lt;p&gt;Cette stratégie multi-cluster comporte plusieurs avantages notables. Tout d'abord, il
+s'agit d'une solution portée par le projet Kubernetes, qui devrait donc continuer à évoluer
+et à être maintenue dans les années à venir. Ensuite, elle peut être mise en place même
+après le déploiement de plusieurs clusters, et peut ainsi être vue comme une amélioration
+naturelle de votre infrastructure. Enfin, elle répond au besoin de distribution de charge
+sur plusieurs localisations avec des exigences d'interconnexion moindres qu'une stratégie
+d'extension de clusters.&lt;/p&gt;
+&lt;p&gt;Sa limite : les Pods des différents clusters ne communiquent pas directement entre eux. Il
+est nécessaire de mettre en place le système ServiceExport / ServiceImport pour qu'ils
+puissent interagir avec les services des autres clusters.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="interconnecter-ses-clusters-liqo-et-submariner"&gt;
+&lt;h2&gt;Interconnecter ses clusters : Liqo et Submariner&lt;/h2&gt;
+&lt;p&gt;Il existe également d'autres solutions, certes moins « officielles », mais redoutablement
+efficaces.&lt;/p&gt;
+&lt;div class="section" id="liqo"&gt;
+&lt;h3&gt;Liqo&lt;/h3&gt;
+&lt;p&gt;Si vous avez besoin d'interconnecter vos clusters afin que les applications déployées sur
+un cluster puissent découvrir les services d'un autre comme s'ils faisaient partie du même
+cluster, &lt;a class="reference external" href="https://docs.liqo.io/en/latest/introduction.html"&gt;Liqo&lt;/a&gt; est un outil
+minimaliste, open source et facile à prendre en main. Il permet également une certaine
+gestion de la répartition des charges de travail entre les clusters interconnectés, et se
+distingue par sa simplicité de déploiement, puisqu'il ne requiert aucune modification des
+configurations existantes des clusters.&lt;/p&gt;
+&lt;p&gt;Intégrer plusieurs clusters hétérogènes, notamment gérés par différents fournisseurs Cloud,
+peut toutefois rendre sa configuration et sa gestion plus complexes. De plus, la latence des
+interconnexions réseau peut varier en fonction des distances géographiques entre les
+clusters, ce qui impacte les performances des applications distribuées.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="submariner"&gt;
+&lt;h3&gt;Submariner&lt;/h3&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://submariner.io/"&gt;Submariner&lt;/a&gt;, projet incubé par la CNCF, est spécialisé dans
+l'interconnexion sécurisée et performante des clusters, mais sans gestion de charge
+distribuée. Il a été développé pour répondre aux défis de la connectivité réseau dans des
+environnements multi-cluster, et vise les déploiements qui nécessitent une communication
+entre clusters tout en maintenant une stricte isolation réseau.&lt;/p&gt;
+&lt;p&gt;Submariner établit une connectivité transparente en configurant automatiquement des tunnels
+sécurisés et performants : les Pods d'un cluster accèdent aux services d'un autre comme
+s'ils étaient sur le même réseau. Ce qui le différencie, c'est son approche décentralisée,
+qui ne nécessite aucun point de gestion central pour orchestrer la connectivité, ce qui
+renforce la disponibilité du réseau.&lt;/p&gt;
+&lt;p&gt;D'un point de vue technique, Submariner repose sur des tunnels VPN chiffrés, utilisant des
+technologies éprouvées comme IPsec ou WireGuard, qui garantissent une communication
+sécurisée entre les clusters Kubernetes. Cette approche facilite l'extension des réseaux
+tout en maintenant des niveaux de sécurité élevés.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="multi-cluster-et-platform-as-a-service"&gt;
+&lt;h2&gt;Multi-cluster et Platform as a Service&lt;/h2&gt;
+&lt;p&gt;Le concept de Platform as a Service (PaaS), au cœur de &lt;a class="reference external" href="/"&gt;The Art of Kubernetes&lt;/a&gt;, est
+parfaitement compatible avec une architecture multi-cluster et vous laisse une certaine
+liberté quant à son implémentation : une plateforme par cluster, ou seulement une partie de
+la plateforme par cluster, en mutualisant certains services et outils sur d'autres
+clusters.&lt;/p&gt;
+&lt;p&gt;Encore une fois, il est préférable de limiter au strict minimum le nombre d'outils et de
+services d'une plateforme, ainsi que le nombre d'instances associées. Bien que plusieurs
+outils de gestion permettent de gagner du temps dans l'exploitation des services, restez
+vigilant quant à la complexité supplémentaire qu'ils ajoutent à la suite logicielle que
+vous devrez maîtriser.&lt;/p&gt;
+&lt;blockquote class="pull-quote"&gt;
+Adoptez une approche pragmatique : concentrez-vous sur les niveaux de service que la
+plateforme fournit, plutôt que sur la multiplication des outils, des services et des
+fonctionnalités.&lt;/blockquote&gt;
+&lt;/div&gt;
+</content><category term="Kubernetes"></category><category term="kubernetes"></category><category term="multi-cluster"></category><category term="multicluster"></category><category term="hub and spoke"></category><category term="kubestellar"></category><category term="liqo"></category><category term="submariner"></category><category term="architecture"></category><category term="k8s"></category></entry><entry><title>Qu'est-ce que Kubernetes ? Bien plus qu'un orchestrateur de conteneurs</title><link href="https://theartofkubernetes.com/fr/qu-est-ce-que-kubernetes" rel="alternate"></link><published>2024-09-09T00:00:00+02:00</published><updated>2026-11-07T00:00:00+01:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-09-09:/fr/qu-est-ce-que-kubernetes</id><summary type="html">Depuis plus de dix ans, Kubernetes s'est imposé dans les entreprises. Pourtant, ce n'est « qu'un » orchestrateur de conteneurs. Prenons cinq minutes pour comprendre ce qui fait vraiment sa force.</summary><content type="html">&lt;p&gt;Depuis quelques années, Kubernetes est présenté comme la technologie incontournable.
+Pourtant, si l'on s'en tient à sa définition stricte, il ne s'agit « que » d'un
+orchestrateur de conteneurs. Alors, pourquoi cette solution s'est-elle imposée comme
+indispensable dans tant d'entreprises depuis plus de dix ans ?&lt;/p&gt;
+&lt;div class="section" id="la-conteneurisation-a-transforme-la-gestion-des-infrastructures"&gt;
+&lt;h2&gt;La conteneurisation a transformé la gestion des infrastructures&lt;/h2&gt;
+&lt;p&gt;La conteneurisation, couplée à l'architecture microservices, a profondément transformé le
+paysage de la gestion des infrastructures. Elle a facilité la gestion du cycle de vie des
+applications tout en rendant leur déploiement et leur évolution plus efficaces. Cette
+architecture &lt;em&gt;Cloud Native&lt;/em&gt; a progressivement remplacé les approches de virtualisation
+traditionnelle, plus lourdes.&lt;/p&gt;
+&lt;p&gt;Kubernetes a été conçu pour orchestrer ces conteneurs, en mettant un accent particulier sur
+la &lt;strong&gt;résilience&lt;/strong&gt; et la &lt;strong&gt;performance&lt;/strong&gt;. Il intègre des mécanismes permettant, par exemple,
+de redémarrer automatiquement les conteneurs défaillants ou de faire évoluer dynamiquement
+leur nombre pour absorber des pics de charge. Il est toutefois important de noter que
+certains aspects comme la sécurité, bien qu'essentiels, ne sont pas fournis nativement par
+Kubernetes.&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="Les principales fonctionnalités de Kubernetes : résilience, scalabilité, haute disponibilité, déploiement automatique, stockage persistant, jobs, isolation des ressources, découverte de services, configuration des applications, extensibilité et répartition de charge." src="/images/kubernetes-fonctionnalites.webp" style="width: 560px; height: 410px;" /&gt;
+&lt;p class="caption"&gt;Les principales fonctionnalités de Kubernetes.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="flexibilite-et-extensibilite-les-cles-du-succes-de-kubernetes"&gt;
+&lt;h2&gt;Flexibilité et extensibilité : les clés du succès de Kubernetes&lt;/h2&gt;
+&lt;p&gt;Ce qui a véritablement permis à Kubernetes de surpasser ses concurrents réside dans sa
+flexibilité et son extensibilité.&lt;/p&gt;
+&lt;p&gt;D'une part, Kubernetes offre une grande &lt;strong&gt;flexibilité&lt;/strong&gt; grâce à son architecture modulaire,
+qui permet de choisir et d'adapter ses composants en fonction des besoins spécifiques de
+chaque entreprise. Par exemple, bien que Kubernetes définisse un modèle réseau à respecter,
+il laisse une liberté totale quant à son implémentation via des solutions compatibles comme
+&lt;a class="reference external" href="https://cilium.io/"&gt;Cilium&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;D'autre part, en tant que projet open source, Kubernetes bénéficie d'une communauté
+dynamique qui développe rapidement des &lt;strong&gt;extensions&lt;/strong&gt; pour enrichir ses fonctionnalités. Il
+est ainsi extrêmement facile d'ajouter, par exemple, l'extension
+&lt;a class="reference external" href="https://coredns.io/"&gt;CoreDNS&lt;/a&gt; pour permettre la découverte automatique des services au
+sein du cluster.&lt;/p&gt;
+&lt;p&gt;Grâce à cette flexibilité et à cette extensibilité, Kubernetes répond non seulement aux
+attentes d'une infrastructure Cloud Native moderne, mais garantit également un très haut
+niveau de qualité de service.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="de-l-infrastructure-a-la-plateforme-paas"&gt;
+&lt;h2&gt;De l'infrastructure à la plateforme (PaaS)&lt;/h2&gt;
+&lt;p&gt;L'association de l'architecture Cloud Native et de la puissance de Kubernetes change
+fondamentalement la perception de l'infrastructure. Celle-ci n'est plus seulement un socle
+technique pour faire fonctionner les applications : elle devient une véritable
+&lt;strong&gt;plateforme&lt;/strong&gt; capable de fournir des services et des outils standardisés.&lt;/p&gt;
+&lt;p&gt;Ces outils simplifient la gestion du cycle de vie des applications : l'intégration d'un
+service de déploiement continu (&lt;em&gt;Continuous Delivery&lt;/em&gt;), par exemple, permet de déployer
+automatiquement les services applicatifs. Par ailleurs, des services prêts à l'emploi,
+comme une base de données, peuvent être déployés facilement dans Kubernetes, notamment
+grâce aux &lt;a class="reference external" href="https://theartofkubernetes.com/fr/operator-or-not-operator"&gt;Operators&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote class="pull-quote"&gt;
+Kubernetes est bien plus qu'un simple orchestrateur de conteneurs : c'est un outil de
+choix pour la mise en œuvre de plateformes.&lt;/blockquote&gt;
+&lt;p&gt;Aujourd'hui, il est possible d'implémenter des plateformes sur mesure, adaptées à chaque
+entreprise et offrant des niveaux de service élevés. Une plateforme en tant que service
+(&lt;em&gt;Platform as a Service&lt;/em&gt;) ne représente pas seulement un atout technique, mais également un
+levier organisationnel : elle constitue un cadre efficace de communication et de
+collaboration entre les équipes applicatives et celles en charge de l'infrastructure.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="en-resume"&gt;
+&lt;h2&gt;En résumé&lt;/h2&gt;
+&lt;p&gt;Kubernetes est une solution technologique conçue pour gérer de manière résiliente et
+performante des charges de travail conteneurisées. Grâce à son architecture flexible et
+extensible, couplée à une infrastructure Cloud Native, il se positionne comme un outil de
+choix pour la mise en œuvre de plateformes, et il excelle notamment dans la gestion du
+cycle de vie des applications.&lt;/p&gt;
+&lt;p&gt;Dans &lt;a class="reference external" href="/"&gt;The Art of Kubernetes&lt;/a&gt;, j'explique comment devenir des artisans de
+l'infrastructure, en affinant nos solutions pour optimiser l'infrastructure grâce à
+Kubernetes.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="Kubernetes"></category><category term="kubernetes"></category><category term="k8s"></category><category term="conteneurs"></category><category term="cloud native"></category><category term="paas"></category><category term="platform as a service"></category><category term="architecture"></category></entry><entry><title>Edge computing avec Kubernetes : architectures et outils</title><link href="https://theartofkubernetes.com/fr/edge-computing-avec-kubernetes" rel="alternate"></link><published>2024-08-14T00:00:00+02:00</published><updated>2026-11-07T00:00:00+01:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-08-14:/fr/edge-computing-avec-kubernetes</id><summary type="html">Kubernetes est un outil puissant pour orchestrer des environnements décentralisés, où les ressources sont dispersées géographiquement et où la latence, la bande passante et la résilience sont critiques. Tour d'horizon des architectures possibles.</summary><content type="html">&lt;p&gt;Comment Kubernetes peut-il orchestrer des ressources dispersées au plus près des
+utilisateurs ? Voici ce qu'il faut savoir sur l'edge computing et sur les architectures
+possibles avec Kubernetes.&lt;/p&gt;
+&lt;div class="section" id="qu-est-ce-que-l-edge-computing"&gt;
+&lt;h2&gt;Qu'est-ce que l'edge computing ?&lt;/h2&gt;
+&lt;p&gt;L'edge computing, ou informatique en périphérie, est une approche décentralisée du
+traitement des données : le calcul et le stockage sont effectués au plus près de la source
+de production des données, plutôt que dans un centre de données centralisé. Cette
+architecture permet de réduire la latence, d'améliorer la réactivité des applications et de
+gérer les données plus efficacement en local, avant de les transférer éventuellement vers un
+cloud centralisé pour un traitement approfondi ou un stockage à long terme.&lt;/p&gt;
+&lt;p&gt;En rapprochant la puissance de calcul des utilisateurs finaux, l'edge computing est
+particulièrement adapté aux environnements qui nécessitent une prise de décision en temps
+réel, comme l'Internet des objets (IoT), les véhicules autonomes ou les systèmes industriels
+intelligents.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="reduire-la-latence-en-traitant-les-donnees-localement"&gt;
+&lt;h2&gt;Réduire la latence en traitant les données localement&lt;/h2&gt;
+&lt;p&gt;Netflix a été l'une des premières entreprises à installer des points de présence chez les
+fournisseurs d'accès à Internet (FAI), avec son réseau
+&lt;a class="reference external" href="https://openconnect.netflix.com/"&gt;Open Connect&lt;/a&gt; : les films et séries sont stockés au
+plus près des utilisateurs, ce qui garantit une lecture optimale partout dans le monde.&lt;/p&gt;
+&lt;p&gt;Sans aller jusqu'à déployer des points de présence chez les FAI, ce qui n'est pas à la
+portée de toutes les entreprises, une architecture edge peut être réalisée sur plusieurs
+zones géographiques au sein de votre fournisseur d'infrastructure.&lt;/p&gt;
+&lt;blockquote class="pull-quote"&gt;
+L'un des principaux avantages de l'edge computing réside dans sa capacité à réduire la
+latence en traitant les données localement.&lt;/blockquote&gt;
+&lt;p&gt;Dans des secteurs tels que l'IoT, les véhicules autonomes ou les réseaux de capteurs
+industriels, la rapidité de traitement est essentielle. En utilisant Kubernetes pour
+orchestrer ces environnements, les entreprises peuvent déployer des microservices et des
+applications conteneurisées directement en périphérie du réseau. Cette approche réduit les
+temps de réponse et optimise l'utilisation de la bande passante, en évitant l'envoi de
+volumes massifs de données vers des centres de données centraux.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="pourquoi-kubernetes-est-adapte-a-l-edge-computing"&gt;
+&lt;h2&gt;Pourquoi Kubernetes est adapté à l'edge computing&lt;/h2&gt;
+&lt;p&gt;Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements
+décentralisés, où les ressources sont dispersées géographiquement et où les exigences en
+matière de latence, de bande passante et de résilience sont particulièrement critiques.&lt;/p&gt;
+&lt;p&gt;Il offre d'abord une grande &lt;strong&gt;flexibilité&lt;/strong&gt; pour déployer et gérer des applications sur les
+infrastructures hétérogènes typiques de l'edge. Que les ressources disponibles se trouvent
+sur des serveurs locaux, des dispositifs IoT ou de petits datacenters régionaux, Kubernetes
+maintient une gestion et une orchestration homogènes des conteneurs. Cette standardisation
+facilite la scalabilité horizontale, essentielle dans un contexte où la capacité de réponse
+doit s'adapter rapidement aux fluctuations de la demande.&lt;/p&gt;
+&lt;p&gt;Kubernetes renforce aussi la &lt;strong&gt;résilience&lt;/strong&gt; des infrastructures edge en assurant une gestion
+autonome des défaillances. En déployant des applications sur plusieurs nœuds en périphérie,
+il garantit la continuité des services, même en cas de panne de l'un des nœuds. Cette
+tolérance aux pannes est cruciale pour les applications critiques qui ne peuvent se
+permettre aucun temps d'arrêt, comme la gestion des urgences ou les opérations
+industrielles.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="quatre-approches-pour-faire-de-l-edge-computing-avec-kubernetes"&gt;
+&lt;h2&gt;Quatre approches pour faire de l'edge computing avec Kubernetes&lt;/h2&gt;
+&lt;p&gt;L'implémentation de l'edge computing avec Kubernetes peut prendre plusieurs formes, selon
+les besoins de l'entreprise et l'architecture sous-jacente.&lt;/p&gt;
+&lt;div class="section" id="des-clusters-kubernetes-en-peripherie"&gt;
+&lt;h3&gt;Des clusters Kubernetes en périphérie&lt;/h3&gt;
+&lt;p&gt;La manière la plus directe consiste à déployer des points de présence sous forme de
+clusters Kubernetes en périphérie, répartis sur différents sites, chacun autonome mais
+interconnecté. Cette configuration est idéale lorsque chaque site a des exigences
+spécifiques en matière de traitement des données, mais qu'une certaine coordination entre
+les sites reste nécessaire. Les outils présentés dans notre article sur le
+&lt;a class="reference external" href="https://theartofkubernetes.com/fr/multi-cluster-kubernetes"&gt;multi-cluster Kubernetes&lt;/a&gt; s'appliquent alors directement.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="etendre-un-cluster-avec-des-noeuds-distants"&gt;
+&lt;h3&gt;Étendre un cluster avec des nœuds distants&lt;/h3&gt;
+&lt;p&gt;Une autre approche consiste à étendre un cluster Kubernetes centralisé vers les périphéries
+du réseau, en utilisant des nœuds distants pour exécuter les charges de travail propres à
+l'edge. La répartition des charges de travail selon des règles métier est déjà
+&lt;a class="reference external" href="https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/"&gt;implémentée et documentée dans Kubernetes&lt;/a&gt;. Cette méthode
+permet de centraliser la gestion tout en déployant des services là où ils sont le plus
+nécessaires.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="federer-plusieurs-clusters"&gt;
+&lt;h3&gt;Fédérer plusieurs clusters&lt;/h3&gt;
+&lt;p&gt;La fédération de clusters est un cas particulier de gestion de plusieurs clusters :
+Kubernetes permet de gérer plusieurs clusters distribués comme une seule entité cohérente.
+Cette approche est particulièrement efficace pour orchestrer des déploiements
+multi-régionaux, où les applications doivent être disponibles et réactives dans plusieurs
+emplacements géographiques.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="des-plateformes-edge-cles-en-main-kubeedge-et-open-horizon"&gt;
+&lt;h3&gt;Des plateformes edge clés en main : KubeEdge et Open Horizon&lt;/h3&gt;
+&lt;img alt="Logo du projet KubeEdge" class="align-right" src="/images/logo-kubeedge-240.webp" style="width: 240px; height: 240px;" /&gt;
+&lt;p&gt;De nombreuses entreprises intègrent Kubernetes avec des plateformes edge spécialisées
+telles que &lt;a class="reference external" href="https://kubeedge.io/"&gt;KubeEdge&lt;/a&gt; ou
+&lt;a class="reference external" href="https://lfedge.org/projects/open-horizon/"&gt;Open Horizon&lt;/a&gt;, conçues pour faciliter le
+déploiement et la gestion des applications sur des infrastructures distribuées. Ces
+plateformes ajoutent des fonctionnalités spécifiques aux contraintes de l'edge, comme la
+gestion d'une connectivité réseau intermittente ou l'intégration avec des dispositifs IoT.&lt;/p&gt;
+&lt;p&gt;Si vous disposez des ressources en interne, il est également possible de développer votre
+propre solution edge à partir de Kubernetes. Mais à ce stade, vous faites sans doute déjà
+partie des experts de Kubernetes !&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;L'edge computing avec Kubernetes ouvre la voie à des architectures plus réactives,
+résilientes et flexibles, qui répondent aux exigences croissantes des entreprises en
+matière de traitement des données en temps réel. Kubernetes permet non seulement de tirer
+parti des avantages de l'edge computing, mais aussi de standardiser la gestion des
+ressources à travers des infrastructures dispersées, tout en maintenant une cohérence
+opérationnelle à l'échelle mondiale.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="Kubernetes"></category><category term="kubernetes"></category><category term="edge computing"></category><category term="edge"></category><category term="kubeedge"></category><category term="open horizon"></category><category term="iot"></category><category term="architecture"></category><category term="infrastructure"></category></entry><entry><title>Operator ou pas Operator ? Avantages et limites des Operators Kubernetes</title><link href="https://theartofkubernetes.com/fr/operator-or-not-operator" rel="alternate"></link><published>2024-08-01T00:00:00+02:00</published><updated>2026-11-07T00:00:00+01:00</updated><author><name>Florian Grignon</name></author><id>tag:theartofkubernetes.com,2024-08-01:/fr/operator-or-not-operator</id><summary type="html">Le modèle d'Operator occupe une place centrale dans l'écosystème Kubernetes en automatisant la gestion d'applications complexes au sein du cluster. Mais faut-il en déployer partout ? Avantages, limites et recommandations.</summary><content type="html">&lt;p&gt;Kubernetes est conçu pour prendre en charge tout type d'application conteneurisée de
+manière performante et résiliente. Sa flexibilité constitue un atout majeur : elle lui
+permet d'étendre ses fonctionnalités afin de supporter les divers services et outils d'une
+plateforme, tout en optimisant l'utilisation des ressources d'infrastructure d'une
+entreprise.&lt;/p&gt;
+&lt;div class="section" id="gerer-le-cycle-de-vie-des-applications-dans-kubernetes"&gt;
+&lt;h2&gt;Gérer le cycle de vie des applications dans Kubernetes&lt;/h2&gt;
+&lt;p&gt;Les outils intégrés à une plateforme facilitent la gestion du cycle de vie des applications
+et des services. Par exemple, un bon système de déploiement continu (CD) permet de gérer
+efficacement les déploiements au sein de votre parc.&lt;/p&gt;
+&lt;p&gt;Un autre système de gestion du cycle de vie des applications s'est imposé dans
+l'écosystème Kubernetes : celui des &lt;strong&gt;Operators&lt;/strong&gt;. Ces derniers occupent désormais une place
+centrale en automatisant la gestion d'applications complexes directement au sein du
+cluster Kubernetes.&lt;/p&gt;
+&lt;p&gt;Comme je le développe dans &lt;a class="reference external" href="/"&gt;The Art of Kubernetes&lt;/a&gt;, Kubernetes et son écosystème
+permettent de définir des plateformes efficaces pour chaque entreprise, avec les outils
+adaptés pour gérer le cycle de vie des applications et des services. Pour des raisons que
+je vais détailler, je recommande pourtant de recourir aux Operators uniquement dans des cas
+spécifiques. Dans d'autres situations, vous pouvez facilement gérer le service vous-même ou
+opter pour un service externalisé.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="qu-est-ce-qu-un-operator-kubernetes"&gt;
+&lt;h2&gt;Qu'est-ce qu'un Operator Kubernetes ?&lt;/h2&gt;
+&lt;p&gt;Un Operator est une extension de Kubernetes qui encapsule la logique opérationnelle d'une
+application spécifique dans des contrôleurs personnalisés, en s'appuyant sur des
+&lt;em&gt;Custom Resource Definitions&lt;/em&gt; (CRD), une fonctionnalité de Kubernetes qui permet de définir
+de nouvelles ressources. C'est en quelque sorte un « opérateur humain » codifié, capable de
+gérer des tâches complexes telles que le déploiement, la mise à jour, la sauvegarde, la
+restauration et même la mise à l'échelle de l'application, le tout de manière automatisée.&lt;/p&gt;
+&lt;p&gt;Un Operator surveille ces ressources personnalisées et réagit aux événements associés en
+exécutant des actions prédéfinies pour gérer l'état de l'application. Il gère ainsi le
+cycle de vie d'une application ou d'un service, &lt;em&gt;stateful&lt;/em&gt; ou &lt;em&gt;stateless&lt;/em&gt;, de son
+installation à sa désinstallation, en passant par ses différents états fonctionnels. Il
+ajoute une couche de logique supplémentaire entre l'administrateur et l'application, ce qui
+nécessite des droits élevés, au minimum équivalents à ceux de l'administrateur du service
+concerné.&lt;/p&gt;
+&lt;p&gt;Prenons l'exemple de l'Operator PostgreSQL &lt;a class="reference external" href="https://cloudnative-pg.io/"&gt;CloudNativePG&lt;/a&gt;.
+Il met à disposition de l'administrateur du cluster des CRD comme &lt;tt class="docutils literal"&gt;Cluster&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;Backup&lt;/tt&gt;
+ou &lt;tt class="docutils literal"&gt;ScheduledBackup&lt;/tt&gt;. Pour déployer un cluster PostgreSQL à l'intérieur de votre cluster
+Kubernetes, il suffit de créer un objet &lt;tt class="docutils literal"&gt;Cluster&lt;/tt&gt; dans l'API Kubernetes avec les bons
+paramètres, puis de laisser l'Operator faire sa magie : il déploiera les Pods, Services et
+PersistentVolumes nécessaires pour obtenir un cluster PostgreSQL fonctionnel.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="l-automatisation-une-arme-a-double-tranchant"&gt;
+&lt;h2&gt;L'automatisation, une arme à double tranchant&lt;/h2&gt;
+&lt;p&gt;L'avantage principal des Operators réside dans leur capacité à automatiser des tâches
+complexes qui, autrement, nécessiteraient une intervention humaine. Par exemple, la mise à
+jour d'une base de données &lt;em&gt;stateful&lt;/em&gt;, avec toutes ses spécificités, peut être entièrement
+gérée par un Operator, minimisant ainsi les risques d'erreurs.&lt;/p&gt;
+&lt;blockquote class="pull-quote"&gt;
+Si les Operators automatisent l'exploitation d'un service, ils posent également un défi
+en déléguant les décisions critiques à un logiciel plutôt qu'à un expert humain.&lt;/blockquote&gt;
+&lt;p&gt;Cependant, ce même avantage peut se transformer en inconvénient : l'administrateur risque
+de se reposer entièrement sur l'Operator et de perdre la connaissance approfondie de la
+logique de l'application. Il pourrait alors négliger la documentation et ne plus maîtriser
+suffisamment l'application pour la déployer et la maintenir en état de fonctionnement, ce
+qui pourrait avoir des conséquences graves en cas de problème majeur. L'opérateur humain
+doit rester expert des services qu'il administre.&lt;/p&gt;
+&lt;p&gt;C'est un peu comme balayer la poussière sous le tapis : la poussière est toujours là, et
+vous risquez toujours d'y être allergique. Il n'existe pas de raccourci pour maîtriser un
+logiciel et atteindre un haut niveau de service : cela nécessite une solide expertise, de
+la pratique, ainsi qu'un investissement en temps.&lt;/p&gt;
+&lt;blockquote class="pull-quote"&gt;
+Les choix que vous déléguez à un Operator ne vous exemptent pas d'en assumer les
+conséquences, qu'elles soient positives ou négatives.&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div class="section" id="standardisation-et-reproductibilite-une-promesse-trompeuse"&gt;
+&lt;h2&gt;Standardisation et reproductibilité : une promesse trompeuse ?&lt;/h2&gt;
+&lt;p&gt;Les Operators jouent un rôle essentiel dans la standardisation de la gestion des
+applications et des services, en garantissant que les meilleures pratiques sont appliquées
+de manière cohérente à travers différents environnements. Cette reproductibilité s'avère
+particulièrement utile dans des contextes multi-environnements ou
+&lt;a class="reference external" href="https://theartofkubernetes.com/fr/multi-cluster-kubernetes"&gt;multi-clusters&lt;/a&gt;, où il est crucial que les applications
+soient déployées et maintenues de manière uniforme.&lt;/p&gt;
+&lt;p&gt;Cette standardisation peut cependant s'avérer trompeuse. En ajoutant une couche automatisée
+qui gère le cycle de vie du logiciel, comment être certain que ce logiciel se trouve dans
+le même état dans deux environnements différents ? Cela devient presque impossible si vous
+ne contrôlez pas l'ensemble de l'état de l'Operator, qui dépend de tout l'environnement. Cela
+pose un réel problème dans les environnements d'intégration continue (CI), où la
+reproductibilité et l'idempotence sont des notions essentielles pour garantir la fiabilité
+des résultats.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="des-operators-qui-ne-couvrent-pas-tous-les-besoins"&gt;
+&lt;h2&gt;Des Operators qui ne couvrent pas tous les besoins&lt;/h2&gt;
+&lt;p&gt;Les Operators disponibles ne couvrent pas nécessairement l'ensemble des besoins
+opérationnels d'une application. Il est donc possible qu'un Operator limite votre capacité à
+maintenir le service dans un état pleinement fonctionnel. Une migration de l'application
+ou du service est-elle prise en compte par l'Operator ? Et même si c'est le cas,
+préférez-vous effectuer la migration à l'aide d'un Operator automatisé ou d'un opérateur
+humain ?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="resilience-qui-decide-en-cas-d-incident"&gt;
+&lt;h2&gt;Résilience : qui décide en cas d'incident ?&lt;/h2&gt;
+&lt;p&gt;En automatisant la gestion des erreurs et en surveillant continuellement l'état des
+applications, les Operators contribuent à améliorer la disponibilité et la résilience des
+services. Un Operator peut par exemple détecter un dysfonctionnement et prendre
+automatiquement des mesures correctives, comme le redémarrage d'un composant défaillant ou
+la restauration à partir d'une sauvegarde.&lt;/p&gt;
+&lt;p&gt;Mais là encore, le choix de la résolution des dysfonctionnements est laissé à un composant
+logiciel plutôt qu'à un expert de l'application. Cette automatisation peut entraîner
+l'application dans un état non seulement indésirable, mais aussi problématique, sans
+possibilité de retour en arrière.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="le-vrai-interet-des-operators-sur-mesure-pour-vos-applications"&gt;
+&lt;h2&gt;Le vrai intérêt : des Operators sur mesure pour vos applications&lt;/h2&gt;
+&lt;p&gt;Je vais probablement m'écarter de ce que vous avez déjà entendu à propos des Operators,
+mais je pense que leur efficacité et leur utilité résident dans les &lt;strong&gt;Operators
+personnalisés pour vos propres applications&lt;/strong&gt;. En développant un Operator adapté à vos
+besoins, vous pouvez l'utiliser facilement comme un service au sein de votre plateforme
+Kubernetes, sans dépendre de nombreux outils tiers. La logique de gestion du cycle de vie de
+vos applications étant intégrée dans l'Operator, vous pouvez instancier votre application
+aisément pour la tester depuis une autre plateforme.&lt;/p&gt;
+&lt;p&gt;Attention cependant : le développement d'un Operator peut s'avérer complexe et nécessite une
+compréhension approfondie de Kubernetes. Cette complexité peut constituer une barrière à
+l'adoption, en particulier pour les petites équipes ou les entreprises qui ne disposent pas
+des compétences nécessaires en interne.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="maintenance-et-charge-cognitive-le-cout-cache-des-operators"&gt;
+&lt;h2&gt;Maintenance et charge cognitive : le coût caché des Operators&lt;/h2&gt;
+&lt;p&gt;Comme tout composant logiciel de votre cluster, un Operator doit être maintenu, mis à jour
+et corrigé en cas de bugs ou de vulnérabilités. Cela implique un effort de maintenance
+continu, qui peut devenir coûteux si l'Operator est complexe ou s'il doit évoluer avec
+l'application qu'il gère. Cet effort doit également être pris en compte dans les cas
+critiques, comme une migration de l'application.&lt;/p&gt;
+&lt;p&gt;Pour les équipes qui gèrent déjà un grand nombre d'outils et de services, l'ajout
+d'Operators peut aussi contribuer à une surcharge cognitive. Comprendre et gérer les
+différents Operators déployés dans un cluster peut devenir complexe, en particulier lorsque
+chacun a ses propres configurations et comportements.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion-utiliser-les-operators-avec-parcimonie"&gt;
+&lt;h2&gt;Conclusion : utiliser les Operators avec parcimonie&lt;/h2&gt;
+&lt;p&gt;Les Operators sont aujourd'hui très (voire trop) répandus : plus de 277 étaient déjà
+référencés sur &lt;a class="reference external" href="https://operatorhub.io/"&gt;OperatorHub&lt;/a&gt; en 2024, et il est désormais possible
+de déployer presque n'importe quel composant logiciel open source avec un Operator. Il est
+cependant crucial de bien peser les avantages et les inconvénients d'un Operator par
+rapport à d'autres méthodes pour gérer le cycle de vie d'un composant logiciel.&lt;/p&gt;
+&lt;p&gt;Je vous recommande donc d'utiliser les Operators avec parcimonie : principalement pour
+transformer vos propres applications en services au sein d'une plateforme, et dans les cas
+où vous n'avez pas d'autre choix.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="Kubernetes"></category><category term="kubernetes"></category><category term="operator"></category><category term="operators kubernetes"></category><category term="crd"></category><category term="administration"></category><category term="architecture"></category><category term="infrastructure"></category></entry></feed>

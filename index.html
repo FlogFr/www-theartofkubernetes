@@ -1,563 +1,684 @@
-
-<!DOCTYPE html>
-<html lang="fr" class="light scroll-smooth" dir="ltr">
+<!doctype html>
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Appréhendez Kubernetes pour sa mise en place et son utilisation</title>
-  
+  <title>The Art of Kubernetes – Le livre Kubernetes en français</title>
+  <meta name="description" content="Livre Kubernetes en français : comprendre Kubernetes, son écosystème et bâtir une plateforme sur mesure (PaaS). Par Florian Grignon (CKA). Kindle 9,99 €.">
   <meta name="author" content="Florian Grignon">
-  <meta name="description" content="Appréhendez Kubernetes pour sa mise en place et son utilisation.">
-  <meta name="keywords" content="Kubernetes, Organisation de Kubernetes, Piloter Kubernetes, Automatisation et Orchestration, Surveillance et Dépannage, Sécurité avec Kubernetes, Cas d'Utilisation Kubernetes, Écosystème Kubernetes, Cloud, GCP, AWS, Livre, Chapitres, Partage">
-  
-  <meta name="website" content="https://theartofkubernetes.com">
-  <meta name="email" content="bonjour@theartofkubernetes.com">
-  <meta name="version" content="1.0.0">
-  
-  <!-- favicon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/theme/assets/images/apple-touch-icon.png">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://theartofkubernetes.com/">
+
+  <meta property="og:type" content="book">
+  <meta property="og:site_name" content="The Art of Kubernetes">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="The Art of Kubernetes – Le livre Kubernetes en français">
+  <meta property="og:description" content="Livre Kubernetes en français : comprendre Kubernetes, son écosystème et bâtir une plateforme sur mesure (PaaS). Par Florian Grignon (CKA). Kindle 9,99 €.">
+  <meta property="og:url" content="https://theartofkubernetes.com/">
+  <meta property="og:image" content="https://theartofkubernetes.com/images/og-the-art-of-kubernetes.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The Art of Kubernetes - French Edition, Florian Grignon">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="book:author" content="Florian Grignon">
+
+  <link rel="preload" href="/theme/assets/fonts/libre-franklin-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/theme/assets/fonts/crimson-pro-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/theme/assets/css/site.css">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="192x192" href="/theme/assets/images/android-chrome-192x192.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/theme/assets/images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/theme/assets/images/favicon-16x16.png">
-  <link href="/theme/assets/images/favicon.ico" rel="shortcut icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="/theme/assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f2a2e">
+  <link rel="alternate" type="application/atom+xml" href="https://theartofkubernetes.com/feeds/all.atom.xml" title="The Art of Kubernetes – Articles Kubernetes">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://theartofkubernetes.com/#website",
+      "url": "https://theartofkubernetes.com/",
+      "name": "The Art of Kubernetes",
+      "inLanguage": "fr",
+      "publisher": {"@id": "https://theartofkubernetes.com/#author"}
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://theartofkubernetes.com/#webpage",
+      "url": "https://theartofkubernetes.com/",
+      "name": "The Art of Kubernetes \u2013 Le livre Kubernetes en fran\u00e7ais",
+      "description": "Livre Kubernetes en fran\u00e7ais : comprendre Kubernetes, son \u00e9cosyst\u00e8me et b\u00e2tir une plateforme sur mesure (PaaS). Par Florian Grignon (CKA). Kindle 9,99 \u20ac.",
+      "inLanguage": "fr",
+      "isPartOf": {"@id": "https://theartofkubernetes.com/#website"},
+      "about": {"@id": "https://theartofkubernetes.com/#book"},
+      "primaryImageOfPage": "https://theartofkubernetes.com/images/the-art-of-kubernetes-couverture-800.webp"
+    },
+{
+      "@type": "Person",
+      "@id": "https://theartofkubernetes.com/#author",
+      "name": "Florian Grignon",
+      "url": "https://theartofkubernetes.com/#auteur",
+      "image": "https://theartofkubernetes.com/theme/assets/images/auteur-florian-grignon-480.webp",
+      "jobTitle": "Formateur Cloud Native et Certified Kubernetes Administrator (CKA)",
+      "description": "Certifi\u00e9 Kubernetes Administrator (CKA), formateur Cloud Native (Kubernetes, Terraform) et auteur de The Art of Kubernetes. Il accompagne les entreprises dans la conception et la mise en place de leur infrastructure Cloud Native.",
+      "knowsAbout": ["Kubernetes", "Cloud Native", "Platform as a Service", "Terraform", "DevOps"],
+      "hasCredential": {
+        "@type": "EducationalOccupationalCredential",
+        "name": "Certified Kubernetes Administrator (CKA)",
+        "credentialCategory": "certification"
+      }
+    },
+    {
+      "@type": ["Book", "Product"],
+      "@id": "https://theartofkubernetes.com/#book",
+      "name": "The Art of Kubernetes",
+      "alternateName": "The Art of Kubernetes - French Edition",
+      "description": "The Art of Kubernetes est un livre en fran\u00e7ais pour comprendre Kubernetes, ses composants et son \u00e9cosyst\u00e8me, et apprendre \u00e0 b\u00e2tir une plateforme sur mesure (Platform as a Service) capable d\u0027atteindre des niveaux de service \u00e9lev\u00e9s avec des ressources modestes. \u00c9crit par Florian Grignon, formateur certifi\u00e9 Kubernetes (CKA), il inclut des entretiens avec des acteurs du march\u00e9.",
+      "url": "https://theartofkubernetes.com/",
+      "image": "https://theartofkubernetes.com/images/the-art-of-kubernetes-couverture-800.webp",
+      "author": {"@id": "https://theartofkubernetes.com/#author"},
+      "inLanguage": "fr",
+      "bookFormat": "https://schema.org/EBook",
+      "numberOfPages": 350,
+      "genre": "Informatique",
+      "about": ["Kubernetes", "Cloud Native", "Platform as a Service"],
+      "sku": "B0DMHYT348",
+      "brand": {"@type": "Brand", "name": "The Art of Kubernetes"},
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.amazon.fr/dp/B0DMHYT348",
+        "price": "9.99",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "seller": {"@type": "Organization", "name": "Amazon.fr"}
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "author": {"@type": "Person", "name": "Fresser J."},
+          "reviewRating": {"@type": "Rating", "ratingValue": 5, "bestRating": 5},
+          "reviewBody": "Le bouleversement technique et organisationel de l\u0027IT que nous connaissions, apport\u00e9 par Kubernetes, est de nature \u00e0 rebuter, sinon troubler, les non-initi\u00e9s. Cet ouvrage a pour but de prendre du recul sur les d\u00e9tails techniques et d\u0027embrasser une vision d\u0027ensemble de cet outil incontournable. Les avertis y trouveront de quoi approfondir leurs connaissances ou remettre en question leurs certitudes, gr\u00e2ce aux nombreux retours d\u0027exp\u00e9rience et t\u00e9moignages."
+        },
+        {
+          "@type": "Review",
+          "author": {"@type": "Person", "name": "Ismael Hommani"},
+          "reviewRating": {"@type": "Rating", "ratingValue": 5, "bestRating": 5},
+          "reviewBody": "F\u00e9licitations Florian Grignon pour cette r\u00e9alisation. J\u0027ai beaucoup aim\u00e9 la p\u00e9dagogie de ton livre et surtout la passion que l\u0027on ressent au fil des pages. Je suis content d\u0027avoir enfin un livre francophone \u00e0 conseiller sur la th\u00e9matique \"Cloud Native\" (Taill\u00e9 pour l\u0027informatique Nuagique ? :D ) et k8s dans un domaine domin\u00e9 par l\u0027anglais. En esp\u00e9rant en parler de vive voix bient\u00f4t !"
+        },
+        {
+          "@type": "Review",
+          "author": {"@type": "Person", "name": "I\u00f1igo Imaz Chac\u00f3n"},
+          "reviewRating": {"@type": "Rating", "ratingValue": 5, "bestRating": 5},
+          "reviewBody": "Que vous soyez d\u00e9butant ou d\u00e9j\u00e0 exp\u00e9riment\u00e9, ce livre est super utile pour mieux comprendre Kubernetes. Il explique les bases de fa\u00e7on claire pour les nouveaux et partage des conseils avanc\u00e9s pour les experts. En plus, les entretiens inclus avec des pros du domaine apportent des id\u00e9es vraiment int\u00e9ressantes. C\u2019est une ressource parfaite pour progresser \u00e0 tout niveau!"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://theartofkubernetes.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "\u00c0 qui s\u0027adresse The Art of Kubernetes ?",
+          "acceptedAnswer": {"@type": "Answer", "text": "\u00c0 toutes les personnes amen\u00e9es \u00e0 travailler avec Kubernetes : d\u00e9veloppeurs, ops, SRE, architectes, mais aussi d\u00e9cideurs techniques. Les bases sont expliqu\u00e9es clairement pour les d\u00e9butants, et les retours d\u0027exp\u00e9rience comme les entretiens apportent de quoi approfondir leurs connaissances aux plus exp\u00e9riment\u00e9s."}
+        },
+        {
+          "@type": "Question",
+          "name": "Faut-il d\u00e9j\u00e0 conna\u00eetre Kubernetes pour lire ce livre ?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Non. Le livre commence par les origines de Kubernetes et le fonctionnement de ses composants principaux, avant d\u0027aborder les distributions, la construction d\u0027une plateforme, la s\u00e9curit\u00e9 et l\u0027\u00e9cosyst\u00e8me."}
+        },
+        {
+          "@type": "Question",
+          "name": "Est-ce un tutoriel Kubernetes ?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Non, ce n\u0027est pas une liste de commandes. The Art of Kubernetes prend du recul sur les d\u00e9tails techniques pour donner une vision d\u0027ensemble : comprendre les possibilit\u00e9s et les limites de Kubernetes, choisir les bons outils dans son \u00e9cosyst\u00e8me et en faire une plateforme adapt\u00e9e \u00e0 votre entreprise."}
+        },
+        {
+          "@type": "Question",
+          "name": "Dans quel format le livre est-il disponible ?",
+          "acceptedAnswer": {"@type": "Answer", "text": "The Art of Kubernetes est disponible au format Kindle sur Amazon.fr, au prix de 9,99 \u20ac. Pas besoin de liseuse : l\u0027application Kindle gratuite permet de le lire sur smartphone, tablette ou ordinateur."}
+        },
+        {
+          "@type": "Question",
+          "name": "Combien de pages compte le livre ?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Le livre complet compte 350 pages, entretiens avec des acteurs du march\u00e9 compris."}
+        },
+        {
+          "@type": "Question",
+          "name": "Puis-je lire un extrait avant d\u0027acheter ?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Oui : inscrivez-vous \u00e0 la newsletter et vous recevrez gratuitement un chapitre du livre par email."}
+        },
+        {
+          "@type": "Question",
+          "name": "Existe-t-il une version anglaise ?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Une \u00e9dition anglaise est en cours d\u0027\u00e9criture. Inscrivez-vous \u00e0 la newsletter pour \u00eatre pr\u00e9venu de sa sortie."}
+        },
+        {
+          "@type": "Question",
+          "name": "Proposez-vous des achats group\u00e9s ?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Pour \u00e9quiper une \u00e9quipe ou une entreprise, n\u0027h\u00e9sitez pas \u00e0 me contacter \u00e0 bonjour@theartofkubernetes.com."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body class="bg-white font-sans text-slate-700 antialiased">
+  <a href="#contenu" class="skip-link">Aller au contenu</a>
+<header class="site-header sticky top-0 z-40 border-b border-slate-200/80 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+  <div class="wrap flex h-16 items-center justify-between gap-3 lg:h-20">
+    <a href="/" class="shrink-0 rounded-md" aria-label="The Art of Kubernetes – Accueil">
+      <img src="/theme/assets/images/logo-the-art-of-kubernetes-dark.webp" alt="The Art of Kubernetes" width="480" height="182" class="h-10 w-auto lg:h-12">
+    </a>
 
-  <!-- Css -->
-<!-- Main Css -->
-<link href="/theme/assets/libs/tobii/css/tobii.min.css" rel="stylesheet">
-<link href="/theme/assets/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
-<link href="/theme/assets/libs/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="/theme/assets/css/tailwind.css"></head>
+    <nav aria-label="Navigation principale" class="hidden lg:block">
+      <ul class="flex items-center gap-8 text-[15px] font-medium text-slate-700">
+        <li><a href="/#livre" class="nav-link">Le livre</a></li>
+        <li><a href="/#sommaire" class="nav-link">Sommaire</a></li>
+        <li><a href="/#avis" class="nav-link">Avis</a></li>
+        <li><a href="/#auteur" class="nav-link">L'auteur</a></li>
+        <li><a href="/fr/articles" class="nav-link">Articles</a></li>
+      </ul>
+    </nav>
 
-<body class="font-libre_franklin text-base text-black dark:text-white bg-white dark:bg-slate-900">
-    <!-- Loader Start -->
-    <!-- <div id="preloader">
-        <div id="status">
-            <div class="logo">
-                <img src="/theme/assets/images/logo-icon-64.png" class="d-block mx-auto animate-[spin_10s_linear_infinite]" alt="">
-            </div>
-            <div class="justify-content-center">
-                <div class="text-center">
-                    <h4 class="mb-0 mt-2 text-lg font-semibold">Upcover</h4>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- Loader End -->
-<!-- Navbar Start -->
-<nav class="navbar" id="navbar">
-    <div class="container relative flex flex-wrap items-center justify-between">
-        <a class="navbar-brand md:me-8" href="/index.html">
-            <span class="inline-block dark:hidden">
-                <img src="/theme/assets/images/TheArtOfKubernetes-logo-dark.png" class="l-dark" style="max-height: 100px;" alt="">
-                <img src="/theme/assets/images/TheArtOfKubernetes-logo-light.png" class="l-light" style="max-height: 100px;" alt="">
-            </span>
-            <img src="/theme/assets/images/TheArtOfKubernetes-logo-light.png" class="hidden dark:inline-block" style="max-height: 100px;" alt="">
-        </a>
-        <!-- Navbar Manu -->
-        <div class="navigation lg_992:order-1 lg_992:flex hidden ms-auto" id="menu-collapse">
-            <ul class="navbar-nav nav-light sidebar-nav" id="navbar-navlist">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/#livre">Le Livre</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/#chapitres">Chapitres</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/#editions">Éditions</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/#publications">Publications</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="nav-icons flex items-center lg_992:order-2 ms-auto md:ms-8">
-            <!-- Navbar Button -->
-            <ul class="invisible lg:visible list-none menu-social mb-0">
-                <li class="inline">
-                    <a href="/#editions" class="h-8 px-4 text-[12px] tracking-wider inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white uppercase">Acheter</a>
-                </li>
-            </ul>
-
-            <!-- Navbar Collapse Manu Button -->
-            <button data-collapse="menu-collapse" type="button" class="collapse-btn inline-flex items-center ms-2 text-dark dark:text-white lg_992:hidden" aria-controls="menu-collapse" aria-expanded="false">
-                <span class="sr-only">Navigation Menu</span>
-                <i class="mdi mdi-menu text-[24px]"></i>
-            </button>
-        </div>
+    <div class="flex items-center gap-2">
+      <a href="https://www.amazon.fr/dp/B0DMHYT348" class="btn btn-buy btn-sm" target="_blank" rel="noopener" data-track="buy-amazon-header">
+        <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <span class="sm:hidden">Acheter</span><span class="hidden sm:inline">Acheter sur Amazon</span>
+      </a>
+      <button type="button" class="inline-flex size-10 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 lg:hidden" aria-expanded="false" aria-controls="menu-mobile" data-menu-toggle>
+        <span class="sr-only">Menu</span>
+        <svg class="size-6 menu-open-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <svg class="size-6 menu-close-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
     </div>
-</nav>
-<!-- Navbar End -->
-<!-- Start Hero -->
-<section class="relative table w-full py-36 lg:py-64 overflow-hidden" id="livre">
-    <div class="absolute inset-0 overflow-hidden">
-        <div class="absolute image-wrap -top-[350px] -bottom-[350px] -start-[100px] -end-[100px] min-w-full w-auto min-h-full h-auto overflow-hidden m-auto bg-[url('/theme/assets/images/Mountains.jpg')] bg-no-repeat bg-center bg-cover"></div>
-    </div>
-    <div class="absolute inset-0 bg-black/70"></div>
+  </div>
 
-    <div class="container relative">
-        <div class="grid grid-cols-1 text-center">
-            <h4 class="text-white font-semibold lg:leading-normal leading-normal tracking-wide text-4xl lg:text-5xl my-5">The Art of Kubernetes</h4>
-        
-            <p class="text-white/70 text-lg max-w-xl mx-auto">Transformez vos infrastructures en plateformes optimisées avec Kubernetes et son écosystème</p>
-        
-            <div class="relative mt-8">
-                <a href="#newsletter" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white">Recevez votre premier chapitre gratuitement</a>
-            </div>
-        </div>
-    </div><!--end container-->
-</section><!--end section-->
-<div class="relative">
-    <div class="absolute block w-full h-auto bottom-[25px] z-1 start-0">
-        <a href="#about"><i class="mdi mdi-arrow-down absolute top-0 start-0 end-0 text-center inline-flex items-center justify-center rounded-full bg-white dark:bg-slate-900 h-12 w-12 mx-auto shadow-md dark:shadow-gray-800"></i></a>
-    </div>
+  <nav id="menu-mobile" aria-label="Navigation principale" class="hidden border-t border-slate-200 bg-white lg:hidden">
+    <ul class="wrap grid py-2 text-base font-medium text-slate-800">
+      <li><a href="/#livre" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>Le livre</a></li>
+      <li><a href="/#sommaire" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>Sommaire</a></li>
+      <li><a href="/#avis" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>Avis</a></li>
+      <li><a href="/#auteur" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>L'auteur</a></li>
+      <li><a href="/fr/articles" class="block rounded-lg px-2 py-3 hover:bg-slate-50" data-menu-link>Articles</a></li>
+    </ul>
+  </nav>
+</header>  <main id="contenu">
+<section class="relative isolate overflow-hidden bg-night text-white">
+  <picture>
+    <source media="(min-width: 768px)" srcset="/theme/assets/images/mountains-1920.webp">
+    <img src="/theme/assets/images/mountains-960.webp" alt="" width="1920" height="1080" class="absolute inset-0 -z-10 size-full object-cover object-[center_70%] opacity-45" fetchpriority="low">
+  </picture>
+  <div class="absolute inset-0 -z-10 bg-gradient-to-r from-night via-night/85 to-night/30"></div>
 
-    <div class="shape absolute sm:-bottom-px -bottom-[2px] start-0 end-0 overflow-hidden text-white dark:text-slate-900">
-        <svg class="w-full h-auto scale-[2.0] origin-top" viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
-        </svg>
-    </div>
-</div>
-<!-- End Hero -->
-
-<section class="relative md:py-24 py-8"><!-- Start Livre -->
-  <div class="container relative">
-    <div class="flex flex-col md:flex-row items-center">
-      <div class="basis-1/2">
-        <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">Selon l'auteur…</h6>
-        <h3 class="font-semibold text-2xl leading-normal mb-4">Quatrième de couverture</h3>
-
-        <p class="text-slate-400 max-w-xl mb-6">Réduire Kubernetes, un outil d'une telle flexibilité, modularité et extensibilité, à une simple liste de fonctionnalités serait une erreur majeure. C'est pourquoi, après avoir exploré les fondements de Kubernetes à travers le fonctionnement de ses composants principaux, nous établirons un cadre de réflexion pour découvrir l'étendue des possibilités qu'il offre, tout en en identifiant ses limites. Ce cadre repose sur le concept de Plateforme as a Service (PaaS).</p>
-        <p class="text-slate-400 max-w-xl mb-6">Nous démontrerons que Kubernetes se distingue particulièrement dans la construction de plateformes sur mesure, capables d'atteindre des niveaux de service élevés avec une allocation de ressources relativement modeste. Loin de se limiter à un rôle technique, Kubernetes s'impose comme un outil stratégique, adaptable à la grande majorité des entreprises qui souhaitent tirer parti de son potentiel.</p>
-
-        <div class="flex justify-center">
-          <a href="#chapitres" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white">Voir les chapitres <i class="mdi mdi-chevron-right align-middle ms-0.5"></i></a>
-        </div>
+  <div class="wrap grid items-center gap-12 py-14 md:grid-cols-[1.25fr_0.75fr] lg:py-24">
+    <div>
+      <p class="eyebrow text-teal-300">Livre · Édition française</p>
+      <h1 class="font-serif font-semibold tracking-tight text-white">
+        <span class="block text-5xl leading-none sm:text-6xl lg:text-7xl">The Art of Kubernetes</span>
+        <span class="mt-4 block text-2xl font-medium leading-snug text-teal-100 sm:text-3xl">Le livre pour maîtriser Kubernetes et son écosystème</span>
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-200">Comprenez les fondements de Kubernetes, faites les bons choix parmi les outils de son écosystème et bâtissez une <strong class="font-semibold text-white">plateforme sur mesure (PaaS)</strong> capable d'atteindre des niveaux de service élevés, même avec des ressources modestes.</p>
+      <ul class="mt-6 grid gap-2 text-slate-100">
+        <li class="flex gap-3"><svg class="mt-0.5 size-5 shrink-0 text-teal-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg><span>350 pages de fondamentaux, d'architecture et de bonnes pratiques</span></li>
+        <li class="flex gap-3"><svg class="mt-0.5 size-5 shrink-0 text-teal-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg><span>Des entretiens avec des acteurs du marché et de nombreux retours d'expérience</span></li>
+        <li class="flex gap-3"><svg class="mt-0.5 size-5 shrink-0 text-teal-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg><span>Écrit par un formateur Certified Kubernetes Administrator (CKA)</span></li>
+      </ul>
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        <a href="https://www.amazon.fr/dp/B0DMHYT348" class="btn btn-buy btn-lg " target="_blank" rel="noopener" data-track="buy-amazon">
+  <svg class="size-5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+  <span>Acheter sur Amazon.fr · 9,99 €</span>
+</a>
+        <a href="#newsletter" class="btn btn-ghost-light btn-lg"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg><span>Recevoir un chapitre gratuit</span></a>
       </div>
-
-      <div class="basis-1/2 flex justify-center pt-8">
-          <img src="/images/BackgroundBook.webp" class="rounded-full shadow dark:shadow-gray-700 max-w-40 max-h-40 md:max-w-96 md:max-h-96" alt="Livre The Art of Kubernetes" >
-      </div>
+      <p class="mt-4 text-sm text-slate-300">Format Kindle : lisible sur liseuse Kindle et avec l'application Kindle gratuite (smartphone, tablette, ordinateur).</p>
+      <a href="#avis" class="mt-6 inline-flex items-center gap-3 text-sm text-slate-200 hover:text-white">
+        <span class="inline-flex gap-0.5 text-amber-400" role="img" aria-label="Note : 5 sur 5"><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span><span>Recommandé par des SRE, des experts Cloud et des développeurs</span>
+      </a>
     </div>
-  </div><!--end container-->
-</section><!--end section livre-->
-<!-- Start Review -->
-<section class="relative md:py-24 py-16" id="review">
-    <div class="container relative">
-        <div class="grid grid-cols-1 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">Ce qu'ils pensent du livre…</h3>
-        </div><!--end grid-->
 
-        <div class="grid grid-cols-1 mt-6">
-            <div class="tiny-item">
-                <div class="tiny-slide text-center">
-                    <div class="cursor-e-resize">
-                        <div class="content relative rounded shadow dark:shadow-gray-700 m-2 p-6 bg-white dark:bg-slate-900 before:content-[''] before:absolute before:start-1/2 before:-bottom-[4px] before:box-border before:border-8 before:rotate-[45deg] before:border-t-transparent before:border-e-white dark:before:border-e-slate-900 before:border-b-white dark:before:border-b-slate-900 before:border-s-transparent before:shadow-testi dark:before:shadow-gray-700 before:origin-top-left">
-                            <i class="mdi mdi-format-quote-open mdi-48px text-teal-500"></i>
-                            <p class="text-slate-400">Le bouleversement technique et organisationel de l'IT que nous connaissions, apporté par Kubernetes, est de nature à rebuter, sinon troubler, les non-initiés. Cet ouvrage a pour but de prendre du recul sur les détails techniques et d'embrasser une vision d'ensemble de cet outil incontournable. Les avertis y trouveront de quoi approfondir leurs connaissances ou remettre en question leurs certitudes, grâce aux nombreux retours d'expérience et témoignages.</p>
-                            <ul class="list-none mb-0 text-amber-400 mt-3">
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                            </ul>
-                        </div>
-                        
-                        <div class="text-center mt-5">
-                            <img src="/images/JD-Fresser-Portrait.webp" class="size-14 rounded-full shadow-md dark:shadow-gray-700 mx-auto" alt="">
-                            <h6 class="mt-2 font-semibold">Fresser J.</h6>
-                            <span class="text-slate-400 text-sm">Site Reliability Engineer</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tiny-slide text-center">
-                    <div class="cursor-e-resize">
-                        <div class="content relative rounded shadow dark:shadow-gray-700 m-2 p-6 bg-white dark:bg-slate-900 before:content-[''] before:absolute before:start-1/2 before:-bottom-[4px] before:box-border before:border-8 before:rotate-[45deg] before:border-t-transparent before:border-e-white dark:before:border-e-slate-900 before:border-b-white dark:before:border-b-slate-900 before:border-s-transparent before:shadow-testi dark:before:shadow-gray-700 before:origin-top-left">
-                            <i class="mdi mdi-format-quote-open mdi-48px text-teal-500"></i>
-                            <p class="text-slate-400">Félicitations Florian Grignon pour cette réalisation. J'ai beaucoup aimé la pédagogie de ton livre et surtout la passion que l'on ressent au fil des pages. Je suis content d'avoir enfin un livre francophone à conseiller sur la thématique "Cloud Native" (Taillé pour l'informatique Nuagique ? :D ) et k8s dans un domaine dominé par l'anglais. En espérant en parler de vive voix bientôt !</p>
-                            <ul class="list-none mb-0 text-amber-400 mt-3">
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                            </ul>
-                        </div>
-                        
-                        <div class="text-center mt-5">
-                            <img src="/images/Ismael-Hommani-Portrait.webp" class="size-14 rounded-full shadow-md dark:shadow-gray-700 mx-auto" alt="">
-                            <h6 class="mt-2 font-semibold">Ismael Hommani</h6>
-                            <span class="text-slate-400 text-sm">Cloud Expert</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tiny-slide text-center">
-                    <div class="cursor-e-resize">
-                        <div class="content relative rounded shadow dark:shadow-gray-700 m-2 p-6 bg-white dark:bg-slate-900 before:content-[''] before:absolute before:start-1/2 before:-bottom-[4px] before:box-border before:border-8 before:rotate-[45deg] before:border-t-transparent before:border-e-white dark:before:border-e-slate-900 before:border-b-white dark:before:border-b-slate-900 before:border-s-transparent before:shadow-testi dark:before:shadow-gray-700 before:origin-top-left">
-                            <i class="mdi mdi-format-quote-open mdi-48px text-teal-500"></i>
-                            <p class="text-slate-400">Que vous soyez débutant ou déjà expérimenté, ce livre est super utile pour mieux comprendre Kubernetes. Il explique les bases de façon claire pour les nouveaux et partage des conseils avancés pour les experts. En plus, les entretiens inclus avec des pros du domaine apportent des idées vraiment intéressantes. C’est une ressource parfaite pour progresser à tout niveau!</p>
-                            <ul class="list-none mb-0 text-amber-400 mt-3">
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                                <li class="inline"><i class="mdi mdi-star"></i></li>
-                            </ul>
-                        </div>
-                        
-                        <div class="text-center mt-5">
-                            <img src="/images/Inigo-Imaz-Chacon-Portrait.webp" class="size-14 rounded-full shadow-md dark:shadow-gray-700 mx-auto" alt="">
-                            <h6 class="mt-2 font-semibold">Iñigo Imaz Chacón</h6>
-                            <span class="text-slate-400 text-sm">Main Software Developer</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!--end grid-->
-    </div><!--end container-->
-</section><!--end section-->
-<!-- End Review-->
-<section class="relative md:py-24 py-8"><!-- Section Auteur -->
-  <div class="container relative">
-    <div class="flex flex-col md:flex-row items-center">
-      <div class="basis-1/2">
-        <h6 class="text-teal-500 text-sm font-semibold uppercase mb-2">À propos de l'auteur…</h6>
-        <h3 class="font-semibold text-2xl leading-normal mb-4">À qui s'adresse ce livre ?</h3>
-        <p class="text-slate-400 max-w-xl mb-6">Bonjour ! Je m’appelle Florian Grignon. Je suis Certifié Administrateur Kubernetes (CKA) et Formateur autour des technologies Cloud Native (Terraform et Kubernetes). J’accompagne au quotidien des entreprises dans leur apprentissage et la mise en place de leur Infrastructure Cloud Native. L’infrastructure est trop souvent mal comprise, prise en compte trop tard, voire laissée à l’abandon. Pourtant, avec des solutions comme Kubernetes, il est maintenant possible, même pour de petites entreprises, de maîtriser leur infrastructure.</p>
-        <p class="text-slate-400 max-w-xl mb-6">J'ai écrit The Art of Kubernetes pour toutes les personnes qui sont amenées à travailler avec Kubernetes, afin de les aider à appréhender cette technologie.</p>
-
-        <div class="flex justify-center">
-          <a href="#chapitres" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white">Voir les chapitres <i class="mdi mdi-chevron-right align-middle ms-0.5"></i></a>
-        </div>
-      </div>
-
-      <div class="basis-1/2 flex justify-center pt-8">
-          <img src="/theme/assets/images/auteur-florian-grignon.webp" class="rounded-full shadow dark:shadow-gray-700 max-h-40 max-w-40 md:max-h-96 md:max-w-96" alt="Auteur de The Art of Kubernetes, Florian Grignon">
-      </div>
+    <div class="mx-auto w-56 sm:w-64 md:w-full md:max-w-xs lg:max-w-sm">
+      <a href="https://www.amazon.fr/dp/B0DMHYT348" target="_blank" rel="noopener" class="block" data-track="buy-amazon-cover">
+        <img src="/images/the-art-of-kubernetes-couverture-400.webp" srcset="/images/the-art-of-kubernetes-couverture-400.webp 400w, /images/the-art-of-kubernetes-couverture-800.webp 800w" sizes="(min-width: 1024px) 384px, (min-width: 768px) 320px, 256px" alt="Couverture du livre The Art of Kubernetes - French Edition, de Florian Grignon" width="400" height="568" fetchpriority="high" class="book-cover w-full rounded-md">
+      </a>
     </div>
-  </div><!--end container-->
-</section><!--end section auteur-->
-<!-- End Auteur -->
-<!-- Start Chapitres -->
-<section class="relative md:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="chapitres">
-    <div class="container relative">
-        <div class="grid grid-cols-1 pb-6 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">Chapitres</h3>
-
-            <p class="text-slate-400 max-w-xl mx-auto">Voici tous les sujets traités dans le livre.</p>
-        </div><!--end grid-->
-
-        <div class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-6 mt-6">
-            <div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 350px;" >
-                <div class="flex items-center justify-center size-14 -rotate-45 bg-gradient-to-r from-transparent to-teal-500/10 text-teal-500 text-center rounded-full group-hover:bg-teal-500/10 duration-500">
-                    <i data-feather="sunrise" class="size-6 rotate-45"></i>
-                </div>
-
-                <div class="content mt-6 relative z-1">
-                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Origines de Kubernetes</a>
-                    <p class="text-slate-400 mt-3">Comprenez comment le projet Kubernetes a vu le jour, et a été architecturé en quelques composants Core.</p>
-                </div>
-
-                <div class="absolute bottom-0 -end-16">
-                    <i data-feather="sunrise" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
-                </div>
-            </div><!--end feature content-->
-
-            <div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 350px;" >
-                <div class="flex items-center justify-center size-14 -rotate-45 bg-gradient-to-r from-transparent to-teal-500/10 text-teal-500 text-center rounded-full group-hover:bg-teal-500/10 duration-500">
-                    <i data-feather="codepen" class="size-6 rotate-45"></i>
-                </div>
-
-                <div class="content mt-6 relative z-1">
-                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Distribution Kubernetes</a>
-                    <p class="text-slate-400 mt-3">Explorez les possibilités de configuration et d'extensions compatibles Kubernetes pour former une distribution.</p>
-                </div>
-
-                <div class="absolute bottom-0 -end-16">
-                    <i data-feather="codepen" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
-                </div>
-            </div><!--end feature content-->
-
-            <div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 350px;" >
-                <div class="flex items-center justify-center size-14 -rotate-45 bg-gradient-to-r from-transparent to-teal-500/10 text-teal-500 text-center rounded-full group-hover:bg-teal-500/10 duration-500">
-                    <i data-feather="hexagon" class="size-6 rotate-45"></i>
-                </div>
-
-                <div class="content mt-6 relative z-1">
-                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Platform as a Service</a>
-                    <p class="text-slate-400 mt-3">Tirez pleinement profit de Kubernetes en organisant les outils et services de votre infrastructure selon le concept de Platform as a Service.</p>
-                </div>
-
-                <div class="absolute bottom-0 -end-16">
-                    <i data-feather="hexagon" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
-                </div>
-            </div><!--end feature content-->
-
-            <div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 350px;" >
-                <div class="flex items-center justify-center size-14 -rotate-45 bg-gradient-to-r from-transparent to-teal-500/10 text-teal-500 text-center rounded-full group-hover:bg-teal-500/10 duration-500">
-                    <i data-feather="tool" class="size-6 rotate-45"></i>
-                </div>
-
-                <div class="content mt-6 relative z-1">
-                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Mise en œuvre</a>
-                    <p class="text-slate-400 mt-3">Atteignez des hauts niveaux de services pour votre infrastructure en construisant une plateforme sur mesure avec Kubernetes.</p>
-                </div>
-
-                <div class="absolute bottom-0 -end-16">
-                    <i data-feather="tool" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
-                </div>
-            </div><!--end feature content-->
-
-            <div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 350px;" >
-                <div class="flex items-center justify-center size-14 -rotate-45 bg-gradient-to-r from-transparent to-teal-500/10 text-teal-500 text-center rounded-full group-hover:bg-teal-500/10 duration-500">
-                    <i data-feather="shield" class="size-6 rotate-45"></i>
-                </div>
-
-                <div class="content mt-6 relative z-1">
-                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Sécurité</a>
-                    <p class="text-slate-400 mt-3">Découvrez une méthode et des outils compatibles Kubernetes permettant d'augmenter la sécurité de vos clusters.</p>
-                </div>
-
-                <div class="absolute bottom-0 -end-16">
-                    <i data-feather="shield" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
-                </div>
-            </div><!--end feature content-->
-
-            <div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 350px;" >
-                <div class="flex items-center justify-center size-14 -rotate-45 bg-gradient-to-r from-transparent to-teal-500/10 text-teal-500 text-center rounded-full group-hover:bg-teal-500/10 duration-500">
-                    <i data-feather="book-open" class="size-6 rotate-45"></i>
-                </div>
-
-                <div class="content mt-6 relative z-1">
-                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Cas d'Utilisation</a>
-                    <p class="text-slate-400 mt-3">Explorez des cas d'utilisation atypiques mais essentiels de Kubernetes, mettant en lumière les bonnes pratiques pour répondre à des besoins spécifiques.</p>
-                </div>
-
-                <div class="absolute bottom-0 -end-16">
-                    <i data-feather="book-open" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
-                </div>
-            </div><!--end feature content-->
-
-            <div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 350px;" >
-                <div class="flex items-center justify-center size-14 -rotate-45 bg-gradient-to-r from-transparent to-teal-500/10 text-teal-500 text-center rounded-full group-hover:bg-teal-500/10 duration-500">
-                    <i data-feather="share-2" class="size-6 rotate-45"></i>
-                </div>
-
-                <div class="content mt-6 relative z-1">
-                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Écosystème Kubernetes</a>
-                    <p class="text-slate-400 mt-3">Plongez dans l'écosystème de Kubernetes : découvrez les outils internes et externes étendant ses fonctionnalités.</p>
-                </div>
-
-                <div class="absolute bottom-0 -end-16">
-                    <i data-feather="share-2" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
-                </div>
-            </div><!--end feature content-->
-
-            <div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 350px;" >
-                <div class="flex items-center justify-center size-14 -rotate-45 bg-gradient-to-r from-transparent to-teal-500/10 text-teal-500 text-center rounded-full group-hover:bg-teal-500/10 duration-500">
-                    <i data-feather="more-horizontal" class="size-6 rotate-45"></i>
-                </div>
-
-                <div class="content mt-6 relative z-1">
-                    <a href="" class="title text-lg font-semibold hover:text-teal-500">Et bien d'autres</a>
-                    <p class="text-slate-400 mt-3">D'autres chapitres sur Kubernetes vous permettront de mieux appréhender et comprendre cette technologie révolutionnaire.</p>
-                </div>
-
-                <div class="absolute bottom-0 -end-16">
-                    <i data-feather="more-horizontal" class="size-48 text-teal-500 opacity-[0.04] dark:opacity-[0.04] group-hover:opacity-10 duration-500"></i>
-                </div>
-            </div><!--end feature content-->
-        </div><!--end grid-->
-    </div><!--end container-->
-</section><!--end section-->
-<!-- End Chapitres -->
-<!-- Start Pricing -->
-<section class="relative md:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="editions">
-    <div class="container relative">
-        <div class="grid grid-cols-1 pb-6 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">Les Différentes Éditions</h3>
-            <p class="text-slate-400 max-w-xl mx-auto">Les différents packages numériques et papiers disponibles. N'hésitez pas à me contacter si vous souhaitez faire un achat groupé.</p>
-        </div><!--end grid-->
-
-        <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-6 gap-6">
-
-            <div class="col-start-2 group p-[1px] relative overflow-hidden shadow dark:shadow-gray-700 rounded-md bg-gradient-to-tr from-teal-500 to-indigo-600 h-fit">
-                <div class="p-6 bg-white dark:bg-slate-900 rounded-md">
-                    <h6 class="font-semibold mb-5 text-xl">Digitale</h6>
-
-                    <div class="flex mb-5">
-                        <span class="text-lg font-medium">€</span>
-                        <span class="price text-5xl h6 font-semibold mb-0">9.99</span>
-                    </div>
-
-                    <ul class="list-none text-slate-400">
-                      <li class="mb-1 flex"><i class="mdi mdi-check-circle-outline text-teal-500 text-[20px] align-middle me-2"></i> <span>Le livre complet (350 pages), en version PDF.</span></li>
-                      <li class="mb-1 flex"><i class="mdi mdi-check-circle-outline text-teal-500 text-[20px] align-middle me-2"></i> <span>Tous les entretiens d'acteurs du marché</span></li>
-                      <li class="mb-1 flex"><i class="mdi mdi-check-circle-outline text-teal-500 text-[20px] align-middle me-2"></i> <span>En tant que connaisseur Kubernetes, vous avez l'option de recevoir des nouvelles de l'écosystème Kubernetes par newsletter</span></li>
-                    </ul>
-
-                    <a href="https://www.amazon.fr/dp/B0DMHYT348/ref=sr_1_3" class="h-10 px-6 tracking-wide inline-flex items-center justify-center font-medium rounded-md bg-teal-500 text-white w-full mt-5">Acheter</a>
-                </div>
-            </div><!--end content-->
-
-        </div><!--end grid-->
-    </div>
+  </div>
 </section>
-<!-- End Pricing -->
-<!-- Blog Card List -->
-<!-- Start Blog Article List Card -->
-<section class="relative md:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="publications">
-    <div class="container relative">
-        <div class="grid grid-cols-1 pb-6 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">Publications</h3>
 
-            <p class="text-slate-400 max-w-xl mx-auto">Quelques articles autour de Kubernetes qui pourraient vous intéresser.</p>
-        </div><!--end grid-->
+<section aria-label="Le livre en bref" class="border-b border-slate-200 bg-white">
+  <ul class="wrap grid grid-cols-2 gap-6 py-8 lg:grid-cols-4">
+    <li class="flex items-center gap-3">
+      <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-700"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></span>
+      <span><span class="block font-semibold text-slate-900">350 pages</span><span class="block text-sm text-slate-500">du concept à la mise en œuvre</span></span>
+    </li>
+    <li class="flex items-center gap-3">
+      <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-700"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></span>
+      <span><span class="block font-semibold text-slate-900">Format Kindle</span><span class="block text-sm text-slate-500">liseuse, mobile ou ordinateur</span></span>
+    </li>
+    <li class="flex items-center gap-3">
+      <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-700"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></span>
+      <span><span class="block font-semibold text-slate-900">Entretiens</span><span class="block text-sm text-slate-500">avec des acteurs du marché</span></span>
+    </li>
+    <li class="flex items-center gap-3">
+      <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-700"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg></span>
+      <span><span class="block font-semibold text-slate-900">Auteur certifié</span><span class="block text-sm text-slate-500">Kubernetes Administrator (CKA)</span></span>
+    </li>
+  </ul>
+</section>
 
-        <div class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-6 mt-6">
-
-<div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 100%;">
-  <a href="fr/multi-cluster-kubernetes" class="title text-lg font-semibold hover:text-teal-500 duration-500 ease-in-out">
-    <div class="relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-        <img src="/images/logo-multicluster.webp" class="group-hover:scale-110 duration-500" alt="Multi Cluster Kubernetes" >
+<section id="livre" class="scroll-mt-24 py-16 lg:py-24" aria-labelledby="livre-title">
+  <div class="wrap grid items-center gap-12 lg:grid-cols-2">
+    <div>
+      <p class="eyebrow">Quatrième de couverture</p>
+      <h2 id="livre-title" class="section-title">Kubernetes est bien plus qu'une liste de fonctionnalités</h2>
+      <div class="mt-6 space-y-4 text-lg leading-relaxed text-slate-600">
+        <p>Réduire Kubernetes, un outil d'une telle flexibilité, modularité et extensibilité, à une simple liste de fonctionnalités serait une erreur majeure. C'est pourquoi, après avoir exploré les fondements de Kubernetes à travers le fonctionnement de ses composants principaux, nous établirons un cadre de réflexion pour découvrir l'étendue des possibilités qu'il offre, tout en en identifiant les limites. Ce cadre repose sur le concept de <strong class="text-slate-900">Platform as a Service (PaaS)</strong>.</p>
+        <p>Nous démontrerons que Kubernetes se distingue particulièrement dans la construction de plateformes sur mesure, capables d'atteindre des niveaux de service élevés avec une allocation de ressources relativement modeste. Loin de se limiter à un rôle technique, Kubernetes s'impose comme un <strong class="text-slate-900">outil stratégique</strong>, adaptable à la grande majorité des entreprises qui souhaitent tirer parti de son potentiel.</p>
+      </div>
     </div>
-  </a>
+    <figure>
+      <img src="/images/the-art-of-kubernetes-livre-1200.webp" alt="Le livre The Art of Kubernetes, édition française, posé sur une table en bois" width="1200" height="900" loading="lazy" decoding="async" class="w-full rounded-3xl shadow-xl ring-1 ring-slate-200">
+    </figure>
+  </div>
 
-    <div class="mt-6">
-        <div class="flex mb-4">
-          <span class="flex items-center text-slate-400 text-sm"><i data-feather="calendar" class="size-4 text-slate-900 dark:text-white me-1.5"></i>15-09-2024</span>
-          <span class="flex items-center text-slate-400 text-sm ms-3"><i data-feather="clock" class="size-4 text-slate-900 dark:text-white me-1.5"></i>15 min de lecture</span>
-        </div>
-
-        <a href="fr/multi-cluster-kubernetes" class="title text-lg font-semibold hover:text-teal-500 duration-500 ease-in-out">Multi Cluster Kubernetes</a>
-        <p class="truncate text-slate-400 overflow-hidden max-h-xs">Kubernetes, grâce à son architecture hautement modulable, flexible et extensible permet facilement de mettre en place une architecture multi clusters pour répondre à des besoins spécifiques.</p>
-
-        <div class="mt-3">
-          <a href="fr/multi-cluster-kubernetes" class="text-teal-500">Continuer la lecture <i class="mdi mdi-chevron-right align-middle"></i></a>
-        </div>
+  <div class="wrap mt-16">
+    <div class="rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-200 sm:p-10">
+      <h3 class="font-serif text-3xl font-semibold text-slate-900">Ce que vous allez apprendre</h3>
+      <ul class="mt-6 grid gap-x-10 gap-y-4 md:grid-cols-2">
+        <li class="flex gap-3 text-slate-700"><svg class="mt-1 size-5 shrink-0 text-teal-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Comprendre les composants fondamentaux de Kubernetes et pourquoi il s'est imposé</span></li>
+        <li class="flex gap-3 text-slate-700"><svg class="mt-1 size-5 shrink-0 text-teal-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Choisir et assembler une distribution Kubernetes adaptée à vos besoins</span></li>
+        <li class="flex gap-3 text-slate-700"><svg class="mt-1 size-5 shrink-0 text-teal-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Penser votre infrastructure comme une Platform as a Service (PaaS)</span></li>
+        <li class="flex gap-3 text-slate-700"><svg class="mt-1 size-5 shrink-0 text-teal-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Atteindre des niveaux de service élevés avec des ressources modestes</span></li>
+        <li class="flex gap-3 text-slate-700"><svg class="mt-1 size-5 shrink-0 text-teal-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Renforcer la sécurité de vos clusters avec une méthode et des outils éprouvés</span></li>
+        <li class="flex gap-3 text-slate-700"><svg class="mt-1 size-5 shrink-0 text-teal-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Savoir quand recourir aux Operators, au multi-cluster ou à l'edge computing</span></li>
+      </ul>
     </div>
-</div><!--end content--><div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 100%;">
-  <a href="fr/qu-est-ce-que-kubernetes" class="title text-lg font-semibold hover:text-teal-500 duration-500 ease-in-out">
-    <div class="relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-        <img src="/images/logo-kubernetes.webp" class="group-hover:scale-110 duration-500" alt="Qu'est-ce que Kubernetes ?" >
+  </div>
+</section>
+
+<section id="pour-qui" class="scroll-mt-24 bg-slate-50 py-16 lg:py-24" aria-labelledby="pour-qui-title">
+  <div class="wrap">
+    <div class="max-w-3xl">
+      <p class="eyebrow">Pour qui ?</p>
+      <h2 id="pour-qui-title" class="section-title">À qui s'adresse ce livre ?</h2>
+      <p class="mt-4 text-lg leading-relaxed text-slate-600">À toutes les personnes amenées à travailler avec Kubernetes, quel que soit leur niveau : les bases sont expliquées clairement, et les retours d'expérience apportent matière à réflexion aux plus expérimentés.</p>
     </div>
-  </a>
+    <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <li class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <span class="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg></span>
+        <h3 class="mt-4 text-lg font-semibold text-slate-900">Développeurs</h3>
+        <p class="mt-2 text-slate-600">Comprenez la plateforme sur laquelle tournent vos applications et collaborez plus efficacement avec les équipes d'infrastructure.</p>
+      </li>
+      <li class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <span class="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg></span>
+        <h3 class="mt-4 text-lg font-semibold text-slate-900">Ops, SRE et DevOps</h3>
+        <p class="mt-2 text-slate-600">Prenez du recul sur les détails techniques, structurez votre plateforme et fiabilisez vos niveaux de service.</p>
+      </li>
+      <li class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <span class="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg></span>
+        <h3 class="mt-4 text-lg font-semibold text-slate-900">Architectes et tech leads</h3>
+        <p class="mt-2 text-slate-600">Faites des choix d'architecture éclairés : distribution, multi-cluster, edge computing, Operators, sécurité.</p>
+      </li>
+      <li class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <span class="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></span>
+        <h3 class="mt-4 text-lg font-semibold text-slate-900">CTO et décideurs</h3>
+        <p class="mt-2 text-slate-600">Mesurez l'intérêt stratégique de Kubernetes et ce qu'une plateforme sur mesure peut apporter à votre organisation.</p>
+      </li>
+    </ul>
+  </div>
+</section>
 
-    <div class="mt-6">
-        <div class="flex mb-4">
-          <span class="flex items-center text-slate-400 text-sm"><i data-feather="calendar" class="size-4 text-slate-900 dark:text-white me-1.5"></i>09-09-2024</span>
-          <span class="flex items-center text-slate-400 text-sm ms-3"><i data-feather="clock" class="size-4 text-slate-900 dark:text-white me-1.5"></i>15 min de lecture</span>
-        </div>
-
-        <a href="fr/qu-est-ce-que-kubernetes" class="title text-lg font-semibold hover:text-teal-500 duration-500 ease-in-out">Qu'est-ce que Kubernetes ?</a>
-        <p class="truncate text-slate-400 overflow-hidden max-h-xs">Kubernetes a 10 ans, et a bien évolué durant tout ce temps. Prenons 5 minutes pour voir ce qu'est devenu Kubernetes.</p>
-
-        <div class="mt-3">
-          <a href="fr/qu-est-ce-que-kubernetes" class="text-teal-500">Continuer la lecture <i class="mdi mdi-chevron-right align-middle"></i></a>
-        </div>
+<section id="sommaire" class="scroll-mt-24 py-16 lg:py-24" aria-labelledby="sommaire-title">
+  <div class="wrap">
+    <div class="max-w-3xl">
+      <p class="eyebrow">Sommaire</p>
+      <h2 id="sommaire-title" class="section-title">Les grands thèmes du livre</h2>
+      <p class="mt-4 text-lg leading-relaxed text-slate-600">Du fonctionnement interne de Kubernetes jusqu'à sa mise en œuvre en entreprise, voici les sujets traités dans The Art of Kubernetes.</p>
     </div>
-</div><!--end content--><div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 100%;">
-  <a href="fr/edge-computing-avec-kubernetes" class="title text-lg font-semibold hover:text-teal-500 duration-500 ease-in-out">
-    <div class="relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-        <img src="/images/logo-edge.webp" class="group-hover:scale-110 duration-500" alt="Edge Computing avec Kubernetes" >
-    </div>
-  </a>
-
-    <div class="mt-6">
-        <div class="flex mb-4">
-          <span class="flex items-center text-slate-400 text-sm"><i data-feather="calendar" class="size-4 text-slate-900 dark:text-white me-1.5"></i>14-08-2024</span>
-          <span class="flex items-center text-slate-400 text-sm ms-3"><i data-feather="clock" class="size-4 text-slate-900 dark:text-white me-1.5"></i>15 min de lecture</span>
+    <ol class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <li class="group relative overflow-hidden rounded-2xl bg-white p-6 ring-1 ring-slate-200 transition hover:shadow-lg hover:ring-teal-300">
+        <div class="flex items-center justify-between">
+          <span class="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700 transition group-hover:bg-teal-600 group-hover:text-white"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="2" x2="12" y2="9"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="8 6 12 2 16 6"></polyline></svg></span>
+          <span class="font-serif text-3xl font-semibold text-slate-200" aria-hidden="true">01</span>
         </div>
-
-        <a href="fr/edge-computing-avec-kubernetes" class="title text-lg font-semibold hover:text-teal-500 duration-500 ease-in-out">Edge Computing avec Kubernetes</a>
-        <p class="truncate text-slate-400 overflow-hidden max-h-xs">Kubernetes se révèle être un outil puissant pour orchestrer et gérer ces environnements décentralisés, où les ressources sont dispersées géographiquement et où les exigences en matière de latence, de bande passante, et de résilience sont particulièrement critiques</p>
-
-        <div class="mt-3">
-          <a href="fr/edge-computing-avec-kubernetes" class="text-teal-500">Continuer la lecture <i class="mdi mdi-chevron-right align-middle"></i></a>
+        <h3 class="mt-4 text-lg font-semibold text-slate-900">Origines de Kubernetes</h3>
+        <p class="mt-2 text-slate-600">Comprenez comment le projet Kubernetes a vu le jour et comment il a été architecturé autour de quelques composants principaux.</p>
+      </li>
+      <li class="group relative overflow-hidden rounded-2xl bg-white p-6 ring-1 ring-slate-200 transition hover:shadow-lg hover:ring-teal-300">
+        <div class="flex items-center justify-between">
+          <span class="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700 transition group-hover:bg-teal-600 group-hover:text-white"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon><line x1="12" y1="22" x2="12" y2="15.5"></line><polyline points="22 8.5 12 15.5 2 8.5"></polyline><polyline points="2 15.5 12 8.5 22 15.5"></polyline><line x1="12" y1="2" x2="12" y2="8.5"></line></svg></span>
+          <span class="font-serif text-3xl font-semibold text-slate-200" aria-hidden="true">02</span>
         </div>
-    </div>
-</div><!--end content--><div class="group rounded-md shadow dark:shadow-gray-700 relative bg-white dark:bg-slate-900 p-6 overflow-hidden h-fit" style="min-height: 100%;">
-  <a href="fr/operator-or-not-operator" class="title text-lg font-semibold hover:text-teal-500 duration-500 ease-in-out">
-    <div class="relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-        <img src="/images/logo-operator.webp" class="group-hover:scale-110 duration-500" alt="Operator ou ne pas Operator, telle est la question" >
-    </div>
-  </a>
-
-    <div class="mt-6">
-        <div class="flex mb-4">
-          <span class="flex items-center text-slate-400 text-sm"><i data-feather="calendar" class="size-4 text-slate-900 dark:text-white me-1.5"></i>01-08-2024</span>
-          <span class="flex items-center text-slate-400 text-sm ms-3"><i data-feather="clock" class="size-4 text-slate-900 dark:text-white me-1.5"></i>15 min de lecture</span>
+        <h3 class="mt-4 text-lg font-semibold text-slate-900">Distributions Kubernetes</h3>
+        <p class="mt-2 text-slate-600">Explorez les possibilités de configuration et les extensions compatibles avec Kubernetes qui, ensemble, forment une distribution.</p>
+      </li>
+      <li class="group relative overflow-hidden rounded-2xl bg-white p-6 ring-1 ring-slate-200 transition hover:shadow-lg hover:ring-teal-300">
+        <div class="flex items-center justify-between">
+          <span class="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700 transition group-hover:bg-teal-600 group-hover:text-white"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg></span>
+          <span class="font-serif text-3xl font-semibold text-slate-200" aria-hidden="true">03</span>
         </div>
-
-        <a href="fr/operator-or-not-operator" class="title text-lg font-semibold hover:text-teal-500 duration-500 ease-in-out">Operator ou ne pas Operator, telle est la question</a>
-        <p class="truncate text-slate-400 overflow-hidden max-h-xs">L'un des atouts majeurs de Kubernetes réside dans sa capacité à être extensible et à s'adapter à une multitude de cas d'usage grâce à des abstractions avancées. Parmi celles-ci, le modèle d’Operator occupe une place centrale en automatisant la gestion d'applications complexes directement au sein du cluster Kubernetes.</p>
-
-        <div class="mt-3">
-          <a href="fr/operator-or-not-operator" class="text-teal-500">Continuer la lecture <i class="mdi mdi-chevron-right align-middle"></i></a>
+        <h3 class="mt-4 text-lg font-semibold text-slate-900">Platform as a Service</h3>
+        <p class="mt-2 text-slate-600">Tirez pleinement profit de Kubernetes en organisant les outils et services de votre infrastructure selon le concept de Platform as a Service (PaaS).</p>
+      </li>
+      <li class="group relative overflow-hidden rounded-2xl bg-white p-6 ring-1 ring-slate-200 transition hover:shadow-lg hover:ring-teal-300">
+        <div class="flex items-center justify-between">
+          <span class="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700 transition group-hover:bg-teal-600 group-hover:text-white"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg></span>
+          <span class="font-serif text-3xl font-semibold text-slate-200" aria-hidden="true">04</span>
         </div>
-    </div>
-</div><!--end content-->            
-        </div><!--end grid-->
-    </div><!--end container-->
-</section><!--end section-->
-<!-- End Blog Article List Card -->
-<section class="relative lg:py-24 py-16 bg-slate-50 dark:bg-slate-800" id="newsletter">
-    <div class="container relative">
-        <div class="grid grid-cols-1 pb-6 text-center">
-            <h3 class="font-semibold text-2xl leading-normal mb-4">Rejoignez la communauté des connaisseurs Kubernetes</h3>
-
-            <p class="text-slate-400 max-w-xl mx-auto">En vous inscrivant à la newsletter, vous recevrez gratuitement un chapitre du livre.</p>
-        </div><!--end grid-->
-
-        <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-6">
-            <div class="lg:col-span-7 md:col-span-6">
-                <img src="/theme/assets/images/contact.svg" alt="">
-            </div>
-
-            <div class="lg:col-span-5 md:col-span-6">
-                <div class="lg:ms-5">
-                    <div class="bg-white dark:bg-slate-900 rounded-md shadow dark:shadow-gray-700 p-6">
-                      <script async src="https://eocampaign1.com/form/7f014dd2-69c3-11ef-b4cf-7d716c80cc13.js" data-form="7f014dd2-69c3-11ef-b4cf-7d716c80cc13"></script>
-                    </div>
-                </div>
-            </div>
+        <h3 class="mt-4 text-lg font-semibold text-slate-900">Mise en œuvre</h3>
+        <p class="mt-2 text-slate-600">Atteignez des niveaux de service élevés pour votre infrastructure en construisant une plateforme sur mesure avec Kubernetes.</p>
+      </li>
+      <li class="group relative overflow-hidden rounded-2xl bg-white p-6 ring-1 ring-slate-200 transition hover:shadow-lg hover:ring-teal-300">
+        <div class="flex items-center justify-between">
+          <span class="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700 transition group-hover:bg-teal-600 group-hover:text-white"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></span>
+          <span class="font-serif text-3xl font-semibold text-slate-200" aria-hidden="true">05</span>
         </div>
-    </div><!--end container-->
-</section><!--end section-->
-
-<!-- Footer Start -->
-<footer class="footer bg-dark-footer relative text-gray-200 dark:text-gray-200">
-    <div class="py-[30px] px-0 border-t border-slate-800">
-        <div class="container relative text-center">
-            <div class="grid lg:grid-cols-12 md:grid-cols-3 grid-cols-1 items-center">
-
-                <div class="lg:col-span-3 md:text-start text-center">
-                    <a href="#" class="text-[22px] focus:outline-none">
-                        <img src="/theme/assets/images/TheArtOfKubernetes-logo-light.png" class="mx-auto md:me-auto md:ms-0" alt="">
-                    </a>
-                </div>
-
-                <div class="lg:col-span-5 text-center mt-6 md:mt-0">
-                  <p class="mb-0">Copyright 2024-<script>document.write(new Date().getFullYear())</script> © Grignon Florian.<br/>All rights reserved.</p>
-                </div>
-
-            </div><!--end grid-->
-        </div><!--end container-->
+        <h3 class="mt-4 text-lg font-semibold text-slate-900">Sécurité</h3>
+        <p class="mt-2 text-slate-600">Découvrez une méthode et des outils compatibles avec Kubernetes pour renforcer la sécurité de vos clusters.</p>
+      </li>
+      <li class="group relative overflow-hidden rounded-2xl bg-white p-6 ring-1 ring-slate-200 transition hover:shadow-lg hover:ring-teal-300">
+        <div class="flex items-center justify-between">
+          <span class="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700 transition group-hover:bg-teal-600 group-hover:text-white"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg></span>
+          <span class="font-serif text-3xl font-semibold text-slate-200" aria-hidden="true">06</span>
+        </div>
+        <h3 class="mt-4 text-lg font-semibold text-slate-900">Cas d'utilisation</h3>
+        <p class="mt-2 text-slate-600">Explorez des cas d'utilisation atypiques mais essentiels de Kubernetes, et les bonnes pratiques pour répondre à des besoins spécifiques.</p>
+      </li>
+      <li class="group relative overflow-hidden rounded-2xl bg-white p-6 ring-1 ring-slate-200 transition hover:shadow-lg hover:ring-teal-300">
+        <div class="flex items-center justify-between">
+          <span class="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700 transition group-hover:bg-teal-600 group-hover:text-white"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></span>
+          <span class="font-serif text-3xl font-semibold text-slate-200" aria-hidden="true">07</span>
+        </div>
+        <h3 class="mt-4 text-lg font-semibold text-slate-900">Écosystème Kubernetes</h3>
+        <p class="mt-2 text-slate-600">Plongez dans l'écosystème de Kubernetes : les outils internes et externes qui étendent ses fonctionnalités.</p>
+      </li>
+      <li class="group relative overflow-hidden rounded-2xl bg-white p-6 ring-1 ring-slate-200 transition hover:shadow-lg hover:ring-teal-300">
+        <div class="flex items-center justify-between">
+          <span class="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700 transition group-hover:bg-teal-600 group-hover:text-white"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></span>
+          <span class="font-serif text-3xl font-semibold text-slate-200" aria-hidden="true">08</span>
+        </div>
+        <h3 class="mt-4 text-lg font-semibold text-slate-900">Entretiens d'experts</h3>
+        <p class="mt-2 text-slate-600">Des entretiens avec des acteurs du marché apportent un regard de terrain et de nombreux retours d'expérience.</p>
+      </li>
+    </ol>
+    <div class="mt-10 flex flex-wrap items-center gap-3">
+      <a href="https://www.amazon.fr/dp/B0DMHYT348" class="btn btn-buy  " target="_blank" rel="noopener" data-track="buy-amazon">
+  <svg class="size-5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+  <span>Acheter sur Amazon.fr · 9,99 €</span>
+</a>
+      <a href="#newsletter" class="btn btn-secondary"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg><span>Recevoir un chapitre gratuit</span></a>
     </div>
-</footer><!--end footer-->
-<!-- Footer End -->
-        <!-- Back to top -->
-        <a href="#" onclick="topFunction()" id="back-to-top" class="back-to-top fixed hidden text-lg rounded-full z-10 bottom-5 right-5 size-9 text-center bg-teal-500 text-white leading-9"><i class="mdi mdi-arrow-up"></i></a>
-        <!-- Back to top -->
+  </div>
+</section>
 
-        <!-- JAVASCRIPTS -->
-        <script src="/theme/assets/libs/feather-icons/feather.min.js"></script>
-<script src="/theme/assets/libs/gumshoejs/gumshoe.polyfills.min.js"></script>
-<script src="/theme/assets/libs/tobii/js/tobii.min.js"></script>
-<script src="/theme/assets/libs/tiny-slider/min/tiny-slider.js"></script>
-<script src="/theme/assets/js/plugins.init.js"></script>
-<script src="/theme/assets/js/app.js"></script>        <!-- JAVASCRIPTS -->
-    </body>
+<section id="avis" class="scroll-mt-24 bg-night py-16 text-white lg:py-24" aria-labelledby="avis-title">
+  <div class="wrap">
+    <div class="max-w-3xl">
+      <p class="eyebrow text-teal-300">Avis de lecteurs</p>
+      <h2 id="avis-title" class="section-title text-white">Ce qu'en disent les lecteurs</h2>
+    </div>
+    <ul class="mt-10 grid gap-6 lg:grid-cols-3">
+      <li>
+        <figure class="flex h-full flex-col rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 sm:p-8">
+          <span class="inline-flex gap-0.5 text-amber-400" role="img" aria-label="Note : 5 sur 5"><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+          <blockquote class="mt-4 flex-1 leading-relaxed text-slate-200">
+            <p>« Le bouleversement technique et organisationel de l'IT que nous connaissions, apporté par Kubernetes, est de nature à rebuter, sinon troubler, les non-initiés. Cet ouvrage a pour but de prendre du recul sur les détails techniques et d'embrasser une vision d'ensemble de cet outil incontournable. Les avertis y trouveront de quoi approfondir leurs connaissances ou remettre en question leurs certitudes, grâce aux nombreux retours d'expérience et témoignages. »</p>
+          </blockquote>
+          <figcaption class="mt-6 flex items-center gap-4">
+            <img src="/images/JD-Fresser-Portrait.webp" alt="" width="56" height="56" loading="lazy" class="size-14 rounded-full object-cover ring-2 ring-teal-400/40">
+            <span><span class="block font-semibold text-white">Fresser J.</span><span class="block text-sm text-slate-400">Site Reliability Engineer</span></span>
+          </figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure class="flex h-full flex-col rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 sm:p-8">
+          <span class="inline-flex gap-0.5 text-amber-400" role="img" aria-label="Note : 5 sur 5"><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+          <blockquote class="mt-4 flex-1 leading-relaxed text-slate-200">
+            <p>« Félicitations Florian Grignon pour cette réalisation. J'ai beaucoup aimé la pédagogie de ton livre et surtout la passion que l'on ressent au fil des pages. Je suis content d'avoir enfin un livre francophone à conseiller sur la thématique "Cloud Native" (Taillé pour l'informatique Nuagique ? :D ) et k8s dans un domaine dominé par l'anglais. En espérant en parler de vive voix bientôt ! »</p>
+          </blockquote>
+          <figcaption class="mt-6 flex items-center gap-4">
+            <img src="/images/Ismael-Hommani-Portrait.webp" alt="" width="56" height="56" loading="lazy" class="size-14 rounded-full object-cover ring-2 ring-teal-400/40">
+            <span><span class="block font-semibold text-white">Ismael Hommani</span><span class="block text-sm text-slate-400">Cloud Expert</span></span>
+          </figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure class="flex h-full flex-col rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 sm:p-8">
+          <span class="inline-flex gap-0.5 text-amber-400" role="img" aria-label="Note : 5 sur 5"><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+          <blockquote class="mt-4 flex-1 leading-relaxed text-slate-200">
+            <p>« Que vous soyez débutant ou déjà expérimenté, ce livre est super utile pour mieux comprendre Kubernetes. Il explique les bases de façon claire pour les nouveaux et partage des conseils avancés pour les experts. En plus, les entretiens inclus avec des pros du domaine apportent des idées vraiment intéressantes. C’est une ressource parfaite pour progresser à tout niveau! »</p>
+          </blockquote>
+          <figcaption class="mt-6 flex items-center gap-4">
+            <img src="/images/Inigo-Imaz-Chacon-Portrait.webp" alt="" width="56" height="56" loading="lazy" class="size-14 rounded-full object-cover ring-2 ring-teal-400/40">
+            <span><span class="block font-semibold text-white">Iñigo Imaz Chacón</span><span class="block text-sm text-slate-400">Main Software Developer</span></span>
+          </figcaption>
+        </figure>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section id="auteur" class="scroll-mt-24 py-16 lg:py-24" aria-labelledby="auteur-title">
+  <div class="wrap grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+    <img src="/theme/assets/images/auteur-florian-grignon-480.webp" alt="Portrait dessiné de Florian Grignon, auteur de The Art of Kubernetes" width="480" height="480" loading="lazy" decoding="async" class="mx-auto w-64 rounded-full shadow-xl ring-8 ring-teal-50 lg:w-80">
+    <div>
+      <p class="eyebrow">L'auteur</p>
+      <h2 id="auteur-title" class="section-title">Florian Grignon, formateur Kubernetes certifié CKA</h2>
+      <div class="mt-6 space-y-4 text-lg leading-relaxed text-slate-600">
+        <p>Bonjour ! Je m'appelle Florian Grignon. Je suis Certified Kubernetes Administrator (CKA) et formateur sur les technologies Cloud Native (Kubernetes et Terraform). J'accompagne au quotidien des entreprises dans leur apprentissage et dans la mise en place de leur infrastructure Cloud Native.</p>
+        <p>L'infrastructure est trop souvent mal comprise, prise en compte trop tard, voire laissée à l'abandon. Pourtant, avec des solutions comme Kubernetes, il est désormais possible, même pour de petites entreprises, de maîtriser leur infrastructure.</p>
+        <p>J'ai écrit The Art of Kubernetes pour toutes les personnes amenées à travailler avec Kubernetes, afin de les aider à appréhender cette technologie et à faire des choix éclairés.</p>
+      </div>
+      <ul class="mt-6 flex flex-wrap gap-2 text-sm font-medium">
+        <li class="rounded-full bg-teal-50 px-3 py-1 text-teal-800 ring-1 ring-teal-200">Certified Kubernetes Administrator (CKA)</li>
+        <li class="rounded-full bg-teal-50 px-3 py-1 text-teal-800 ring-1 ring-teal-200">Formateur Kubernetes et Terraform</li>
+        <li class="rounded-full bg-teal-50 px-3 py-1 text-teal-800 ring-1 ring-teal-200">Infrastructure Cloud Native</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="acheter" class="scroll-mt-24 bg-slate-50 py-16 lg:py-24" aria-labelledby="acheter-title">
+  <div class="wrap">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="eyebrow justify-center">Disponible maintenant</p>
+      <h2 id="acheter-title" class="section-title">Procurez-vous The Art of Kubernetes</h2>
+    </div>
+    <div class="mx-auto mt-10 grid max-w-4xl items-center gap-8 rounded-3xl bg-white p-6 shadow-xl ring-1 ring-slate-200 sm:p-10 md:grid-cols-[220px_1fr]">
+      <img src="/images/the-art-of-kubernetes-couverture-400.webp" alt="Couverture de The Art of Kubernetes - French Edition" width="400" height="568" loading="lazy" class="mx-auto w-44 rounded-md shadow-lg md:w-full">
+      <div>
+        <h3 class="font-serif text-3xl font-semibold text-slate-900">The Art of Kubernetes - French Edition</h3>
+        <p class="mt-1 text-slate-500">Format Kindle · Amazon.fr</p>
+        <p class="mt-4 text-5xl font-semibold tracking-tight text-slate-900">9,99 €</p>
+        <ul class="mt-6 grid gap-3 text-slate-700">
+          <li class="flex gap-3"><svg class="mt-0.5 size-5 shrink-0 text-teal-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg><span>Le livre complet : 350 pages</span></li>
+          <li class="flex gap-3"><svg class="mt-0.5 size-5 shrink-0 text-teal-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg><span>Tous les entretiens d'acteurs du marché</span></li>
+          <li class="flex gap-3"><svg class="mt-0.5 size-5 shrink-0 text-teal-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg><span>Lisible sur liseuse Kindle et avec l'application Kindle gratuite (smartphone, tablette, ordinateur)</span></li>
+          <li class="flex gap-3"><svg class="mt-0.5 size-5 shrink-0 text-teal-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg><span>En option : l'actualité de l'écosystème Kubernetes avec la newsletter</span></li>
+        </ul>
+        <div class="mt-8"><a href="https://www.amazon.fr/dp/B0DMHYT348" class="btn btn-buy btn-lg w-full sm:w-auto" target="_blank" rel="noopener" data-track="buy-amazon">
+  <svg class="size-5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+  <span>Acheter sur Amazon.fr · 9,99 €</span>
+</a></div>
+        <p class="mt-4 text-sm text-slate-500">Achat groupé pour une équipe ? Contactez-moi : <a href="mailto:bonjour@theartofkubernetes.com" class="font-medium text-teal-700 underline-offset-2 hover:underline">bonjour@theartofkubernetes.com</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="scroll-mt-24 py-16 lg:py-24" aria-labelledby="faq-title">
+  <div class="wrap grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+    <div>
+      <p class="eyebrow">FAQ</p>
+      <h2 id="faq-title" class="section-title">Questions fréquentes</h2>
+      <p class="mt-4 text-lg text-slate-600">Une autre question ? Écrivez-moi à <a href="mailto:bonjour@theartofkubernetes.com" class="font-medium text-teal-700 hover:underline">bonjour@theartofkubernetes.com</a>.</p>
+    </div>
+    <div class="divide-y divide-slate-200 rounded-2xl ring-1 ring-slate-200">
+      <details class="faq group px-6 py-5" open>
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900">
+          <h3 class="text-lg">À qui s'adresse The Art of Kubernetes ?</h3>
+          <svg class="size-5 shrink-0 text-teal-600 transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </summary>
+        <p class="mt-3 leading-relaxed text-slate-600 [&_a]:font-medium [&_a]:text-teal-700 [&_a]:underline">À toutes les personnes amenées à travailler avec Kubernetes : développeurs, ops, SRE, architectes, mais aussi décideurs techniques. Les bases sont expliquées clairement pour les débutants, et les retours d'expérience comme les entretiens apportent de quoi approfondir leurs connaissances aux plus expérimentés.</p>
+      </details>
+      <details class="faq group px-6 py-5">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900">
+          <h3 class="text-lg">Faut-il déjà connaître Kubernetes pour lire ce livre ?</h3>
+          <svg class="size-5 shrink-0 text-teal-600 transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </summary>
+        <p class="mt-3 leading-relaxed text-slate-600 [&_a]:font-medium [&_a]:text-teal-700 [&_a]:underline">Non. Le livre commence par les origines de Kubernetes et le fonctionnement de ses composants principaux, avant d'aborder les distributions, la construction d'une plateforme, la sécurité et l'écosystème.</p>
+      </details>
+      <details class="faq group px-6 py-5">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900">
+          <h3 class="text-lg">Est-ce un tutoriel Kubernetes ?</h3>
+          <svg class="size-5 shrink-0 text-teal-600 transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </summary>
+        <p class="mt-3 leading-relaxed text-slate-600 [&_a]:font-medium [&_a]:text-teal-700 [&_a]:underline">Non, ce n'est pas une liste de commandes. The Art of Kubernetes prend du recul sur les détails techniques pour donner une vision d'ensemble : comprendre les possibilités et les limites de Kubernetes, choisir les bons outils dans son écosystème et en faire une plateforme adaptée à votre entreprise.</p>
+      </details>
+      <details class="faq group px-6 py-5">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900">
+          <h3 class="text-lg">Dans quel format le livre est-il disponible ?</h3>
+          <svg class="size-5 shrink-0 text-teal-600 transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </summary>
+        <p class="mt-3 leading-relaxed text-slate-600 [&_a]:font-medium [&_a]:text-teal-700 [&_a]:underline">The Art of Kubernetes est disponible au format Kindle sur Amazon.fr, au prix de 9,99 €. Pas besoin de liseuse : l'application Kindle gratuite permet de le lire sur smartphone, tablette ou ordinateur.</p>
+      </details>
+      <details class="faq group px-6 py-5">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900">
+          <h3 class="text-lg">Combien de pages compte le livre ?</h3>
+          <svg class="size-5 shrink-0 text-teal-600 transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </summary>
+        <p class="mt-3 leading-relaxed text-slate-600 [&_a]:font-medium [&_a]:text-teal-700 [&_a]:underline">Le livre complet compte 350 pages, entretiens avec des acteurs du marché compris.</p>
+      </details>
+      <details class="faq group px-6 py-5">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900">
+          <h3 class="text-lg">Puis-je lire un extrait avant d'acheter ?</h3>
+          <svg class="size-5 shrink-0 text-teal-600 transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </summary>
+        <p class="mt-3 leading-relaxed text-slate-600 [&_a]:font-medium [&_a]:text-teal-700 [&_a]:underline">Oui : inscrivez-vous à la <a href="#newsletter">newsletter</a> et vous recevrez gratuitement un chapitre du livre par email.</p>
+      </details>
+      <details class="faq group px-6 py-5">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900">
+          <h3 class="text-lg">Existe-t-il une version anglaise ?</h3>
+          <svg class="size-5 shrink-0 text-teal-600 transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </summary>
+        <p class="mt-3 leading-relaxed text-slate-600 [&_a]:font-medium [&_a]:text-teal-700 [&_a]:underline">Une édition anglaise est en cours d'écriture. Inscrivez-vous à la <a href="#newsletter">newsletter</a> pour être prévenu de sa sortie.</p>
+      </details>
+      <details class="faq group px-6 py-5">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900">
+          <h3 class="text-lg">Proposez-vous des achats groupés ?</h3>
+          <svg class="size-5 shrink-0 text-teal-600 transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </summary>
+        <p class="mt-3 leading-relaxed text-slate-600 [&_a]:font-medium [&_a]:text-teal-700 [&_a]:underline">Pour équiper une équipe ou une entreprise, n'hésitez pas à me contacter à <a href="mailto:bonjour@theartofkubernetes.com">bonjour@theartofkubernetes.com</a>.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="articles" class="scroll-mt-24 bg-slate-50 py-16 lg:py-24" aria-labelledby="articles-title">
+  <div class="wrap">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Blog</p>
+        <h2 id="articles-title" class="section-title">Articles Kubernetes</h2>
+        <p class="mt-4 text-lg text-slate-600">Des articles pour approfondir certains sujets du livre : architecture, Operators, multi-cluster, edge computing…</p>
+      </div>
+      <a href="/fr/articles" class="btn btn-secondary">Tous les articles <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+    </div>
+    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <article class="group relative flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-teal-300">
+  <img src="/images/logo-multicluster.webp" alt="" width="800" height="500" loading="lazy" decoding="async" class="aspect-[8/5] w-full object-cover">
+  <div class="flex flex-1 flex-col p-6">
+    <p class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500">
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><time datetime="2024-09-15T00:00:00+02:00">15 septembre 2024</time></span>
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>5 min de lecture</span>
+    </p>
+    <h3 class="mt-3 font-serif text-2xl font-semibold leading-snug text-slate-900">
+      <a href="/fr/multi-cluster-kubernetes" class="after:absolute after:inset-0 group-hover:text-teal-700">Multi-cluster Kubernetes : pourquoi et comment gérer plusieurs clusters</a>
+    </h3>
+    <p class="mt-2 line-clamp-3 text-slate-600">Grâce à son architecture modulaire, flexible et extensible, Kubernetes permet de mettre en place une architecture multi-cluster pour répondre à des besoins spécifiques. Pourquoi multiplier les clusters, et avec quels outils les gérer ?</p>
+    <p class="mt-auto pt-4 inline-flex items-center gap-1 font-medium text-teal-700">Lire l'article <svg class="size-4 transition group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+  </div>
+</article>
+      <article class="group relative flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-teal-300">
+  <img src="/images/logo-kubernetes.webp" alt="" width="800" height="500" loading="lazy" decoding="async" class="aspect-[8/5] w-full object-cover">
+  <div class="flex flex-1 flex-col p-6">
+    <p class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500">
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><time datetime="2024-09-09T00:00:00+02:00">9 septembre 2024</time></span>
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 min de lecture</span>
+    </p>
+    <h3 class="mt-3 font-serif text-2xl font-semibold leading-snug text-slate-900">
+      <a href="/fr/qu-est-ce-que-kubernetes" class="after:absolute after:inset-0 group-hover:text-teal-700">Qu'est-ce que Kubernetes ? Bien plus qu'un orchestrateur de conteneurs</a>
+    </h3>
+    <p class="mt-2 line-clamp-3 text-slate-600">Depuis plus de dix ans, Kubernetes s'est imposé dans les entreprises. Pourtant, ce n'est « qu'un » orchestrateur de conteneurs. Prenons cinq minutes pour comprendre ce qui fait vraiment sa force.</p>
+    <p class="mt-auto pt-4 inline-flex items-center gap-1 font-medium text-teal-700">Lire l'article <svg class="size-4 transition group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+  </div>
+</article>
+      <article class="group relative flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-teal-300">
+  <img src="/images/logo-edge.webp" alt="" width="800" height="500" loading="lazy" decoding="async" class="aspect-[8/5] w-full object-cover">
+  <div class="flex flex-1 flex-col p-6">
+    <p class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500">
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><time datetime="2024-08-14T00:00:00+02:00">14 août 2024</time></span>
+      <span class="inline-flex items-center gap-1.5"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>4 min de lecture</span>
+    </p>
+    <h3 class="mt-3 font-serif text-2xl font-semibold leading-snug text-slate-900">
+      <a href="/fr/edge-computing-avec-kubernetes" class="after:absolute after:inset-0 group-hover:text-teal-700">Edge computing avec Kubernetes : architectures et outils</a>
+    </h3>
+    <p class="mt-2 line-clamp-3 text-slate-600">Kubernetes est un outil puissant pour orchestrer des environnements décentralisés, où les ressources sont dispersées géographiquement et où la latence, la bande passante et la résilience sont critiques. Tour d'horizon des architectures possibles.</p>
+    <p class="mt-auto pt-4 inline-flex items-center gap-1 font-medium text-teal-700">Lire l'article <svg class="size-4 transition group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+  </div>
+</article>
+    </div>
+  </div>
+</section>
+
+<section id="newsletter" class="scroll-mt-24 bg-teal-50" aria-labelledby="newsletter-title">
+  <div class="wrap grid items-center gap-10 py-16 lg:grid-cols-2 lg:py-24">
+    <div>
+      <p class="eyebrow"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Newsletter</p>
+      <h2 id="newsletter-title" class="section-title">Recevez gratuitement un chapitre du livre</h2>
+      <p class="mt-4 max-w-xl text-lg leading-relaxed text-slate-600">Inscrivez-vous à la newsletter des connaisseurs Kubernetes : vous recevez un chapitre de The Art of Kubernetes par email, puis les nouveaux articles, entretiens et actualités de l'écosystème. Pas de spam, désinscription en un clic.</p>
+    </div>
+    <div class="min-h-56 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <script async src="https://eocampaign1.com/form/7f014dd2-69c3-11ef-b4cf-7d716c80cc13.js" data-form="7f014dd2-69c3-11ef-b4cf-7d716c80cc13"></script>
+    </div>
+  </div>
+</section>  </main>
+<footer class="bg-night text-slate-300">
+  <div class="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+    <div>
+      <a href="/" class="inline-block rounded-md" aria-label="The Art of Kubernetes – Accueil">
+        <img src="/theme/assets/images/logo-the-art-of-kubernetes-light.webp" alt="The Art of Kubernetes" width="480" height="182" loading="lazy" class="h-14 w-auto">
+      </a>
+      <p class="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">Le livre pour comprendre Kubernetes, son écosystème, et bâtir une plateforme sur mesure.</p>
+    </div>
+
+    <nav aria-label="Le livre">
+      <p class="font-semibold text-white">Le livre</p>
+      <ul class="mt-4 grid gap-2 text-sm">
+        <li><a href="/#livre" class="footer-link">Le livre</a></li>
+        <li><a href="/#sommaire" class="footer-link">Sommaire</a></li>
+        <li><a href="/#avis" class="footer-link">Avis</a></li>
+        <li><a href="/#auteur" class="footer-link">L'auteur</a></li>
+        <li><a href="/#faq" class="footer-link">FAQ</a></li>
+        <li><a href="/fr/articles" class="footer-link">Articles Kubernetes</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <p class="font-semibold text-white">Contact</p>
+      <p class="mt-4 text-sm"><a href="mailto:bonjour@theartofkubernetes.com" class="footer-link inline-flex items-center gap-2"><svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>bonjour@theartofkubernetes.com</a></p>
+      <div class="mt-6"><a href="https://www.amazon.fr/dp/B0DMHYT348" class="btn btn-buy btn-sm " target="_blank" rel="noopener" data-track="buy-amazon">
+  <svg class="size-5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+  <span>Acheter sur Amazon.fr · 9,99 €</span>
+</a></div>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <p class="wrap py-6 text-xs text-slate-400">© 2024–2026 Florian Grignon. Tous droits réservés.</p>
+  </div>
+</footer>  <script src="/theme/assets/js/site.js" defer></script>
+</body>
 </html>
