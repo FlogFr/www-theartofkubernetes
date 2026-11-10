@@ -46,11 +46,16 @@ Every page must pass `make check`. Strategy and keyword map: `claude/docs/seo.md
 
 ## Structured data (JSON-LD)
 
-- Home: `WebSite`, `WebPage`, `Person`, `Book`+`Product` (offer, reviews), `FAQPage`.
-  Articles: `BlogPosting`, `BreadcrumbList`. Article list: `CollectionPage`.
-- Structured data must mirror visible content: FAQ entries, testimonials and price come
-  from the same template variables, so edit them there, never in the JSON-LD only.
-- Never invent reviews, ratings or an `aggregateRating`.
+- Home: `WebSite`, `WebPage`, `Person`, `Book`+`Product` (offer with shipping details),
+  `FAQPage`. Articles: `BlogPosting`, `BreadcrumbList`. Article list: `CollectionPage`.
+- Structured data must mirror visible content: FAQ entries and price come from the same
+  template variables, so edit them there, never in the JSON-LD only.
+- Never invent reviews, ratings or an `aggregateRating`. The testimonials are **not**
+  marked up as `Review`: Google requires an `aggregateRating` as soon as there are
+  several reviews, and we have no real rating to give (Search Console issue of
+  2026-11-10, see `claude/docs/seo.md`). Do not add them back.
+- Commercial terms in the markup (shipping, return policy) come from `BOOKS[lang]` and
+  must be checked on the store's own pages; when unsure, leave the field out.
 
 ## Amazon links
 

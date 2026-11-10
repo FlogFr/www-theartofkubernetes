@@ -96,7 +96,7 @@ from `obj.translations` (plus `x-default` = default-language version).
 | Setting                 | Purpose |
 | ----------------------- | ------- |
 | `SITEURL`               | `http://localhost:8000` in development, production URL in `publishconf.py`. Used for absolute URLs only. |
-| `BOOKS`                 | one entry per language edition: title, format, pages, price (`price` for schema.org, `price_display` for humans), currency, ASIN, store, Amazon `url`, `link_rel`, `cover`, `og_image`. |
+| `BOOKS`                 | one entry per language edition: title, format, pages, price (`price` for schema.org, `price_display` for humans), currency, ASIN, store, `country` (store country: schema.org shipping destination and return policy), `return_days` (store return window in days, `None` = no `hasMerchantReturnPolicy` in the JSON-LD), Amazon `url`, `link_rel`, `cover`, `og_image`. |
 | `AMAZON_ASSOCIATE_TAG`  | optional affiliate tag appended to Amazon URLs; switches links to `rel="noopener sponsored"`. |
 | `HOME_PAGES`            | languages with a home page (`{"fr": "/"}`), drives the language switcher. |
 | `AUTHOR_PROFILES`       | author's public profile URLs → schema.org `sameAs`. Empty for now. |

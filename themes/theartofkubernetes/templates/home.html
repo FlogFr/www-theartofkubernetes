@@ -60,24 +60,38 @@
       "about": ["Kubernetes", "Cloud Native", "Platform as a Service"],
       "sku": {{ book.asin|tojson }},
       "brand": {"@type": "Brand", "name": {{ SITENAME|tojson }}},
+      {#- No "review"/"aggregateRating": the testimonials are hand-picked quotes
+          without a rating, and Google requires an aggregateRating as soon as
+          there are several reviews (claude/docs/decisions.md, 2026-11-10). -#}
       "offers": {
         "@type": "Offer",
         "url": {{ book.url|tojson }},
         "price": {{ book.price|tojson }},
         "priceCurrency": {{ book.currency|tojson }},
         "availability": "https://schema.org/InStock",
-        "seller": {"@type": "Organization", "name": {{ book.store|tojson }}}
-      },
-      "review": [
-        {% for r in testimonials %}
-        {
-          "@type": "Review",
-          "author": {"@type": "Person", "name": {{ r.name|tojson }}},
-          "reviewRating": {"@type": "Rating", "ratingValue": 5, "bestRating": 5},
-          "reviewBody": {{ r.quote|tojson }}
-        }{{ "," if not loop.last }}
-        {% endfor %}
-      ]
+        "seller": {"@type": "Organization", "name": {{ book.store|tojson }}},
+        {#- Digital delivery: free and immediate. -#}
+        "shippingDetails": {
+          "@type": "OfferShippingDetails",
+          "shippingRate": {"@type": "MonetaryAmount", "value": 0, "currency": {{ book.currency|tojson }}},
+          "shippingDestination": {"@type": "DefinedRegion", "addressCountry": {{ book.country|tojson }}},
+          "deliveryTime": {
+            "@type": "ShippingDeliveryTime",
+            "handlingTime": {"@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY"},
+            "transitTime": {"@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY"}
+          }
+        }
+        {%- if book.return_days %},
+        "hasMerchantReturnPolicy": {
+          "@type": "MerchantReturnPolicy",
+          "applicableCountry": {{ book.country|tojson }},
+          "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+          "merchantReturnDays": {{ book.return_days }},
+          "returnFees": "https://schema.org/FreeReturn",
+          "refundType": "https://schema.org/FullRefund"
+        }
+        {%- endif %}
+      }
     },
     {
       "@type": "FAQPage",

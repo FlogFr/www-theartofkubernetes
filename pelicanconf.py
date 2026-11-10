@@ -113,6 +113,12 @@ BOOKS = {
         "currency": "EUR",
         "asin": "B0DMHYT348",
         "store": "Amazon.fr",
+        # Country of the store: schema.org shipping destination / return policy.
+        "country": "FR",
+        # Return window of the store for this ebook, in days. None = not
+        # declared in the structured data (hasMerchantReturnPolicy omitted).
+        # Only set it to a value checked on the store's help pages.
+        "return_days": None,
         "url": _amazon_url("amazon.fr", "B0DMHYT348"),
         # Affiliate links must be marked rel="sponsored" (Google guidelines).
         "link_rel": "noopener sponsored" if AMAZON_ASSOCIATE_TAG else "noopener",

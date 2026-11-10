@@ -43,7 +43,10 @@ One main keyword per page; never create two pages for the same intent (cannibali
 
 **Structured data (JSON-LD)**
 - Home: `WebSite`, `WebPage`, `Person` (author, CKA credential), `Book`+`Product`
-  (Kindle offer, price, ASIN as `sku`, testimonials as `Review`), `FAQPage`.
+  (Kindle offer: price, ASIN as `sku`, free immediate delivery as `shippingDetails`,
+  return policy only if `BOOKS[lang].return_days` is set), `FAQPage`.
+- **No `review` / `aggregateRating`** in the markup: the testimonials stay visible on the
+  page but are not marked up (see "Search Console history" below).
 - Articles: `BlogPosting` (dates, author, image, word count, keywords) + `BreadcrumbList`.
 - Article list: `CollectionPage` with `ItemList` + `BreadcrumbList`.
 
@@ -78,6 +81,25 @@ anchors, sitemap/indexable pages mismatch, robots.txt without sitemap.
 - Bing Webmaster Tools: import from Search Console.
 - Removed URLs from the old site (tag/category/archive pages, `/fr/kubernetes-autoscaler`)
   now return 404: let them drop from the index, or request removal in Search Console.
+
+## Search Console history
+
+**2026-11-10: structured data issues on `/`** (Product snippets, Review snippets,
+Merchant listings reports).
+
+| Issue | Report / severity | Fix |
+| ----- | ----------------- | --- |
+| Multiple reviews without aggregateRating object | Review snippets (critical), Product snippets and Merchant listings (non-critical) | `review` array removed from the `Book`+`Product` markup. An `aggregateRating` built from three hand-picked testimonials, whose 5/5 rating was not given by their authors, would be invented data (forbidden by `claude/rules/seo.md`) and a risk of manual action for misleading structured data. |
+| Missing field "shippingDetails" (in "offers") | Merchant listings (non-critical) | `shippingDetails` added: digital delivery, free (0 EUR), immediate (0 day), destination `BOOKS[lang].country`. Mirrored on the page ("Livraison immédiate et gratuite" in the buy box). |
+| Missing field "hasMerchantReturnPolicy" (in "offers") | Merchant listings (non-critical) | **Open.** The template outputs it once `BOOKS[lang].return_days` is set. Amazon.fr's return window for Kindle books could not be verified (sources say 7 or 14 days); the author must confirm it on the Amazon.fr help pages. Until then the warning stays; it does not block the product from appearing in Search. |
+
+After deploying: Rich Results Test on `/`, then "Validate fix" in each of the three
+Search Console reports. The Review snippets report should become empty (no review markup
+left), which is expected.
+
+Note: the site is not the merchant (Amazon.fr is the `seller`), so the page is really a
+product snippet page; Google still evaluates any `Product` with an `Offer` for merchant
+listings, hence the recommended shipping/return fields.
 
 ## Recommendations (not implemented, need the author)
 

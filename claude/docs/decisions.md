@@ -2,6 +2,19 @@
 
 Newest first. Add an entry when you make a structural decision.
 
+## 2026-11-10 — Search Console structured data issues
+
+- **Testimonials are no longer marked up as `Review`.** Search Console reported
+  "Multiple reviews without aggregateRating object" (critical for Review snippets). The
+  only fix that keeps reviews would be an invented `aggregateRating` from three
+  hand-picked testimonials that carry no real rating: rejected. The testimonials stay
+  visible on the page; the `Product` stays valid through its `offers`.
+- **Offer gets `shippingDetails`** (free, immediate digital delivery to `BOOKS[lang].country`),
+  mirrored in the buy box ("Livraison immédiate et gratuite").
+- **Return policy pending the author.** `hasMerchantReturnPolicy` is emitted only when
+  `BOOKS[lang].return_days` is set; Amazon.fr's Kindle return window could not be
+  verified, so it is `None` until the author confirms it.
+
 ## 2026-11-07 — SEO overhaul and redesign
 
 - **Kindle only.** The book is sold only as a Kindle ebook on Amazon.fr (author's answer).
