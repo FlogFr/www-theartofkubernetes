@@ -43,7 +43,8 @@ One main keyword per page; never create two pages for the same intent (cannibali
 
 **Structured data (JSON-LD)**
 - Home: `WebSite`, `WebPage`, `Person` (author, CKA credential), `Book`+`Product`
-  (Kindle offer, price, ASIN as `sku`, testimonials as `Review`), `FAQPage`.
+  (Kindle offer with price and free instant `shippingDetails`, ASIN as `sku`,
+  testimonials as `Review` plus an `aggregateRating` computed from them), `FAQPage`.
 - Articles: `BlogPosting` (dates, author, image, word count, keywords) + `BreadcrumbList`.
 - Article list: `CollectionPage` with `ItemList` + `BreadcrumbList`.
 
@@ -66,8 +67,10 @@ One main keyword per page; never create two pages for the same intent (cannibali
 
 `make check` (`scripts/check_seo.py`) fails on: missing/duplicate title or description,
 title > 70 chars, ≠ 1 `<h1>`, skipped heading levels, missing/foreign canonical, missing
-OG image, invalid JSON-LD, `<img>` without alt/width/height, broken internal links or
-anchors, sitemap/indexable pages mismatch, robots.txt without sitemap.
+OG image, invalid JSON-LD, a `Product` without `offers`, `review` or `aggregateRating`
+(or whose `aggregateRating` does not match its reviews), `<img>` without
+alt/width/height, broken internal links or anchors, sitemap/indexable pages mismatch,
+robots.txt without sitemap.
 
 ## After each deployment (manual)
 
@@ -75,9 +78,22 @@ anchors, sitemap/indexable pages mismatch, robots.txt without sitemap.
   `https://theartofkubernetes.com/sitemap.xml`, inspect new URLs, watch "Pages" and
   "Core Web Vitals" reports.
 - Rich Results Test (https://search.google.com/test/rich-results) on `/` and one article.
+- Search Console "Product snippets" report (history below): after a deployment that
+  fixes an issue, click "Validate fix" on it.
 - Bing Webmaster Tools: import from Search Console.
 - Removed URLs from the old site (tag/category/archive pages, `/fr/kubernetes-autoscaler`)
   now return 404: let them drop from the index, or request removal in Search Console.
+
+## Search Console history
+
+- **"Multiple reviews without aggregateRating object"** (Product snippets): the
+  2026-11-07 version had three `Review` and no `aggregateRating`. A deployment of
+  2026-11-10, made from sources that were never committed, removed the reviews (and
+  added `shippingDetails`); Google validated the fix.
+- **"Missing field review" / "Missing field aggregateRating"** (non-critical): caused
+  by that removal. Fixed on 2026-11-11 by restoring the reviews and adding an
+  `aggregateRating` computed from them (5/5, 3 reviews: the stars shown on the page).
+  `make check` now reports both issues as errors.
 
 ## Recommendations (not implemented, need the author)
 

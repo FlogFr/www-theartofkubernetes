@@ -50,7 +50,10 @@ Every page must pass `make check`. Strategy and keyword map: `claude/docs/seo.md
   Articles: `BlogPosting`, `BreadcrumbList`. Article list: `CollectionPage`.
 - Structured data must mirror visible content: FAQ entries, testimonials and price come
   from the same template variables, so edit them there, never in the JSON-LD only.
-- Never invent reviews, ratings or an `aggregateRating`.
+- Never invent reviews or ratings. The `Product` needs `offers`, `review` and an
+  `aggregateRating` (Search Console "Product snippets"); the `aggregateRating` is
+  computed in `home.html` from the testimonials only (never from Amazon or another
+  site), and `make check` fails if it does not match the reviews.
 
 ## Amazon links
 

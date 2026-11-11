@@ -62,7 +62,7 @@ disabled (`*_SAVE_AS = ""`), as are drafts.
 | Template                     | Used for                                   | Notes |
 | ---------------------------- | ------------------------------------------ | ----- |
 | `base.html`                  | every HTML page                            | `<head>` SEO tags, header, footer, `french_typography` filter on `<main>` |
-| `home.html`                  | landing layout (all languages)             | JSON-LD: WebSite, WebPage, Person, Book+Product, FAQPage |
+| `home.html`                  | landing layout (all languages)             | JSON-LD: WebSite, WebPage, Person, Book+Product (offer, `review` and `aggregateRating` computed from `testimonials`), FAQPage |
 | `home_fr.html`               | French landing page (`:template: home_fr`) | copy + data: `learn`, `audiences`, `chapters`, `testimonials`, `faq`, `book_description` |
 | `article.html`               | articles                                   | JSON-LD: BlogPosting, BreadcrumbList; book CTA, author box, related articles, newsletter |
 | `articles.html`              | article list page (`:template: articles`)  | JSON-LD: CollectionPage + ItemList |
@@ -96,7 +96,7 @@ from `obj.translations` (plus `x-default` = default-language version).
 | Setting                 | Purpose |
 | ----------------------- | ------- |
 | `SITEURL`               | `http://localhost:8000` in development, production URL in `publishconf.py`. Used for absolute URLs only. |
-| `BOOKS`                 | one entry per language edition: title, format, pages, price (`price` for schema.org, `price_display` for humans), currency, ASIN, store, Amazon `url`, `link_rel`, `cover`, `og_image`. |
+| `BOOKS`                 | one entry per language edition: title, format, pages, price (`price` for schema.org, `price_display` for humans), currency, ASIN, store, `country` (ISO code of the store, JSON-LD `shippingDestination`), Amazon `url`, `link_rel`, `cover`, `og_image`. |
 | `AMAZON_ASSOCIATE_TAG`  | optional affiliate tag appended to Amazon URLs; switches links to `rel="noopener sponsored"`. |
 | `HOME_PAGES`            | languages with a home page (`{"fr": "/"}`), drives the language switcher. |
 | `AUTHOR_PROFILES`       | author's public profile URLs → schema.org `sameAs`. Empty for now. |

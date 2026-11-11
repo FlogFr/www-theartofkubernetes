@@ -251,7 +251,7 @@
       <img src="{{ book.cover.replace('-800.', '-400.') }}" alt="Couverture de {{ book.full_title }}" width="400" height="568" loading="lazy" class="mx-auto w-44 rounded-md shadow-lg md:w-full">
       <div>
         <h3 class="font-serif text-3xl font-semibold text-slate-900">{{ book.full_title }}</h3>
-        <p class="mt-1 text-slate-500">Format {{ book.format }} · {{ book.store }}</p>
+        <p class="mt-1 text-slate-500">Format {{ book.format }} · {{ book.store }} · Livraison immédiate et gratuite</p>
         <p class="mt-4 text-5xl font-semibold tracking-tight text-slate-900">{{ book.price_display }}</p>
         <ul class="mt-6 grid gap-3 text-slate-700">
           <li class="flex gap-3">{{ icon("check-circle", "mt-0.5 size-5 shrink-0 text-teal-600") }}<span>Le livre complet : {{ book.pages }} pages</span></li>

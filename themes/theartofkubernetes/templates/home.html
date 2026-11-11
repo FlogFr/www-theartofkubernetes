@@ -20,6 +20,13 @@
 {% block head %}
 {% set site_id = SITEURL ~ "/#website" %}
 {% set author_id = SITEURL ~ "/#author" %}
+{#- Rating of each testimonial: the five stars shown next to it (`stars` macro,
+    t.stars_label). The aggregateRating is computed from the testimonials only, so it
+    always mirrors the reviews shown on the page (Search Console flags several reviews
+    without an aggregateRating, and a Product without review or aggregateRating). -#}
+{% set review_rating = 5 %}
+{#- An ebook (Kindle) is delivered instantly and at no cost: shippingDetails. -#}
+{% set ebook = book.schema_format == "https://schema.org/EBook" %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -66,18 +73,39 @@
         "price": {{ book.price|tojson }},
         "priceCurrency": {{ book.currency|tojson }},
         "availability": "https://schema.org/InStock",
-        "seller": {"@type": "Organization", "name": {{ book.store|tojson }}}
+        "seller": {"@type": "Organization", "name": {{ book.store|tojson }}}{{ "," if ebook }}
+        {% if ebook %}
+        "shippingDetails": {
+          "@type": "OfferShippingDetails",
+          "shippingRate": {"@type": "MonetaryAmount", "value": 0, "currency": {{ book.currency|tojson }}},
+          "shippingDestination": {"@type": "DefinedRegion", "addressCountry": {{ book.country|tojson }}},
+          "deliveryTime": {
+            "@type": "ShippingDeliveryTime",
+            "handlingTime": {"@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY"},
+            "transitTime": {"@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY"}
+          }
+        }
+        {% endif %}
+      }{{ "," if testimonials }}
+      {% if testimonials %}
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": {{ review_rating }},
+        "bestRating": 5,
+        "worstRating": 1,
+        "reviewCount": {{ testimonials|length }}
       },
       "review": [
         {% for r in testimonials %}
         {
           "@type": "Review",
           "author": {"@type": "Person", "name": {{ r.name|tojson }}},
-          "reviewRating": {"@type": "Rating", "ratingValue": 5, "bestRating": 5},
+          "reviewRating": {"@type": "Rating", "ratingValue": {{ review_rating }}, "bestRating": 5, "worstRating": 1},
           "reviewBody": {{ r.quote|tojson }}
         }{{ "," if not loop.last }}
         {% endfor %}
       ]
+      {% endif %}
     },
     {
       "@type": "FAQPage",

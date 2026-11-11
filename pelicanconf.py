@@ -113,6 +113,8 @@ BOOKS = {
         "currency": "EUR",
         "asin": "B0DMHYT348",
         "store": "Amazon.fr",
+        # ISO 3166-1 country of the store (JSON-LD shippingDestination).
+        "country": "FR",
         "url": _amazon_url("amazon.fr", "B0DMHYT348"),
         # Affiliate links must be marked rel="sponsored" (Google guidelines).
         "link_rel": "noopener sponsored" if AMAZON_ASSOCIATE_TAG else "noopener",

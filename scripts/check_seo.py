@@ -8,7 +8,8 @@ Run after a production build:
 Checks every HTML page of the output directory (theme assets excluded):
   - <html lang>, <title> (length), meta description (length), exactly one <h1>,
     no skipped heading level, canonical URL, Open Graph image, robots meta;
-  - JSON-LD blocks are valid JSON;
+  - JSON-LD blocks are valid JSON; Product nodes have offers, review and an
+    aggregateRating that matches the reviews (Search Console "Product snippets");
   - every <img> has an alt attribute plus width and height;
   - internal links and #anchors point to existing pages/ids;
   - titles and descriptions are unique;
@@ -94,6 +95,41 @@ class PageParser(HTMLParser):
             self._heading_text.append(data)
         if self._in_jsonld:
             self._jsonld_text.append(data)
+
+
+def jsonld_nodes(data):
+    """Yield every JSON-LD object (top level, @graph items, nested values)."""
+    if isinstance(data, list):
+        for item in data:
+            yield from jsonld_nodes(item)
+    elif isinstance(data, dict):
+        yield data
+        for value in data.values():
+            yield from jsonld_nodes(value)
+
+
+def check_product(node, err):
+    """Mirror the Search Console "Product snippets" report.
+
+    Google needs one of offers/review/aggregateRating and flags as missing the ones
+    that are absent, and flags several reviews without an aggregateRating. The
+    aggregateRating must be computed from the reviews on the page, never invented.
+    """
+    name = node.get("name", "?")
+    for field in ("offers", "review", "aggregateRating"):
+        if field not in node:
+            err(f'Product {name!r}: missing field "{field}"')
+    reviews = node.get("review", [])
+    reviews = reviews if isinstance(reviews, list) else [reviews]
+    aggregate = node.get("aggregateRating")
+    if not isinstance(aggregate, dict):
+        return
+    ratings = [float(r.get("reviewRating", {}).get("ratingValue", 0)) for r in reviews]
+    count = aggregate.get("reviewCount", aggregate.get("ratingCount"))
+    if count != len(reviews):
+        err(f"Product {name!r}: aggregateRating count {count} != {len(reviews)} reviews")
+    if ratings and abs(float(aggregate.get("ratingValue", 0)) - sum(ratings) / len(ratings)) > 0.05:
+        err(f"Product {name!r}: aggregateRating ratingValue is not the mean of the reviews")
 
 
 def url_to_file(output, path):
@@ -186,9 +222,14 @@ def main():
 
         for block in p.jsonld:
             try:
-                json.loads(block)
+                data = json.loads(block)
             except json.JSONDecodeError as exc:
                 err(f"invalid JSON-LD: {exc}")
+                continue
+            for node in jsonld_nodes(data):
+                types = node.get("@type", [])
+                if "Product" in (types if isinstance(types, list) else [types]):
+                    check_product(node, err)
 
         for img in p.images:
             src = img.get("src", "?")

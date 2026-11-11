@@ -2,6 +2,23 @@
 
 Newest first. Add an entry when you make a structural decision.
 
+## 2026-11-11 — Product structured data: reviews and aggregateRating
+
+- **Context**: Search Console first reported "Multiple reviews without aggregateRating
+  object" on the home page. A deployment of 2026-11-10 (from sources never committed)
+  removed the `review` list, which made Google report "Missing field review" and
+  "Missing field aggregateRating" instead.
+- **Decision**: the `Book`+`Product` keeps the testimonials as `review` and gets an
+  `aggregateRating` computed in `home.html` from the same `testimonials` list
+  (ratingValue = the five stars displayed on each testimonial, reviewCount = number of
+  testimonials). Nothing comes from Amazon or another site, so the structured data
+  still mirrors the page. `make check` fails when a `Product` lacks `offers`, `review`
+  or `aggregateRating`, or when the aggregate does not match the reviews.
+- **Recovered from the 2026-11-10 deployment** so the next build does not revert them:
+  the offer's `shippingDetails` (free, instant delivery in the store's country, for
+  ebooks only; `BOOKS[lang].country`) and "Livraison immédiate et gratuite" in the buy
+  box.
+
 ## 2026-11-07 — SEO overhaul and redesign
 
 - **Kindle only.** The book is sold only as a Kindle ebook on Amazon.fr (author's answer).
