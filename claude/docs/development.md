@@ -41,6 +41,9 @@ The site is hosted on **GitHub Pages** from the `gh-pages` branch of
 make github   # publish, check, ghp-import output/ to gh-pages, git push origin gh-pages
 ```
 
+Deploy from what is on `main` (or about to be fast-forwarded to it, see
+`claude/rules/workflow.md`): `main` must always hold the sources of the live site.
+
 `make github` stops if `make check` fails. GitHub Pages:
 - serves `/fr/slug` from `fr/slug.html` (extensionless canonical URLs);
 - serves `404.html` for unknown URLs;

@@ -2,6 +2,14 @@
 
 Newest first. Add an entry when you make a structural decision.
 
+## 2026-11-11 — Claude may update `main`
+
+- Asked by the author: once a change meets the definition of done, Claude
+  fast-forwards `main` to its working branch (no force-push, no history rewrite).
+- Reason: `main` must hold the sources of the live site. The 2026-11-10 deployment was
+  built from sources that were never committed and had to be reconstructed from
+  `gh-pages`.
+
 ## 2026-11-11 — Product structured data: reviews and aggregateRating
 
 - **Context**: Search Console first reported "Multiple reviews without aggregateRating

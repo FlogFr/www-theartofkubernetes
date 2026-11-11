@@ -32,8 +32,14 @@ Update the files in the same change when you:
 
 ## Git
 
-- Work on the branch you were given; never push to `main` or `gh-pages` unless asked.
-- Never run `make github` (deployment) unless the user explicitly asks.
+- Work on the branch you were given, then update `main` with it once the change meets
+  the definition of done: `git fetch origin main`, rebase the branch on `origin/main` if
+  `main` has moved, then fast-forward `main` (`git push origin HEAD:main`).
+  Never force-push `main`, never rewrite its history.
+- `main` holds the sources of the live site: deploy only commits that are on `main`
+  (or put them on `main` right after deploying), never uncommitted work.
+- Never run `make github` (deployment) unless the user explicitly asks. Never push to
+  `gh-pages` other than through `make github`.
 - Never commit `output/`, `node_modules/` or virtualenvs.
 - Small, focused commits with descriptive English messages.
 
