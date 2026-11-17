@@ -1,4 +1,8 @@
-{#- Newsletter (lead magnet: a free chapter). Uses `t`, `icon` from base.html. -#}
+{#- Newsletter (lead magnet: a free chapter). Uses `t`, `icon`, `lang` from base.html.
+    Sender.net embedded form when SENDER_ACCOUNT_ID and the language's entry of
+    SENDER_FORMS are set (base.html loads the Sender snippet), legacy EmailOctopus
+    form (NEWSLETTER_FORM_ID) otherwise. See pelicanconf.py. -#}
+{%- set sender_form = (SENDER_FORMS[lang] if lang in SENDER_FORMS else SENDER_FORMS[DEFAULT_LANG]) if SENDER_ACCOUNT_ID else "" -%}
 <section id="newsletter" class="scroll-mt-24 bg-teal-50" aria-labelledby="newsletter-title">
   <div class="wrap grid items-center gap-10 py-16 lg:grid-cols-2 lg:py-24">
     <div>
@@ -7,7 +11,11 @@
       <p class="mt-4 max-w-xl text-lg leading-relaxed text-slate-600">{{ t.newsletter_text }}</p>
     </div>
     <div class="min-h-56 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      {% if sender_form %}
+      <div class="sender-form-field" data-sender-form-id="{{ sender_form|e }}"></div>
+      {% else %}
       <script async src="https://eocampaign1.com/form/{{ NEWSLETTER_FORM_ID }}.js" data-form="{{ NEWSLETTER_FORM_ID }}"></script>
+      {% endif %}
     </div>
   </div>
 </section>

@@ -73,6 +73,24 @@
   {% if FEED_ALL_ATOM %}
   <link rel="alternate" type="application/atom+xml" href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" title="{{ SITENAME }} – {{ t.articles_title }}">
   {% endif %}
+  {% if SENDER_ACCOUNT_ID %}
+  {#- Sender.net account snippet (loads universal.js asynchronously). It renders the
+      embedded newsletter form of partials/newsletter.html and any popup form
+      published in Sender. Settings: SENDER_ACCOUNT_ID, SENDER_FORMS. -#}
+  <script>
+    (function (s, e, n, d, er) {
+      s["Sender"] = er;
+      s[er] = s[er] || function () {
+        (s[er].q = s[er].q || []).push(arguments);
+      }, s[er].l = 1 * new Date();
+      var a = e.createElement(n), m = e.getElementsByTagName(n)[0];
+      a.async = 1;
+      a.src = d;
+      m.parentNode.insertBefore(a, m);
+    })(window, document, "script", "https://cdn.sender.net/accounts_resources/universal.js", "sender");
+    sender({{ SENDER_ACCOUNT_ID|tojson }});
+  </script>
+  {% endif %}
   {% block head %}{% endblock %}
 </head>
 <body class="bg-white font-sans text-slate-700 antialiased">

@@ -61,7 +61,8 @@ await p.screenshot({path:'home-mobile.png',fullPage:true});await b.close();})()"
 ```
 
 Lazy-loaded images only appear in full-page screenshots after scrolling the page with
-`page.mouse.wheel`. The EmailOctopus form needs network access to `eocampaign1.com`.
+`page.mouse.wheel`. The newsletter form needs network access to `cdn.sender.net` (Sender.net) or
+`eocampaign1.com` (legacy EmailOctopus form); without it the box stays empty.
 
 ## Troubleshooting
 

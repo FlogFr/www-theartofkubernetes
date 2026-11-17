@@ -11,8 +11,9 @@ French Edition** by Florian Grignon, sold as a Kindle ebook on Amazon.fr
 
 The site has one business goal: **turn search traffic into Amazon sales**.
 - Primary call to action: "Acheter sur Amazon" (amber button), everywhere.
-- Secondary call to action: the newsletter (EmailOctopus), whose lead magnet is a free
-  chapter sent by email.
+- Secondary call to action: the newsletter (Sender.net; legacy EmailOctopus form until
+  the Sender IDs are set in `pelicanconf.py`), whose lead magnet is a free chapter sent
+  by email.
 - Acquisition: SEO on French Kubernetes searches (book page + articles).
 
 ## Stack

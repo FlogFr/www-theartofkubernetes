@@ -125,9 +125,21 @@ BOOKS = {
 }
 
 CONTACT_EMAIL = "bonjour@theartofkubernetes.com"
-# EmailOctopus form of the newsletter (the lead magnet: a free chapter).
-# /fr/bienvenue is the "welcome" page for new subscribers (most likely the
-# form's redirect URL): keep that URL stable.
+# Newsletter (the lead magnet: a free chapter), hosted by Sender.net.
+# Both values are in Sender > Forms > <the form> > Publishing settings:
+#   SENDER_ACCOUNT_ID  the text inside sender('...') in the JavaScript snippet
+#   SENDER_FORMS       one embedded form per language, keyed like BOOKS: the
+#                      data-sender-form-id="..." of the <div> embed code
+# While SENDER_ACCOUNT_ID or the language's form is empty, the legacy
+# EmailOctopus form (NEWSLETTER_FORM_ID) is shown instead.
+# /fr/bienvenue is the "welcome" page for new subscribers (the form's
+# "Redirect after submit" URL): keep that URL stable.
+SENDER_ACCOUNT_ID = ""
+SENDER_FORMS = {
+    "fr": "",
+}
+# Legacy EmailOctopus form: remove once the Sender form is live and the
+# EmailOctopus contacts have been imported into Sender.
 NEWSLETTER_FORM_ID = "7f014dd2-69c3-11ef-b4cf-7d716c80cc13"
 BUILD_YEAR = datetime.now().year
 

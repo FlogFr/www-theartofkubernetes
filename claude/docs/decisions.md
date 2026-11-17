@@ -2,6 +2,21 @@
 
 Newest first. Add an entry when you make a structural decision.
 
+## 2026-11-17 — Newsletter moves to Sender.net
+
+- Asked by the author: the newsletter (free chapter, then about one email a month on
+  Kubernetes news and the book) is hosted by Sender.net instead of EmailOctopus.
+- **Embedded form** (`sender-form-field` div) rather than a hand-made HTML form: it is
+  Sender's documented integration, and the Sender API needs a secret key that must not
+  be exposed in a static site.
+  The form's look, fields, consent text, double opt-in and redirect are set in Sender.
+- **Snippet in `<head>` on every page**, as Sender documents it, so a popup form can
+  also be published from Sender without touching the site.
+- **One form per language** (`SENDER_FORMS`), so French and English readers land in
+  separate groups when the English edition comes out.
+- **Progressive switch**: until `SENDER_ACCOUNT_ID` and `SENDER_FORMS[lang]` are set,
+  the EmailOctopus form stays online (the generated site is unchanged).
+
 ## 2026-11-11 — Claude may update `main`
 
 - Asked by the author: once a change meets the definition of done, Claude
