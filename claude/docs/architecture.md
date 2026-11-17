@@ -101,9 +101,8 @@ from `obj.translations` (plus `x-default` = default-language version).
 | `HOME_PAGES`            | languages with a home page (`{"fr": "/"}`), drives the language switcher. |
 | `AUTHOR_PROFILES`       | author's public profile URLs → schema.org `sameAs`. Empty for now. |
 | `CONTACT_EMAIL`         | contact address shown on the site. |
-| `SENDER_ACCOUNT_ID`     | Sender.net account id (`sender('…')` in the Sender JavaScript snippet). When set, `base.html` loads the Sender snippet in `<head>` on every page. |
-| `SENDER_FORMS`          | Sender embedded form id per language (`data-sender-form-id`), rendered by `partials/newsletter.html`; falls back to `DEFAULT_LANG`. |
-| `NEWSLETTER_FORM_ID`    | legacy EmailOctopus form id, shown while `SENDER_ACCOUNT_ID` or the language's `SENDER_FORMS` entry is empty. Remove once Sender is live. |
+| `SENDER_ACCOUNT_ID`     | Sender.net account id (`sender('…')` in the Sender JavaScript snippet); `base.html` loads the Sender snippet in `<head>` on every page. |
+| `SENDER_FORMS`          | Sender embedded form id per language (`data-sender-form-id`), rendered by `partials/newsletter.html`; falls back to `DEFAULT_LANG`. Hosted version: `https://stats.sender.net/forms/<id>/view`. |
 | `BUILD_YEAR`            | copyright year in the footer. |
 | `JINJA_FILTERS`         | `long_date(lang)`, `reading_time`, `responsive_images`, `french_typography(lang)`. |
 
@@ -122,6 +121,7 @@ from `obj.translations` (plus `x-default` = default-language version).
   `templates/` and `content/**/*.rst`. Custom components are `@utility` blocks.
 - Fonts: Crimson Pro (headings) and Libre Franklin (body), variable woff2, latin subset,
   preloaded, copied from `@fontsource-variable/*` by `npm run fonts`.
-- JS: `site.js` (mobile menu). The only third-party script is the newsletter provider:
-  Sender.net `universal.js` (async, in `<head>`) once `SENDER_ACCOUNT_ID` is set, the
-  EmailOctopus form script until then.
+- JS: `site.js` (mobile menu). The only third-party script is Sender.net `universal.js`
+  (async, in `<head>`), which renders the newsletter form in an iframe. It sets no cookie
+  or storage on the site's domain (checked 2026-11-17). The iframe loads Sender's own
+  assets and the font chosen in the Sender form designer.

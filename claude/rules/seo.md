@@ -65,4 +65,5 @@ Every page must pass `make check`. Strategy and keyword map: `claude/docs/seo.md
 
 - No new third-party scripts, fonts or CSS frameworks. Fonts are self-hosted.
 - Budget: CSS < 70 KB minified, each image < 200 KB, JS limited to `site.js`.
-- Reserve space for anything injected late (e.g. the newsletter form has `min-h-56`).
+- Reserve space for anything injected late (e.g. the newsletter card reserves the height
+  of the Sender form iframe: re-measure it when the form changes in Sender).

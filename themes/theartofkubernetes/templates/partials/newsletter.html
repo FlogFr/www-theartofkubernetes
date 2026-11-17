@@ -1,8 +1,11 @@
 {#- Newsletter (lead magnet: a free chapter). Uses `t`, `icon`, `lang` from base.html.
-    Sender.net embedded form when SENDER_ACCOUNT_ID and the language's entry of
-    SENDER_FORMS are set (base.html loads the Sender snippet), legacy EmailOctopus
-    form (NEWSLETTER_FORM_ID) otherwise. See pelicanconf.py. -#}
-{%- set sender_form = (SENDER_FORMS[lang] if lang in SENDER_FORMS else SENDER_FORMS[DEFAULT_LANG]) if SENDER_ACCOUNT_ID else "" -%}
+    Sender.net embedded form: base.html loads the Sender snippet (SENDER_ACCOUNT_ID),
+    the form id comes from SENDER_FORMS[lang]. See pelicanconf.py.
+    Sender renders the form in an iframe whose size is set in Sender (424×513 px, and
+    310×568 px at 390 px wide, in November 2026). The card reserves that height plus
+    its padding so the page does not jump when the form loads, and centres the form:
+    re-measure and update the two min-h values when the form changes in Sender. -#}
+{%- set sender_form = SENDER_FORMS[lang] if lang in SENDER_FORMS else SENDER_FORMS[DEFAULT_LANG] -%}
 <section id="newsletter" class="scroll-mt-24 bg-teal-50" aria-labelledby="newsletter-title">
   <div class="wrap grid items-center gap-10 py-16 lg:grid-cols-2 lg:py-24">
     <div>
@@ -10,12 +13,9 @@
       <h2 id="newsletter-title" class="section-title">{{ t.newsletter_title }}</h2>
       <p class="mt-4 max-w-xl text-lg leading-relaxed text-slate-600">{{ t.newsletter_text }}</p>
     </div>
-    <div class="min-h-56 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-      {% if sender_form %}
-      <div class="sender-form-field" data-sender-form-id="{{ sender_form|e }}"></div>
-      {% else %}
-      <script async src="https://eocampaign1.com/form/{{ NEWSLETTER_FORM_ID }}.js" data-form="{{ NEWSLETTER_FORM_ID }}"></script>
-      {% endif %}
+    <div class="flex min-h-[38.5rem] items-center justify-center rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:min-h-[35.25rem]">
+      {#- font-size 0 removes the line gap under the inline-block iframe (as Sender's hosted form does). -#}
+      <div class="sender-form-field text-[length:0px]" data-sender-form-id="{{ sender_form|e }}"></div>
     </div>
   </div>
 </section>

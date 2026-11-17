@@ -14,8 +14,11 @@ Newest first. Add an entry when you make a structural decision.
   also be published from Sender without touching the site.
 - **One form per language** (`SENDER_FORMS`), so French and English readers land in
   separate groups when the English edition comes out.
-- **Progressive switch**: until `SENDER_ACCOUNT_ID` and `SENDER_FORMS[lang]` are set,
-  the EmailOctopus form stays online (the generated site is unchanged).
+- **EmailOctopus removed** from the site once the Sender ids were provided (account
+  `3708bb29a72388`, French form `egJR9l`). Its contacts are to be imported into Sender.
+- **Reserved height**: Sender renders the form in an iframe sized by Sender; the card
+  reserves that height (`partials/newsletter.html`) to avoid a layout shift. The form's
+  look (font, colours, border, texts) is set in the Sender form designer, not by the site.
 
 ## 2026-11-11 — Claude may update `main`
 

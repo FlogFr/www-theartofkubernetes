@@ -83,6 +83,10 @@
       s[er] = s[er] || function () {
         (s[er].q = s[er].q || []).push(arguments);
       }, s[er].l = 1 * new Date();
+      s[er].on = function (event, callback) {
+        s[er].listeners = s[er].listeners || {};
+        (s[er].listeners[event] = s[er].listeners[event] || []).push(callback);
+      };
       var a = e.createElement(n), m = e.getElementsByTagName(n)[0];
       a.async = 1;
       a.src = d;

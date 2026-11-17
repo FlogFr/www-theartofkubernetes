@@ -61,8 +61,10 @@ await p.screenshot({path:'home-mobile.png',fullPage:true});await b.close();})()"
 ```
 
 Lazy-loaded images only appear in full-page screenshots after scrolling the page with
-`page.mouse.wheel`. The newsletter form needs network access to `cdn.sender.net` (Sender.net) or
-`eocampaign1.com` (legacy EmailOctopus form); without it the box stays empty.
+`page.mouse.wheel`. The newsletter form needs network access to `cdn.sender.net` and `stats.sender.net`
+(plus `fonts.googleapis.com`/`fonts.gstatic.com` while the form uses a Google font);
+without it the card stays empty. In cloud sessions these hosts are allowed by the
+personal `www-theartofkubernetes` environment.
 
 ## Troubleshooting
 

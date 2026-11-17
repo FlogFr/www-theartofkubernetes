@@ -9,8 +9,7 @@ Bienvenue parmi les connaisseurs de Kubernetes
 :summary: Merci pour votre inscription ! Vous venez de rejoindre les connaisseurs de Kubernetes.
 
 .. Welcome page for new newsletter subscribers. Keep the URL /fr/bienvenue
-   stable: it is the "Redirect after submit" URL of the newsletter form
-   (Sender.net; previously EmailOctopus).
+   stable: it is the "Redirect after submit" URL of the Sender.net newsletter form.
 
 Qui sont les connaisseurs de Kubernetes ?
 =========================================

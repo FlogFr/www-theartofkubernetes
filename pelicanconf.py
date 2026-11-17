@@ -129,18 +129,15 @@ CONTACT_EMAIL = "bonjour@theartofkubernetes.com"
 # Both values are in Sender > Forms > <the form> > Publishing settings:
 #   SENDER_ACCOUNT_ID  the text inside sender('...') in the JavaScript snippet
 #   SENDER_FORMS       one embedded form per language, keyed like BOOKS: the
-#                      data-sender-form-id="..." of the <div> embed code
-# While SENDER_ACCOUNT_ID or the language's form is empty, the legacy
-# EmailOctopus form (NEWSLETTER_FORM_ID) is shown instead.
+#                      data-sender-form-id="..." of the <div> embed code;
+#                      a language without a form uses the DEFAULT_LANG one
+# Hosted version of a form: https://stats.sender.net/forms/<form id>/view
 # /fr/bienvenue is the "welcome" page for new subscribers (the form's
 # "Redirect after submit" URL): keep that URL stable.
-SENDER_ACCOUNT_ID = ""
+SENDER_ACCOUNT_ID = "3708bb29a72388"
 SENDER_FORMS = {
-    "fr": "",
+    "fr": "egJR9l",
 }
-# Legacy EmailOctopus form: remove once the Sender form is live and the
-# EmailOctopus contacts have been imported into Sender.
-NEWSLETTER_FORM_ID = "7f014dd2-69c3-11ef-b4cf-7d716c80cc13"
 BUILD_YEAR = datetime.now().year
 
 # Public profiles of the author (LinkedIn, GitHub, ...). They feed the
