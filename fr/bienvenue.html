@@ -32,6 +32,23 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#0f2a2e">
   <link rel="alternate" type="application/atom+xml" href="https://theartofkubernetes.com/feeds/all.atom.xml" title="The Art of Kubernetes – Articles Kubernetes">
+<script>
+    (function (s, e, n, d, er) {
+      s["Sender"] = er;
+      s[er] = s[er] || function () {
+        (s[er].q = s[er].q || []).push(arguments);
+      }, s[er].l = 1 * new Date();
+      s[er].on = function (event, callback) {
+        s[er].listeners = s[er].listeners || {};
+        (s[er].listeners[event] = s[er].listeners[event] || []).push(callback);
+      };
+      var a = e.createElement(n), m = e.getElementsByTagName(n)[0];
+      a.async = 1;
+      a.src = d;
+      m.parentNode.insertBefore(a, m);
+    })(window, document, "script", "https://cdn.sender.net/accounts_resources/universal.js", "sender");
+    sender("3708bb29a72388");
+  </script>
 </head>
 <body class="bg-white font-sans text-slate-700 antialiased">
   <a href="#contenu" class="skip-link">Aller au contenu</a>
@@ -85,7 +102,7 @@
 <div class="wrap max-w-4xl py-12 lg:py-16">
   <div class="prose prose-lg prose-slate mx-auto max-w-3xl">
     <!-- Welcome page for new newsletter subscribers. Keep the URL /fr/bienvenue
-stable: it is most likely the redirect URL of the EmailOctopus form. -->
+stable: it is the "Redirect after submit" URL of the Sender.net newsletter form. -->
 <div class="section" id="qui-sont-les-connaisseurs-de-kubernetes">
 <h2>Qui sont les connaisseurs de Kubernetes ?</h2>
 <p>Les connaisseurs de Kubernetes forment une communauté qui partage le maximum de
