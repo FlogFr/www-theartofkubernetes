@@ -21,7 +21,8 @@ themes/theartofkubernetes/src/site.css ──► Tailwind CLI ──► static/a
 content/
   fr/                      French articles (one .rst per article) -> /fr/<slug>
   pages/fr/                French pages: home.rst (/), articles.rst (/fr/articles),
-                           bienvenue.rst (/fr/bienvenue, noindex)
+                           bienvenue.rst (/fr/bienvenue, noindex),
+                           contact.rst (/fr/contact, noindex)
   drafts/                  article ideas, excluded from the build (ARTICLE_EXCLUDES)
   images/                  content images: protected originals + optimized derivatives
   assets/                  PDFs (article PDF versions, free chapter)
@@ -66,6 +67,7 @@ disabled (`*_SAVE_AS = ""`), as are drafts.
 | `home_fr.html`               | French landing page (`:template: home_fr`) | copy + data: `learn`, `audiences`, `chapters`, `testimonials`, `faq`, `book_description` |
 | `article.html`               | articles                                   | JSON-LD: BlogPosting, BreadcrumbList; book CTA, author box, related articles, newsletter |
 | `articles.html`              | article list page (`:template: articles`)  | JSON-LD: CollectionPage + ItemList |
+| `contact.html`               | contact page (`:template: contact`)        | page text from the rst + Sender contact form (`SENDER_CONTACT_FORMS`) in a card that reserves the iframe height; email fallback (`CONTACT_EMAIL`) |
 | `page.html`                  | other pages (e.g. bienvenue)               | |
 | `404.html`, `sitemap.html`   | direct templates                           | `DIRECT_TEMPLATES = ["404", "sitemap"]` |
 | `partials/i18n.html`         | UI strings per language (`t.<key>`)        | add every key to all languages |
@@ -100,9 +102,10 @@ from `obj.translations` (plus `x-default` = default-language version).
 | `AMAZON_ASSOCIATE_TAG`  | optional affiliate tag appended to Amazon URLs; switches links to `rel="noopener sponsored"`. |
 | `HOME_PAGES`            | languages with a home page (`{"fr": "/"}`), drives the language switcher. |
 | `AUTHOR_PROFILES`       | author's public profile URLs → schema.org `sameAs`. Empty for now. |
-| `CONTACT_EMAIL`         | contact address shown on the site. |
+| `CONTACT_EMAIL`         | contact address shown on the site (footer, FAQ, buy box, contact page). |
 | `SENDER_ACCOUNT_ID`     | Sender.net account id (`sender('…')` in the Sender JavaScript snippet); `base.html` loads the Sender snippet in `<head>` on every page. |
 | `SENDER_FORMS`          | Sender embedded form id per language (`data-sender-form-id`), rendered by `partials/newsletter.html`; falls back to `DEFAULT_LANG`. Hosted version: `https://stats.sender.net/forms/<id>/view`. |
+| `SENDER_CONTACT_FORMS`  | Sender contact form id per language, same format as `SENDER_FORMS`, rendered by `contact.html` (`/<lang>/contact`); falls back to `DEFAULT_LANG`. |
 | `BUILD_YEAR`            | copyright year in the footer. |
 | `JINJA_FILTERS`         | `long_date(lang)`, `reading_time`, `responsive_images`, `french_typography(lang)`. |
 
@@ -122,6 +125,6 @@ from `obj.translations` (plus `x-default` = default-language version).
 - Fonts: Crimson Pro (headings) and Libre Franklin (body), variable woff2, latin subset,
   preloaded, copied from `@fontsource-variable/*` by `npm run fonts`.
 - JS: `site.js` (mobile menu). The only third-party script is Sender.net `universal.js`
-  (async, in `<head>`), which renders the newsletter form in an iframe. It sets no cookie
+  (async, in `<head>`), which renders the newsletter and contact forms in iframes. It sets no cookie
   or storage on the site's domain (checked 2026-11-17). The iframe loads Sender's own
   assets and the font chosen in the Sender form designer.

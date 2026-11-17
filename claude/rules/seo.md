@@ -21,11 +21,11 @@ Every page must pass `make check`. Strategy and keyword map: `claude/docs/seo.md
 ## URLs
 
 - **Never change a published slug or URL.** Published URLs: `/`, `/fr/articles`,
-  `/fr/bienvenue`, `/fr/qu-est-ce-que-kubernetes`, `/fr/operator-or-not-operator`,
+  `/fr/bienvenue`, `/fr/contact`, `/fr/qu-est-ce-que-kubernetes`, `/fr/operator-or-not-operator`,
   `/fr/multi-cluster-kubernetes`, `/fr/edge-computing-avec-kubernetes`.
 - New slugs: short, lowercase, kebab-case, keyword-rich, in the page language.
 - Do not re-enable tag, category, author or archive pages (thin content).
-- Utility pages (thank-you, legal…) get `:robots: noindex, follow`; they are then left out
+- Utility pages (thank-you, contact, legal…) get `:robots: noindex, follow`; they are then left out
   of the sitemap automatically.
 
 ## Content and links
@@ -65,5 +65,5 @@ Every page must pass `make check`. Strategy and keyword map: `claude/docs/seo.md
 
 - No new third-party scripts, fonts or CSS frameworks. Fonts are self-hosted.
 - Budget: CSS < 70 KB minified, each image < 200 KB, JS limited to `site.js`.
-- Reserve space for anything injected late (e.g. the newsletter card reserves the height
-  of the Sender form iframe: re-measure it when the form changes in Sender).
+- Reserve space for anything injected late (e.g. the newsletter and contact cards reserve
+  the height of the Sender form iframes: re-measure them when a form changes in Sender).

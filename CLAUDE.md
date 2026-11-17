@@ -13,6 +13,8 @@ The site has one business goal: **turn search traffic into Amazon sales**.
 - Primary call to action: "Acheter sur Amazon" (amber button), everywhere.
 - Secondary call to action: the newsletter (Sender.net embedded form), whose lead magnet
   is a free chapter sent by email.
+- Contact: `/fr/contact` (Sender.net contact form, linked from the footer and the FAQ)
+  and `CONTACT_EMAIL`.
 - Acquisition: SEO on French Kubernetes searches (book page + articles).
 
 ## Stack
@@ -42,7 +44,7 @@ make github                 # publish + check + push to gh-pages (only when the 
 pelicanconf.py                 settings: URLs, BOOKS (price/ASIN), HOME_PAGES, Jinja filters
 publishconf.py                 production overrides (SITEURL, feeds)
 content/fr/*.rst               French articles   -> /fr/<slug>
-content/pages/fr/*.rst         French pages      (home.rst -> /, articles.rst, bienvenue.rst)
+content/pages/fr/*.rst         French pages      (home.rst -> /, articles.rst, bienvenue.rst, contact.rst)
 content/drafts/                article ideas, never published
 content/images/                content images (originals + optimized derivatives)
 content/assets/                PDFs (article PDF versions, free chapter)
@@ -52,6 +54,7 @@ themes/theartofkubernetes/
   templates/home.html          landing layout + JSON-LD (Book/Product, FAQPage, Person)
   templates/home_fr.html       French landing page copy and data (FAQ, testimonials…)
   templates/article.html       article page + BlogPosting/Breadcrumb JSON-LD
+  templates/contact.html       contact page with the Sender.net contact form
   templates/partials/i18n.html UI strings per language
   templates/sitemap.html       /sitemap.xml
   src/site.css                 Tailwind source  -> static/assets/css/site.css

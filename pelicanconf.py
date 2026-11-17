@@ -138,6 +138,11 @@ SENDER_ACCOUNT_ID = "3708bb29a72388"
 SENDER_FORMS = {
     "fr": "egJR9l",
 }
+# Contact form (Sender.net embedded form, same account), shown on the contact
+# page (/<lang>/contact, template contact.html). Same format as SENDER_FORMS.
+SENDER_CONTACT_FORMS = {
+    "fr": "eXDyBl",
+}
 BUILD_YEAR = datetime.now().year
 
 # Public profiles of the author (LinkedIn, GitHub, ...). They feed the

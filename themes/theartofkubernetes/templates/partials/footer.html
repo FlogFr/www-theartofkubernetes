@@ -22,7 +22,10 @@
 
     <div>
       <p class="font-semibold text-white">{{ t.footer_contact }}</p>
-      <p class="mt-4 text-sm"><a href="mailto:{{ CONTACT_EMAIL }}" class="footer-link inline-flex items-center gap-2">{{ icon("mail", "size-4") }}{{ CONTACT_EMAIL }}</a></p>
+      <ul class="mt-4 grid gap-2 text-sm">
+        <li><a href="/{{ lang }}/contact" class="footer-link inline-flex items-center gap-2">{{ icon("message-circle", "size-4") }}{{ t.contact_link }}</a></li>
+        <li><a href="mailto:{{ CONTACT_EMAIL }}" class="footer-link inline-flex items-center gap-2">{{ icon("mail", "size-4") }}{{ CONTACT_EMAIL }}</a></li>
+      </ul>
       <div class="mt-6">{{ buy_button(book, t, size="sm") }}</div>
     </div>
   </div>

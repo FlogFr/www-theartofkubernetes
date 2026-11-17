@@ -37,7 +37,7 @@ One main keyword per page; never create two pages for the same intent (cannibali
 - `sitemap.xml` (theme template): indexable pages only, `lastmod`, hreflang, image entries.
 - `robots.txt`: allows everything except `/assets/` (PDF duplicates), points to the sitemap.
 - No thin pages: tag/category/author/archive pages disabled, drafts excluded, the
-  newsletter thank-you page is `noindex`.
+  newsletter thank-you page and the contact page are `noindex, follow`.
 - Custom `404.html` with links to the home page, articles and Amazon.
 - Atom feed `feeds/all.atom.xml` (production build).
 

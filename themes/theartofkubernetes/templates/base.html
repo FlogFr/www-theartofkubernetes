@@ -75,8 +75,9 @@
   {% endif %}
   {% if SENDER_ACCOUNT_ID %}
   {#- Sender.net account snippet (loads universal.js asynchronously). It renders the
-      embedded newsletter form of partials/newsletter.html and any popup form
-      published in Sender. Settings: SENDER_ACCOUNT_ID, SENDER_FORMS. -#}
+      embedded newsletter form of partials/newsletter.html, the contact form of
+      contact.html and any popup form published in Sender. Settings:
+      SENDER_ACCOUNT_ID, SENDER_FORMS, SENDER_CONTACT_FORMS. -#}
   <script>
     (function (s, e, n, d, er) {
       s["Sender"] = er;

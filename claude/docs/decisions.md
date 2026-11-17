@@ -2,6 +2,22 @@
 
 Newest first. Add an entry when you make a structural decision.
 
+## 2026-11-17 — Contact form on a dedicated page
+
+- Asked by the author: embed the Sender.net contact form `eXDyBl` (same Sender account
+  as the newsletter, so the snippet already loaded by `base.html` renders it).
+- **Dedicated page `/fr/contact`** (`content/pages/fr/contact.rst`, template
+  `contact.html`) rather than a section of the landing page: the landing page keeps its
+  conversion structure, and the contact form does not compete with the buy button and
+  the newsletter. Linked from the footer ("Formulaire de contact") and the FAQ intro.
+  Not in the header navigation, which is kept for the book.
+- **`noindex, follow`**: like `/fr/bienvenue`, it is a utility page with little text
+  (thin content for search engines); it stays crawlable through its links.
+- **One form per language** (`SENDER_CONTACT_FORMS`), like `SENDER_FORMS`.
+- The email address stays visible next to the form (and in a `<noscript>` fallback):
+  the site must work without JavaScript.
+- The form's fields, texts, look and confirmation are set in the Sender form designer.
+
 ## 2026-11-17 — Newsletter moves to Sender.net
 
 - Asked by the author: the newsletter (free chapter, then about one email a month on
