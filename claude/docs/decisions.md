@@ -2,6 +2,30 @@
 
 Newest first. Add an entry when you make a structural decision.
 
+## 2026-11-17 — The site styles the Sender forms
+
+- Asked by the author: the newsletter and contact forms looked foreign to the site
+  (Roboto, black button, pink border, a box inside the site's card, English texts).
+- **The site sets the look, Sender keeps the content.** Sender's iframe is same-origin
+  (`about:blank` written by `universal.js`), so `site.js` loads
+  `assets/css/sender-forms.css` inside it: site fonts (self-hosted), slate/teal colours,
+  16 px inputs (no iOS zoom), visible focus, no box of its own. This replaces the
+  previous choice of styling the forms in the Sender designer, which cannot use the
+  self-hosted fonts nor match the site precisely. Texts, fields, consent, success
+  message and redirect are still edited in Sender.
+- Progressive enhancement: without `site.js`, or if Sender changes its markup, the form
+  shows Sender's own look. No extra third-party request.
+- The contact form's one-line "Message" input becomes a `<textarea>` (same name: Sender
+  serializes every `[name]` and validates textareas). Labels are tied to their fields
+  and autofill is allowed for email and names.
+- Newsletter section: the paragraph is shortened and the benefits become a checklist
+  (`newsletter_text`, `newsletter_points` in `partials/i18n.html`). Contact page: the
+  author's portrait, name and job open the left column.
+- Recommended Sender texts were given to the author (newsletter: first name + email,
+  title "Rejoignez les connaisseurs de Kubernetes", button "Recevoir mon chapitre
+  gratuit", redirect to `/fr/bienvenue`; contact: first name, email, message). The cards
+  reserve the height of the forms with those texts.
+
 ## 2026-11-17 — Contact form on a dedicated page
 
 - Asked by the author: embed the Sender.net contact form `eXDyBl` (same Sender account

@@ -2,10 +2,13 @@
     The page text comes from the rst file; the form is a Sender.net embedded form
     (base.html loads the Sender snippet, the form id comes from
     SENDER_CONTACT_FORMS[lang], falling back to DEFAULT_LANG). See pelicanconf.py.
-    Sender renders the form in an iframe whose size is set in Sender (about 424×492 px,
-    and 310×527 px at 390 px wide, in November 2026). The card reserves that height plus
-    its padding so the page does not jump when the form loads: re-measure and update the
-    two min-h values when the form changes in Sender. -#}
+    The card is the frame of the form: site.js styles the Sender iframe like the site
+    (assets/css/sender-forms.css) and turns the message field into a textarea.
+    The texts and fields of the form are set in Sender.
+    The card reserves the height of the styled form so the page does not jump when it
+    loads (measured in November 2026 with a title, 3 fields, a checkbox, a button and a
+    bottom text, at 1280 and 390 px): re-measure and update the two min-h values when
+    the form changes in Sender. -#}
 {% set obj = page %}
 {% set lang = page.lang %}
 {% set seo_title = page.seo_title or (page.title ~ " | " ~ SITENAME) %}
@@ -24,20 +27,27 @@
   </div>
 </header>
 
-<div class="wrap grid items-start gap-10 py-12 lg:grid-cols-2 lg:gap-16 lg:py-16">
+<div class="wrap grid items-start gap-10 py-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16 lg:py-16">
   <div>
-    <div class="prose prose-lg prose-slate">
+    <div class="flex items-center gap-4">
+      <img src="/theme/assets/images/auteur-florian-grignon-480.webp" alt="" width="64" height="64" class="size-16 shrink-0 rounded-full object-cover ring-4 ring-teal-50">
+      <div>
+        <p class="font-serif text-2xl font-semibold leading-tight text-slate-900">{{ AUTHOR }}</p>
+        <p class="mt-0.5 text-sm text-slate-600">{{ t.author_job }}</p>
+      </div>
+    </div>
+    <div class="prose prose-lg prose-slate mt-8">
       {{ page.content|responsive_images }}
     </div>
-    <p class="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-slate-600">
+    <p class="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-slate-200 pt-6 text-slate-600">
       {{ icon("mail", "size-5 shrink-0 text-teal-600") }}{{ t.contact_by_email }}
       <a href="mailto:{{ CONTACT_EMAIL }}" class="font-medium text-teal-700 underline-offset-2 hover:underline">{{ CONTACT_EMAIL }}</a>
     </p>
   </div>
-  <div class="flex min-h-[36rem] items-center justify-center rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:min-h-[34rem]">
+  <div class="flex min-h-[41rem] flex-col justify-center rounded-3xl bg-white p-6 shadow-xl shadow-slate-900/5 ring-1 ring-slate-200 sm:min-h-[41.5rem] sm:p-10">
     {#- font-size 0 removes the line gap under the inline-block iframe (as Sender's hosted form does). -#}
-    <div class="sender-form-field text-[length:0px]" data-sender-form-id="{{ contact_form|e }}"></div>
-    <noscript><p class="text-center text-slate-600">{{ t.contact_noscript }} <a href="mailto:{{ CONTACT_EMAIL }}" class="font-medium text-teal-700 underline">{{ CONTACT_EMAIL }}</a></p></noscript>
+    <div class="sender-form-field w-full text-[length:0px]" data-sender-form-id="{{ contact_form|e }}"></div>
+    <noscript><p class="text-center text-base text-slate-600">{{ t.contact_noscript }} <a href="mailto:{{ CONTACT_EMAIL }}" class="font-medium text-teal-700 underline">{{ CONTACT_EMAIL }}</a></p></noscript>
   </div>
 </div>
 

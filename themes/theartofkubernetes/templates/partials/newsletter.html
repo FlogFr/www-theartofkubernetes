@@ -1,21 +1,29 @@
 {#- Newsletter (lead magnet: a free chapter). Uses `t`, `icon`, `lang` from base.html.
     Sender.net embedded form: base.html loads the Sender snippet (SENDER_ACCOUNT_ID),
     the form id comes from SENDER_FORMS[lang]. See pelicanconf.py.
-    Sender renders the form in an iframe whose size is set in Sender (424×513 px, and
-    310×568 px at 390 px wide, in November 2026). The card reserves that height plus
-    its padding so the page does not jump when the form loads, and centres the form:
-    re-measure and update the two min-h values when the form changes in Sender. -#}
+    The card is the frame of the form: site.js styles the Sender iframe like the site
+    (assets/css/sender-forms.css: transparent, no border, site fonts and colours).
+    The texts and fields of the form are set in Sender.
+    The card reserves the height of the styled form so the page does not jump when it
+    loads (measured in November 2026 with a title, 2 fields, a checkbox, a button and
+    a bottom text, at 1280 and 390 px): re-measure and update the two min-h values when
+    the form changes in Sender. -#}
 {%- set sender_form = SENDER_FORMS[lang] if lang in SENDER_FORMS else SENDER_FORMS[DEFAULT_LANG] -%}
 <section id="newsletter" class="scroll-mt-24 bg-teal-50" aria-labelledby="newsletter-title">
-  <div class="wrap grid items-center gap-10 py-16 lg:grid-cols-2 lg:py-24">
+  <div class="wrap grid items-center gap-10 py-16 lg:grid-cols-2 lg:gap-16 lg:py-24">
     <div>
       <p class="eyebrow">{{ icon("mail", "size-4") }} Newsletter</p>
       <h2 id="newsletter-title" class="section-title">{{ t.newsletter_title }}</h2>
       <p class="mt-4 max-w-xl text-lg leading-relaxed text-slate-600">{{ t.newsletter_text }}</p>
+      <ul class="mt-6 grid max-w-xl gap-3 text-slate-700">
+        {% for point in t.newsletter_points %}
+        <li class="flex gap-3">{{ icon("check-circle", "mt-0.5 size-5 shrink-0 text-teal-600") }}<span>{{ point }}</span></li>
+        {% endfor %}
+      </ul>
     </div>
-    <div class="flex min-h-[38.5rem] items-center justify-center rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:min-h-[35.25rem]">
+    <div class="flex min-h-[31.5rem] flex-col justify-center rounded-3xl bg-white p-6 shadow-xl shadow-teal-900/5 ring-1 ring-teal-100 sm:min-h-[32rem] sm:p-10">
       {#- font-size 0 removes the line gap under the inline-block iframe (as Sender's hosted form does). -#}
-      <div class="sender-form-field text-[length:0px]" data-sender-form-id="{{ sender_form|e }}"></div>
+      <div class="sender-form-field w-full text-[length:0px]" data-sender-form-id="{{ sender_form|e }}"></div>
     </div>
   </div>
 </section>

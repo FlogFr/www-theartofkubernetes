@@ -175,6 +175,13 @@
   &:focus { top: 1rem; }
 }
 
+/* Sender.net embedded forms (newsletter, contact): site.js styles the iframe with
+   assets/css/sender-forms.css, hides it while doing so, then makes it fluid. */
+.sender-form-field { transition: opacity 200ms; }
+.sender-form-field.sender-styling { opacity: 0; }
+.sender-form-field.sender-styled > div { display: block !important; }
+.sender-form-field.sender-styled iframe { width: 100% !important; }
+
 /* Mobile menu state (toggled by site.js). */
 .menu-is-open .menu-open-icon { display: none; }
 .menu-is-open .menu-close-icon { display: block; }

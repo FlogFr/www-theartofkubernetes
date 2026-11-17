@@ -58,6 +58,7 @@ themes/theartofkubernetes/
   templates/partials/i18n.html UI strings per language
   templates/sitemap.html       /sitemap.xml
   src/site.css                 Tailwind source  -> static/assets/css/site.css
+  static/assets/css/sender-forms.css  look of the Sender forms (loaded in their iframe by site.js)
 scripts/check_seo.py           SEO checker used by `make check`
 scripts/make_images.py         image derivatives (never touches originals)
 ```

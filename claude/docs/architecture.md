@@ -30,10 +30,11 @@ content/
                            site.webmanifest, favicon.ico
 themes/theartofkubernetes/
   src/site.css             Tailwind source (fonts, tokens, components, prose styles)
-  static/assets/css/       compiled CSS (site.css)
+  static/assets/css/       compiled CSS (site.css) + sender-forms.css (hand-written,
+                           loaded by site.js inside the Sender form iframes)
   static/assets/fonts/     self-hosted woff2 fonts (Crimson Pro, Libre Franklin)
   static/assets/images/    brand images (logos, mountains, author portrait, favicons)
-  static/assets/js/site.js mobile menu toggle
+  static/assets/js/site.js mobile menu toggle + styling of the Sender form iframes
   templates/               Jinja templates (see below)
   templates/icons/         Feather icons (inner SVG markup)
 scripts/
@@ -67,7 +68,7 @@ disabled (`*_SAVE_AS = ""`), as are drafts.
 | `home_fr.html`               | French landing page (`:template: home_fr`) | copy + data: `learn`, `audiences`, `chapters`, `testimonials`, `faq`, `book_description` |
 | `article.html`               | articles                                   | JSON-LD: BlogPosting, BreadcrumbList; book CTA, author box, related articles, newsletter |
 | `articles.html`              | article list page (`:template: articles`)  | JSON-LD: CollectionPage + ItemList |
-| `contact.html`               | contact page (`:template: contact`)        | page text from the rst + Sender contact form (`SENDER_CONTACT_FORMS`) in a card that reserves the iframe height; email fallback (`CONTACT_EMAIL`) |
+| `contact.html`               | contact page (`:template: contact`)        | author identity + page text from the rst + Sender contact form (`SENDER_CONTACT_FORMS`) in a card that reserves the styled form's height; email fallback (`CONTACT_EMAIL`) |
 | `page.html`                  | other pages (e.g. bienvenue)               | |
 | `404.html`, `sitemap.html`   | direct templates                           | `DIRECT_TEMPLATES = ["404", "sitemap"]` |
 | `partials/i18n.html`         | UI strings per language (`t.<key>`)        | add every key to all languages |
@@ -124,7 +125,20 @@ from `obj.translations` (plus `x-default` = default-language version).
   `templates/` and `content/**/*.rst`. Custom components are `@utility` blocks.
 - Fonts: Crimson Pro (headings) and Libre Franklin (body), variable woff2, latin subset,
   preloaded, copied from `@fontsource-variable/*` by `npm run fonts`.
-- JS: `site.js` (mobile menu). The only third-party script is Sender.net `universal.js`
-  (async, in `<head>`), which renders the newsletter and contact forms in iframes. It sets no cookie
-  or storage on the site's domain (checked 2026-11-17). The iframe loads Sender's own
-  assets and the font chosen in the Sender form designer.
+- JS: `site.js` (mobile menu, Sender form styling). The only third-party script is
+  Sender.net `universal.js` (async, in `<head>`), which renders the newsletter and contact
+  forms in iframes. It sets no cookie or storage on the site's domain (checked
+  2026-11-17). The iframe loads Sender's own assets and the font chosen in the Sender
+  form designer.
+- **Sender form styling**: Sender writes each form into an `about:blank` iframe, which is
+  same-origin with the page. `site.js` watches the `.sender-form-field` containers and,
+  when the iframe appears: loads `static/assets/css/sender-forms.css` inside it (site
+  fonts, slate/teal colours, transparent box: the site's card is the frame), makes it
+  fluid (`.sender-styled` rules in `src/site.css`), keeps its height equal to the form's
+  (ResizeObserver: validation errors, success message), turns a text input whose name
+  contains `message` into a `<textarea>` (same name, so Sender still sends it), ties the
+  labels to their fields and enables autofill (email, first/last name). The iframe is
+  hidden (`.sender-styling`) from its insertion until the stylesheet is loaded, and
+  revealed after 3 s at most. Texts, fields, consent checkbox, success message and
+  redirect stay in the Sender form designer. If Sender changes its markup, the form
+  falls back to the look set in Sender.

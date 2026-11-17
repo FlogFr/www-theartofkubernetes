@@ -1,0 +1,221 @@
+/*
+ * Look of the Sender.net embedded forms (newsletter and contact), matched to the site.
+ *
+ * Hand-written plain CSS, NOT built by Tailwind: site.js loads it INSIDE the Sender
+ * iframe (an about:blank iframe, same origin as the page), where the site's CSS does
+ * not apply. Colours are the Tailwind palette in hex (slate, teal, red).
+ * Sender's own rules are scoped with `.sender-subs-embed-form-<id>` and some use
+ * inline styles, hence the `html body` prefix and a few `!important`.
+ * The texts, fields and checkboxes are set in the Sender form designer, not here.
+ * If Sender changes its markup, the form falls back to the look set in Sender.
+ */
+
+@font-face {
+  font-family: "Libre Franklin Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/libre-franklin-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Crimson Pro Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 900;
+  src: url("../fonts/crimson-pro-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+html body {
+  --sans: "Libre Franklin Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --serif: "Crimson Pro Variable", ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  background: transparent;
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* The site's card is the frame: the Sender box becomes transparent and fluid.
+   The 4px padding leaves room for the focus rings (the iframe clips overflow). */
+html body .sender-form-box,
+html body .sender-form-box.box-padding {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 4px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+html body .sender-form-box p { margin: 0; }
+
+/* ---- Titles and texts ---------------------------------------------------- */
+html body .sender-form .sender-form-title,
+html body .sender-form-success .sender-form-title {
+  font-family: var(--serif) !important;
+  font-size: 1.75rem !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.01em;
+  color: #0f172a !important;
+  text-wrap: balance;
+}
+html body .sender-form-subtitle,
+html body .sender-form-success .sender-form-subtitle {
+  margin-top: 0.75rem !important;
+  font-family: var(--sans) !important;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  color: #475569 !important;
+}
+html body .sender-form-bottom-text {
+  margin-top: 0.875rem !important;
+  font-family: var(--sans) !important;
+  font-size: 0.8125rem !important;
+  line-height: 1.5 !important;
+  color: #64748b !important;
+}
+html body .sender-form-box a {
+  color: #0f766e !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---- Fields --------------------------------------------------------------- */
+html body .sender-form-inputs { margin-top: 1.25rem !important; }
+html body .sender-form-inputs .sender-form-field:not(:last-child) { margin-bottom: 1rem !important; }
+
+html body .sender-form .sender-form-label {
+  display: block;
+  margin-bottom: 0.375rem !important;
+  font-family: var(--sans) !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  color: #334155 !important;
+}
+
+/* 16px text: iOS Safari zooms into smaller inputs. */
+html body .sender-form-input,
+html body textarea.sender-form-input {
+  width: 100%;
+  height: 2.75rem !important;
+  padding: 0.5rem 0.875rem !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 0.75rem !important;
+  background-color: #fff !important;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.05) !important;
+  font-family: var(--sans) !important;
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+  color: #0f172a !important;
+  transition: border-color 150ms, box-shadow 150ms;
+}
+html body textarea.sender-form-input {
+  display: block;
+  height: auto !important;
+  min-height: 8.5rem;
+  padding-block: 0.625rem !important;
+  resize: vertical;
+}
+html body .sender-form-input::placeholder {
+  font-family: var(--sans) !important;
+  font-size: 1rem !important;
+  color: #64748b !important;
+  opacity: 1;
+}
+html body .sender-form-input:hover { border-color: #94a3b8 !important; }
+html body .sender-form-input:focus,
+html body .sender-form-input:active {
+  border-color: #0d9488 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgb(20 184 166 / 0.3) !important;
+}
+html body .sender-form-input.error {
+  border-color: #dc2626 !important;
+}
+html body .sender-form-input.error:focus {
+  box-shadow: 0 0 0 3px rgb(220 38 38 / 0.2) !important;
+}
+html body .sender-form .error-message {
+  margin-top: 0.375rem !important;
+  font-family: var(--sans) !important;
+  font-size: 0.8125rem !important;
+  line-height: 1.4 !important;
+  color: #b91c1c !important;
+}
+
+/* ---- Consent checkbox ----------------------------------------------------- */
+html body .sender-form-checkboxes { margin-top: 1.25rem !important; }
+html body .sender-form-checkbox-holder { line-height: 1.5 !important; }
+html body .sender-form-b-checkbox.sender-form-checkbox.sender-form-label {
+  display: flex !important;
+  align-items: flex-start;
+  margin: 0 !important;
+  cursor: pointer;
+}
+html body .sender-form-field .sender-form-b-checkbox.sender-form-checkbox input[type=checkbox] + .sender-form-check {
+  flex-shrink: 0;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  margin-top: 0.0625rem;
+  margin-inline-end: 0.75rem !important;
+  border: 1px solid #94a3b8 !important;
+  border-radius: 0.375rem !important;
+  background-color: #fff;
+}
+html body .sender-form-b-checkbox.sender-form-checkbox input[type=checkbox]:checked + .sender-form-check {
+  border-color: #0f766e !important;
+  background-color: #0f766e !important;
+}
+html body .sender-form-b-checkbox.sender-form-checkbox input[type=checkbox]:focus-visible + .sender-form-check {
+  outline: 3px solid #14b8a6;
+  outline-offset: 2px;
+}
+html body .sender-form-control-label {
+  font-family: var(--sans) !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  color: #475569 !important;
+}
+
+/* ---- Submit button (same shape as the site's .btn, brand teal) ------------ */
+html body button.submit-button.sender-form-button,
+html body a.submit-button.sender-form-button {
+  width: 100%;
+  min-height: 3rem !important;
+  margin-top: 1.25rem !important;
+  padding: 0.75rem 1.25rem !important;
+  border: 0 !important;
+  border-radius: 0.75rem !important;
+  background-color: #0f766e !important;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.1) !important;
+  font-family: var(--sans) !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+  color: #fff !important;
+  cursor: pointer;
+  transition: background-color 150ms, transform 150ms;
+}
+html body .sender-form-button:hover,
+html body .sender-form-button:focus,
+html body .sender-form-button.sending-request {
+  -webkit-filter: none !important;
+  filter: none !important;
+  background-color: #115e59 !important;
+}
+html body .sender-form-button:hover { transform: translateY(-1px); }
+html body .sender-form-button:focus-visible {
+  outline: 3px solid #14b8a6 !important;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .sender-form-button,
+  html body .sender-form-input { transition: none; }
+  html body .sender-form-button:hover { transform: none; }
+}

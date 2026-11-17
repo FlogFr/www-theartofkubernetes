@@ -42,5 +42,9 @@
 - Mobile first: check 390px and 1280px; no horizontal scroll.
 - Accessibility: WCAG AA contrast, visible focus, one `<h1>`, landmarks, `aria-label` on
   icon-only buttons, decorative SVGs `aria-hidden`.
-- The site must work without JavaScript (`site.js` only toggles the mobile menu).
+- The site must work without JavaScript (`site.js` only toggles the mobile menu and
+  styles the Sender form iframes).
+- Sender forms: their look comes from `static/assets/css/sender-forms.css` (plain CSS in
+  hex Tailwind colours, loaded inside the iframe by `site.js`), their texts and fields
+  from the Sender designer. The site's card around them is the only frame.
 - No jQuery, carousels, animation libraries or icon fonts.
